@@ -6,13 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewEditProfile"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:background="@drawable/ic_profile_background"
+        android:onClick="onClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/loading_progress"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewEditProfile"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewEditProfile"
+        app:layout_constraintStart_toStartOf="@+id/imageViewEditProfile"
+        app:layout_constraintTop_toTopOf="@+id/imageViewEditProfile" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/edit_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:onClick="onClick"
+        android:src="@drawable/ic_edit_icon"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewEditProfile"
+        app:layout_constraintEnd_toEndOf="@id/imageViewEditProfile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

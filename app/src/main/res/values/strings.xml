@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SSImagePicker</string>
+
+    <string name="str_camera">"Camera"</string>
+    <string name="str_gallery">"Gallery"</string>
+    <string name="str_cancel">Cancel</string>
 </resources>

@@ -1,0 +1,111 @@
+package com.ssimagepicker.app
+
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+// Code for upload Profile Picture
+fun checkPermissionForUploadImage(context: Context): Boolean {
+    return ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+}
+
+fun askPermissionForUploadImage(activity: Activity) {
+
+    ActivityCompat.requestPermissions(
+            activity,
+            arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+            ),
+            PERMISSION_REQUEST_CODE
+    )
+}
+
+fun Activity.dispatchTakePictureIntent(): String? {
+    Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+        // Ensure that there's a camera activity to handle the intent
+        packageManager?.run {
+            takePictureIntent.resolveActivity(this)?.also {
+                // Create the File where the photo should go
+                try {
+                    val timeStamp: String =
+                            SimpleDateFormat(
+                                    dateFormatForTakePicture,
+                                    Locale.getDefault()
+                            ).format(Date())
+                    createImageFile(timeStamp).apply {
+                        // Continue only if the File was successfully created
+                        also { photo ->
+                            val photoURI: Uri = FileProvider.getUriForFile(
+                                    this@dispatchTakePictureIntent,
+                                    "${BuildConfig.APPLICATION_ID}.provider", photo
+                            )
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                        }
+                        return absolutePath
+                    }
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+                    return null
+                }
+            }
+        }
+    }
+    return null
+}
+
+fun Activity.createImageFile(name: String = ""): File {
+    // Create an image file name
+    val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    return File.createTempFile("JPEG_${name}_", ".jpg", storageDir)
+}
+
+fun AppCompatImageView.loadImage(
+        url: Any?,
+        isCircle: Boolean = false,
+        func: RequestOptions.() -> Unit
+) {
+    url?.let { image ->
+        val options =
+                RequestOptions().placeholder(R.mipmap.ic_launcher_round)
+                        .error(R.mipmap.ic_launcher_round)
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .apply(func)
+        val requestBuilder = Glide.with(context).load(image).apply(options)
+        if (isCircle) {
+            requestBuilder.apply(options.circleCrop())
+        }
+        requestBuilder.into(this)
+    }
+}

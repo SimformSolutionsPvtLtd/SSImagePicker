@@ -29,20 +29,14 @@ class BottomSheetFragmentForUploadImageOptions(@LayoutRes val layoutId: Int = R.
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.setOnShowListener { dialog ->
             val bottomSheetDialog = dialog as BottomSheetDialog
-            val bottomSheetInternal =
-                    bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as View
+            val bottomSheetInternal = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as View
             BottomSheetBehavior.from(bottomSheetInternal).state = BottomSheetBehavior.STATE_EXPANDED
         }
         return initializeDataBinding()?.root
     }
 
     private fun initializeDataBinding(): BottomsheetLayoutUploadImageOptionsBinding? {
-        return DataBindingUtil.inflate<BottomsheetLayoutUploadImageOptionsBinding>(
-                LayoutInflater.from(requireContext()),
-                layoutId,
-                null,
-                false
-        ).apply {
+        return DataBindingUtil.inflate<BottomsheetLayoutUploadImageOptionsBinding>(LayoutInflater.from(requireContext()), layoutId, null, false).apply {
             lifecycleOwner = this@BottomSheetFragmentForUploadImageOptions
             clickHandler = this@BottomSheetFragmentForUploadImageOptions
             executePendingBindings()
@@ -51,9 +45,7 @@ class BottomSheetFragmentForUploadImageOptions(@LayoutRes val layoutId: Int = R.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -64,7 +56,6 @@ class BottomSheetFragmentForUploadImageOptions(@LayoutRes val layoutId: Int = R.
                     "$context"
             )
         }
-
     }
 
     override fun onDetach() {

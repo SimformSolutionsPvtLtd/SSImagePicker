@@ -23,31 +23,15 @@ import java.util.Locale
 
 // Code for upload Profile Picture
 fun checkPermissionForUploadImage(context: Context): Boolean {
-    return ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-    ) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED
+    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
 }
 
 fun askPermissionForUploadImage(activity: Activity) {
 
-    ActivityCompat.requestPermissions(
-            activity,
-            arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA
-            ),
-            PERMISSION_REQUEST_CODE
-    )
+    ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
+            PERMISSION_REQUEST_CODE)
 }
 
 fun Activity.dispatchTakePictureIntent(): String? {
@@ -57,18 +41,11 @@ fun Activity.dispatchTakePictureIntent(): String? {
             takePictureIntent.resolveActivity(this)?.also {
                 // Create the File where the photo should go
                 try {
-                    val timeStamp: String =
-                            SimpleDateFormat(
-                                    dateFormatForTakePicture,
-                                    Locale.getDefault()
-                            ).format(Date())
+                    val timeStamp: String = SimpleDateFormat(dateFormatForTakePicture, Locale.getDefault()).format(Date())
                     createImageFile(timeStamp).apply {
                         // Continue only if the File was successfully created
                         also { photo ->
-                            val photoURI: Uri = FileProvider.getUriForFile(
-                                    this@dispatchTakePictureIntent,
-                                    "${BuildConfig.APPLICATION_ID}.provider", photo
-                            )
+                            val photoURI: Uri = FileProvider.getUriForFile(this@dispatchTakePictureIntent, "${BuildConfig.APPLICATION_ID}.provider", photo)
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                             startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
                         }
@@ -90,18 +67,13 @@ fun Activity.createImageFile(name: String = ""): File {
     return File.createTempFile("JPEG_${name}_", ".jpg", storageDir)
 }
 
-fun AppCompatImageView.loadImage(
-        url: Any?,
-        isCircle: Boolean = false,
-        func: RequestOptions.() -> Unit
-) {
+fun AppCompatImageView.loadImage(url: Any?, isCircle: Boolean = false, func: RequestOptions.() -> Unit) {
     url?.let { image ->
-        val options =
-                RequestOptions().placeholder(R.mipmap.ic_launcher_round)
-                        .error(R.mipmap.ic_launcher_round)
-                        .skipMemoryCache(true)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .apply(func)
+        val options = RequestOptions().placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .apply(func)
         val requestBuilder = Glide.with(context).load(image).apply(options)
         if (isCircle) {
             requestBuilder.apply(options.circleCrop())

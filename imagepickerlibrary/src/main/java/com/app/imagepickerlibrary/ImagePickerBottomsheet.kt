@@ -1,4 +1,4 @@
-package com.ssimagepicker.app
+package com.app.imagepickerlibrary
 
 import android.app.Dialog
 import android.content.Context
@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import com.app.imagepickerlibrary.databinding.BottomsheetLayoutUploadImageOptionsBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.ssimagepicker.app.databinding.BottomsheetLayoutUploadImageOptionsBinding
 
-class BottomSheetFragmentForUploadImageOptions(@LayoutRes val layoutId: Int = R.layout.bottomsheet_layout_upload_image_options) :
-        BottomSheetDialogFragment(), View.OnClickListener {
+class ImagePickerBottomsheet(@LayoutRes val layoutId: Int = R.layout.bottomsheet_layout_upload_image_options) :
+    BottomSheetDialogFragment(), View.OnClickListener {
 
     private var mListener: ItemClickListener? = null
 
@@ -37,8 +37,8 @@ class BottomSheetFragmentForUploadImageOptions(@LayoutRes val layoutId: Int = R.
 
     private fun initializeDataBinding(): BottomsheetLayoutUploadImageOptionsBinding? {
         return DataBindingUtil.inflate<BottomsheetLayoutUploadImageOptionsBinding>(LayoutInflater.from(requireContext()), layoutId, null, false).apply {
-            lifecycleOwner = this@BottomSheetFragmentForUploadImageOptions
-            clickHandler = this@BottomSheetFragmentForUploadImageOptions
+            lifecycleOwner = this@ImagePickerBottomsheet
+            clickHandler = this@ImagePickerBottomsheet
             executePendingBindings()
         }
     }
@@ -53,7 +53,7 @@ class BottomSheetFragmentForUploadImageOptions(@LayoutRes val layoutId: Int = R.
             context
         } else {
             throw RuntimeException(
-                    "$context"
+                "$context"
             )
         }
     }

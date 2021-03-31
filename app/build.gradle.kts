@@ -126,4 +126,6 @@ dependencies {
     // Glide
     implementation(Dependencies.GLIDE)
     kapt(Dependencies.GLIDE_COMPILER)
+
+    implementation(project(":imagepickerlibrary"))
 }

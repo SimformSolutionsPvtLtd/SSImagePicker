@@ -1,82 +1,61 @@
 package com.ssimagepicker.app
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.View
-import java.io.IOException
+import com.app.imagepickerlibrary.ImagePickerActivityClass
+import com.app.imagepickerlibrary.ImagePickerBottomsheet
+import com.app.imagepickerlibrary.bottomSheetActionCamera
+import com.app.imagepickerlibrary.bottomSheetActionFragment
+import com.app.imagepickerlibrary.bottomSheetActionGallary
+import com.app.imagepickerlibrary.loadImage
 import kotlinx.android.synthetic.main.activity_main.imageViewEditProfile
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, BottomSheetFragmentForUploadImageOptions.ItemClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.onResult {
+
+    private lateinit var imagePicker: ImagePickerActivityClass
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        imagePicker = ImagePickerActivityClass(this,this,this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imageViewEditProfile, R.id.edit_logo -> {
-                checkForPermission()
+                val fragment = ImagePickerBottomsheet()
+                fragment.show(supportFragmentManager, bottomSheetActionFragment)
             }
-        }
-    }
-
-    private fun checkForPermission() {
-        if (checkPermissionForUploadImage(this)) {
-            val fragment = BottomSheetFragmentForUploadImageOptions()
-            fragment.show(supportFragmentManager, bottomSheetActionFragment)
-        } else {
-            askPermissionForUploadImage(this)
         }
     }
 
     override fun onItemClick(item: String?) {
         when {
             item.toString() == bottomSheetActionCamera -> {
-                takePhotoFromCamera()
+                imagePicker.takePhotoFromCamera()
             }
             item.toString() == bottomSheetActionGallary -> {
-                choosePhotoFromGallary()
+                imagePicker.choosePhotoFromGallary()
             }
         }
     }
 
-    private fun takePhotoFromCamera() {
-        dispatchTakePictureIntent().apply {
-            this?.let {
-                imageFilePath = it
-                imageViewEditProfile.loadImage(imageFilePath, isCircle = true) {}
-            }
-        }
-    }
-
-    private fun choosePhotoFromGallary() {
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(galleryIntent, REQUEST_GALLERY)
+    @SuppressLint("MissingSuperCall")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+    ) {
+        imagePicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_CANCELED) {
-            return
-        }
-        if (requestCode == REQUEST_GALLERY) {
-            if (data != null) {
-                val contentURI = data.data
-                try {
-                    contentURI?.let {
-                        imageFilePath = it.toString()
-                        imageViewEditProfile.loadImage(imageFilePath, isCircle = true) {}
-                    }
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
+       imagePicker.onActivityResult(requestCode, resultCode, data)
+    }
 
-        }
+    override fun returnString(item: Uri?) {
+        imageViewEditProfile.loadImage(item, isCircle = true){}
     }
 
 }

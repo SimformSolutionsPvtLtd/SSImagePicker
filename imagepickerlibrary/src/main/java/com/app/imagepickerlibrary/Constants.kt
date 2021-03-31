@@ -1,4 +1,4 @@
-package com.ssimagepicker.app
+package com.app.imagepickerlibrary
 
 const val bottomSheetActionFragment = "BottomSheetFragment"
 var dateFormatForTakePicture = "yyyyMMdd_HHmmss"

@@ -1,0 +1,3 @@
+include ':imagepickerlibrary'
+include ':app'
+rootProject.name = "SSImagePicker"

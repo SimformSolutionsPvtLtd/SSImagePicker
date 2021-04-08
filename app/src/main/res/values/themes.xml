@@ -1,0 +1,31 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.SSImagePicker" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="TextViewImageOption">
+        <item name="android:textColor">@color/design_default_color_on_secondary</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/_14sdp</item>
+    </style>
+
+    <style name="RoundBottomSheetDialogThemeWhite" parent="RoundBaseBottomSheetDialogWhite" />
+
+    <style name="RoundBaseBottomSheetDialogWhite" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/RoundBottomSheetWhite</item>
+    </style>
+
+    <style name="RoundBottomSheetWhite" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/drawable_bottom_sheet_dialog</item>
+    </style>
+
+</resources>

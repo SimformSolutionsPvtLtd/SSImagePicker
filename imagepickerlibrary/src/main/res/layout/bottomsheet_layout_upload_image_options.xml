@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="clickHandler"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_4sdp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewChooseCamera"
+            style="@style/TextViewImageOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_camera"
+            android:onClick="@{clickHandler::onClick}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/dividerTwo"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/textViewChooseCamera" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewChooseGallery"
+            style="@style/TextViewImageOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{clickHandler::onClick}"
+            android:text="@string/str_gallery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerTwo" />
+
+        <View
+            android:id="@+id/dividerThree"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/textViewChooseGallery" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewChooseCancel"
+            style="@style/TextViewImageOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_12sdp"
+            android:onClick="@{clickHandler::onClick}"
+            android:text="@string/str_cancel"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerThree" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

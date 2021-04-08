@@ -8,7 +8,7 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 You can easily select image from camera and gallery and upload it wherever you want. I have created this library to simplify pick or capture image feature.
 
-# Features : 
+# Features :
 
 * Capture Image Using Camera
 * Pick Image From Gallery
@@ -20,9 +20,9 @@ You can easily select image from camera and gallery and upload it wherever you w
 
 # 🎬Preview
 
-| Capture Image Using Camera | Pick Image From Gallery |
-|--|--|
-| ![](Camera.gif) | ![](Gallery.gif) |
+| Capture Image Using Camera | Pick Image From Gallery | Customize Bottomsheet |
+|--|--|--|
+| ![](Camera.gif) | ![](Gallery.gif) | ![](cutomize_bottomsheet.gif) |
 
 # How it works:
 
@@ -81,6 +81,50 @@ You can easily select image from camera and gallery and upload it wherever you w
             **Here You Will Get Your Image Result In Uri Format**
         }
 ```
+# To customize bottomsheet:
+* To customize bottomsheet, first override below method in your activity.
+```
+     override fun doCustomisations(fragment: ImagePickerBottomsheet) {
+         Do customizations here...
+     }
+```
+* To customize text of buttons in Bottomsheet.
+```
+     fragment.setButtonText("Select Camera","Select Gallery","Remove")
+```
+* To only change text color of buttons in Bottomsheet.
+```
+     fragment.setButtonColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+```
+* To customize multiple values of buttons (Text color, size, font family, padding), you need to create a style in your style.xml.
+```
+     fragment.setTextAppearance(R.style.fontForNotificationLandingPage)
+```
+In styles.xml (Note: parent must be "Widget.AppCompat.TextView")
+```
+     <style name="fontForNotificationLandingPage" parent="Widget.AppCompat.TextView">
+         <item name="android:fontFamily">@font/poppins_medium</item>
+         <item name="android:textColor">@color/white</item>
+         <item name="android:textSize">@dimen/_18ssp</item>
+     </style>
+```
+Note: if setTextAppearance and setButtonColors both are used than whichever function is last called will override other one.
+* To change bottomsheet's background (shape, color).
+```
+     fragment.setBottomSheetBackgroundStyle(R.drawable.drawable_bottom_sheet_dialog)
+```
+You need to make one drawable file of type shape.
+```
+     <shape xmlns:android="http://schemas.android.com/apk/res/android"
+         android:shape="rectangle">
+         <corners
+             android:topLeftRadius="@dimen/_25sdp"
+             android:topRightRadius="@dimen/_25sdp" />
+         <padding android:top="@dimen/_5sdp" />
+         <solid android:color="@color/colorPrimary" />
+     </shape>
+```
+
 ## Find this library useful? :heart:
 Support it by joining __[stargazers](https://github.com/SimformSolutionsPvtLtd/SSImagePicker/stargazers)__ for this repository. :star:
 

@@ -28,4 +28,10 @@
         <item name="android:background">@drawable/drawable_bottom_sheet_dialog</item>
     </style>
 
+    <style name="fontForNotificationLandingPage" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_18ssp</item>
+    </style>
+
 </resources>

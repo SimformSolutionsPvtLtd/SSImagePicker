@@ -6,7 +6,6 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import com.app.imagepickerlibrary.ImagePickerActivityClass
 import com.app.imagepickerlibrary.ImagePickerBottomsheet
@@ -16,7 +15,7 @@ import com.app.imagepickerlibrary.bottomSheetActionGallary
 import com.app.imagepickerlibrary.loadImage
 import kotlinx.android.synthetic.main.activity_main.imageViewEditProfile
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.onResult {
+class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.OnResult {
 
     private lateinit var imagePicker: ImagePickerActivityClass
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBotto
                 imagePicker.takePhotoFromCamera()
             }
             item.toString() == bottomSheetActionGallary -> {
-                imagePicker.choosePhotoFromGallary()
+                imagePicker.choosePhotoFromGallery()
             }
         }
     }

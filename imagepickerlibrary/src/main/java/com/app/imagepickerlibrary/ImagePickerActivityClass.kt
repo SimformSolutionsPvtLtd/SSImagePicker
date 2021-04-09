@@ -2,27 +2,26 @@ package com.app.imagepickerlibrary
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.app.ActivityCompat.startActivityForResult
-import java.io.IOException
+import androidx.core.content.ContextCompat
+import com.yalantis.ucrop.UCrop
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Suppress("DEPRECATION")
-class ImagePickerActivityClass(private val context: Context,private val activity: Activity, private val callback: onResult) {
+class ImagePickerActivityClass(private val context: Context, private val activity: Activity, private val callback: OnResult) {
 
     private var functionSelection = FunctionProvider.NONE
     private var fileUri: Uri? = null
 
-    fun checkForPermission(): Boolean {
+    private fun checkForPermission(): Boolean {
         return checkPermissionForUploadImage(context)
     }
 
@@ -30,19 +29,17 @@ class ImagePickerActivityClass(private val context: Context,private val activity
         functionSelection = FunctionProvider.CAMERA
         if (checkForPermission()) {
             fileUri = activity.dispatchTakePictureIntent()
-        }
-        else {
+        } else {
             askPermissionForUploadImage(activity)
         }
     }
 
-    fun choosePhotoFromGallary() {
+    fun choosePhotoFromGallery() {
         functionSelection = FunctionProvider.GALLERY
         if (checkForPermission()) {
             val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             activity.startActivityForResult(galleryIntent, REQUEST_GALLERY)
-        }
-        else {
+        } else {
             askPermissionForUploadImage(activity)
         }
     }
@@ -51,24 +48,40 @@ class ImagePickerActivityClass(private val context: Context,private val activity
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    when(functionSelection) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    when (functionSelection) {
                         FunctionProvider.CAMERA -> {
                             takePhotoFromCamera()
                         }
                         FunctionProvider.GALLERY -> {
-                            choosePhotoFromGallary()
+                            choosePhotoFromGallery()
                         }
                         else -> {
                             //
                         }
                     }
                 } else {
-                    Toast.makeText(context, "Important Permission Required..", Toast.LENGTH_SHORT)
-                            .show()
+                    Toast.makeText(context, "Important Permission Required..", Toast.LENGTH_SHORT).show()
                 }
                 return
             }
+        }
+    }
+
+    private fun startCrop(imageUri: Uri?) {
+        val imageFile = activity.createImageFile(SimpleDateFormat(dateFormatForTakePicture, Locale.getDefault()).format(Date()))
+        imageUri?.let {
+            UCrop.of(imageUri, Uri.fromFile(imageFile)).withOptions(getUCropOptions()).start(activity)
+        }
+    }
+
+    /* Applies app colors to Crop activity UI. */
+    private fun getUCropOptions(): UCrop.Options {
+        return UCrop.Options().apply {
+            setToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimary))
+            setStatusBarColor(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
+            setToolbarWidgetColor(ContextCompat.getColor(activity, R.color.design_default_color_on_primary))
+            setActiveControlsWidgetColor(ContextCompat.getColor(activity, R.color.colorAccent))
         }
     }
 
@@ -79,18 +92,20 @@ class ImagePickerActivityClass(private val context: Context,private val activity
         }
         if (requestCode == REQUEST_GALLERY) {
             if (data != null) {
-                callback.returnString(data.data)
+                startCrop(data.data)
             }
         }
         if (requestCode == REQUEST_TAKE_PHOTO) {
             if (fileUri != null) {
-                callback.returnString(fileUri)
+                startCrop(fileUri)
             }
+        }
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            callback.returnString(data?.let { intent -> UCrop.getOutput(intent) })
         }
     }
 
-    interface onResult {
+    interface OnResult {
         fun returnString(item: Uri?)
     }
-
 }

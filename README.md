@@ -16,7 +16,13 @@ You can easily select image from camera and gallery and upload it wherever you w
 * ImagePicker Bottomsheet 
 * Retrieve Image Result In Uri Format
 * Crop Image (Coming Soon...)
-* Customise Image Picker BottomSheet (Coming Soon...)
+* Customize Image Picker BottomSheet Options Like :
+     - Customize only text of buttons
+     - Customize only text color of buttons
+     - Customize multiple values of buttons like:
+          - Text color, size, font family, padding using your own styles.xml
+     - Customize bottomsheet's background shape and color
+
 
 # 🎬Preview
 
@@ -26,7 +32,9 @@ You can easily select image from camera and gallery and upload it wherever you w
 
 # How it works:
 
-1. Add it in your root build.gradle at the end of repositories:
+1. Gradle Dependency
+
+- Add the JitPack repository to your project's build.gradle file
 
 ```
     allprojects {
@@ -36,20 +44,20 @@ You can easily select image from camera and gallery and upload it wherever you w
     		}
     	}
 ```
-2. Add the dependency in your app's build.gradle file
+- Add the dependency in your app's build.gradle file
 
 ```
     dependencies {
     	        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:-SNAPSHOT'
     	}
 ```
-3. Use ImagePicker Bottomsheet To Choose Option For Pick Image From Gallery Or Camera
+2. Use ImagePicker Bottomsheet To Choose Option For Pick Image From Gallery Or Camera
 
 ```
     val fragment = ImagePickerBottomsheet()
     fragment.show(FragmentManager, String) 
 ```
-4. Allow Camera And Storage Permission To Pick Image And Send Your onRequestPermissionsResult To ImagePickerActivity
+3. Allow Camera And Storage Permission To Pick Image And Send Your onRequestPermissionsResult To ImagePickerActivity
 
 ```
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) 
@@ -58,23 +66,23 @@ You can easily select image from camera and gallery and upload it wherever you w
     }
 ```
 
-5. Call ImagePickerActivityClass To Handle Camera, Gallery Click And Permission Result. Pass Context, Activity And Request Permission Result Callback:
+4. Call ImagePickerActivityClass To Handle Camera, Gallery Click And Permission Result. Pass Context, Activity And Request Permission Result Callback:
 
 ```
     var imagePicker = ImagePickerActivityClass(Context,Activity,onResult_Callback)
 ```
-6. To Capture Image From Camera Use takePhotoFromCamera()
+5. To Capture Image From Camera Use takePhotoFromCamera()
 
 ```
     imagePicker.takePhotoFromCamera()
 ```
-7. To Pick Image From Gallery Use choosePhotoFromGallary()
+6. To Pick Image From Gallery Use choosePhotoFromGallary()
 
 ```
     imagePicker.choosePhotoFromGallary()
 ```
 
-8. You Will Get Image Result In Uri Format In returnString() And Customize It To Upload 
+7. You Will Get Image Result In Uri Format In returnString() And Customize It To Upload 
 
 ```
      override fun returnString(item: Uri?) {

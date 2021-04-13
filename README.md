@@ -42,7 +42,7 @@ You can easily select image from camera and gallery and upload it wherever you w
 
 - Add the JitPack repository to your project's build.gradle file
 
-```
+```groovy
     allprojects {
     		repositories {
     			...
@@ -52,20 +52,20 @@ You can easily select image from camera and gallery and upload it wherever you w
 ```
 - Add the dependency in your app's build.gradle file
 
-```
+```groovy
     dependencies {
     	        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:-SNAPSHOT'
     	}
 ```
 2. Use ImagePicker Bottomsheet To Choose Option For Pick Image From Gallery Or Camera
 
-```
+```kotlin
     val fragment = ImagePickerBottomsheet()
     fragment.show(FragmentManager, String) 
 ```
 3. Allow Camera And Storage Permission To Pick Image And Send Your onRequestPermissionsResult To ImagePickerActivity
 
-```
+```kotlin
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) 
     {
          imagePicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -74,48 +74,48 @@ You can easily select image from camera and gallery and upload it wherever you w
 
 4. Call ImagePickerActivityClass To Handle Camera, Gallery Click And Permission Result. Pass Context, Activity And Request Permission Result Callback:
 
-```
-    var imagePicker = ImagePickerActivityClass(Context,Activity,onResult_Callback)
+```kotlin
+    var imagePicker = ImagePickerActivityClass(context,activity,onResult_Callback)
 ```
 5. To Capture Image From Camera Use takePhotoFromCamera()
 
-```
+```kotlin
     imagePicker.takePhotoFromCamera()
 ```
 6. To Pick Image From Gallery Use choosePhotoFromGallary()
 
-```
+```kotlin
     imagePicker.choosePhotoFromGallary()
 ```
 
 7. You Will Get Image Result In Uri Format In returnString() And Customize It To Upload 
 
-```
+```kotlin
      override fun returnString(item: Uri?) {
             **Here You Will Get Your Image Result In Uri Format**
         }
 ```
 # To customize bottomsheet:
 * To customize bottomsheet, first override below method in your activity.
-```
+```kotlin
      override fun doCustomisations(fragment: ImagePickerBottomsheet) {
-         Do customizations here...
+         //Do customizations here...
      }
 ```
 * To customize text of buttons in Bottomsheet.
-```
+```kotlin
      fragment.setButtonText("Select Camera","Select Gallery","Remove")
 ```
 * To only change text color of buttons in Bottomsheet.
-```
+```kotlin
      fragment.setButtonColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
 ```
 * To customize multiple values of buttons (Text color, size, font family, padding), you need to create a style in your style.xml.
-```
+```kotlin
      fragment.setTextAppearance(R.style.fontForNotificationLandingPage)
 ```
 In styles.xml (Note: parent must be "Widget.AppCompat.TextView")
-```
+```xml
      <style name="fontForNotificationLandingPage" parent="Widget.AppCompat.TextView">
          <item name="android:fontFamily">@font/poppins_medium</item>
          <item name="android:textColor">@color/white</item>
@@ -124,11 +124,11 @@ In styles.xml (Note: parent must be "Widget.AppCompat.TextView")
 ```
 Note: if setTextAppearance and setButtonColors both are used than whichever function is last called will override other one.
 * To change bottomsheet's background (shape, color).
-```
+```kotlin
      fragment.setBottomSheetBackgroundStyle(R.drawable.drawable_bottom_sheet_dialog)
 ```
 You need to make one drawable file of type shape.
-```
+```xml
      <shape xmlns:android="http://schemas.android.com/apk/res/android"
          android:shape="rectangle">
          <corners

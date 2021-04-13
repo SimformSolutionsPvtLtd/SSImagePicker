@@ -15,7 +15,9 @@ You can easily select image from camera and gallery and upload it wherever you w
 * Handle Runtime Pemission For Storage And Camera
 * ImagePicker Bottomsheet 
 * Retrieve Image Result In Uri Format
-* Crop Image (Coming Soon...)
+* Crop Image
+* Rotate Image
+* Image Zoom In, Zoom Out
 * Customize Image Picker BottomSheet Options Like :
      - Customize only text of buttons
      - Customize only text color of buttons
@@ -29,6 +31,10 @@ You can easily select image from camera and gallery and upload it wherever you w
 | Capture Image Using Camera | Pick Image From Gallery | Customize Bottomsheet |
 |--|--|--|
 | ![](Camera.gif) | ![](Gallery.gif) | ![](cutomize_bottomsheet.gif) |
+
+| Crop Image | Rotate Image | Image Zoom in, Zoom out |
+|--|--|--|
+| ![](crop_image.gif) | ![](Rotate.gif) | ![](Zoom%20in%20Zoom%20Out.gif)
 
 # How it works:
 
@@ -132,6 +138,8 @@ You need to make one drawable file of type shape.
          <solid android:color="@color/colorPrimary" />
      </shape>
 ```
+# Other Library used:
+* __[UCrop Library](https://github.com/Yalantis/uCrop)__
 
 ## Find this library useful? :heart:
 Support it by joining __[stargazers](https://github.com/SimformSolutionsPvtLtd/SSImagePicker/stargazers)__ for this repository. :star:

@@ -19,8 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class ImagePickerBottomsheet(@LayoutRes val layoutId: Int = R.layout.bottomsheet_layout_upload_image_options) :
-        BottomSheetDialogFragment(), View.OnClickListener {
+class ImagePickerBottomsheet(@LayoutRes val layoutId: Int = R.layout.bottomsheet_layout_upload_image_options) : BottomSheetDialogFragment(), View.OnClickListener {
 
     private var mListener: ItemClickListener? = null
     lateinit var binding: BottomsheetLayoutUploadImageOptionsBinding

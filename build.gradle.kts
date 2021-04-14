@@ -7,6 +7,8 @@ buildscript {
     dependencies {
         classpath(ClassPaths.ANDROID_GRADLE)
         classpath(ClassPaths.KOTLIN_GRADLE)
+        classpath(ClassPaths.GITHUB_DCENDENTS)
+        classpath(ClassPaths.BINTRAY)
     }
 }
 

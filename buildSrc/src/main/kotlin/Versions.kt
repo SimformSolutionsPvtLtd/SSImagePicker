@@ -16,6 +16,8 @@ object Versions {
     const val JUNIT = "4.13"
     const val JUNIT_EXT = "1.1.1"
     const val KOTLIN_GRADLE = "1.4.21"
+    const val GITHUB_DCENDENTS = "2.1"
+    const val BINTRAY = "1.8.0"
     const val LIFECYCLE = "2.2.0"
     const val MATERIAL = "1.2.0"
     const val TEST_RUNNER = "1.1.1"

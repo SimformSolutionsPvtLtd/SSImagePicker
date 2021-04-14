@@ -54,7 +54,7 @@ You can easily select image from camera and gallery and upload it wherever you w
 
 ```groovy
     dependencies {
-    	        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:-SNAPSHOT'
+    	        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.0'
     	}
 ```
 2. Use ImagePicker Bottomsheet To Choose Option For Pick Image From Gallery Or Camera

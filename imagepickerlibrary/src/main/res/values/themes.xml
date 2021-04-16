@@ -17,15 +17,17 @@
         <item name="android:padding">@dimen/_14sdp</item>
     </style>
 
-    <style name="RoundBottomSheetDialogThemeWhite" parent="RoundBaseBottomSheetDialogWhite" />
-
-    <style name="RoundBaseBottomSheetDialogWhite" parent="@style/Theme.Design.Light.BottomSheetDialog">
+    <style name="roundBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/drawable_bottom_sheet_dialog</item>
         <item name="android:windowIsFloating">false</item>
-        <item name="bottomSheetStyle">@style/RoundBottomSheetWhite</item>
     </style>
 
-    <style name="RoundBottomSheetWhite" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/drawable_bottom_sheet_dialog</item>
+    <style name="roundBaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="bottomSheetStyle">@style/roundBottomSheet</item>
     </style>
 
 </resources>

@@ -50,11 +50,30 @@ You can easily select image from camera and gallery and upload it wherever you w
     		}
     	}
 ```
+- Add plugin in your app's build.gradle file
+
+```groovy
+plugins {
+    ...
+    id 'kotlin-kapt'
+} 
+```
+- Add buildFeature in your app's build.gradle file
+
+```groovy
+android {
+    ...
+    buildFeatures {
+        dataBinding = true
+    }
+}
+```
+
 - Add the dependency in your app's build.gradle file
 
 ```groovy
     dependencies {
-    	        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.0'
+    	        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.4'
     	}
 ```
 2. Use ImagePicker Bottomsheet To Choose Option For Pick Image From Gallery Or Camera
@@ -63,7 +82,22 @@ You can easily select image from camera and gallery and upload it wherever you w
     val fragment = ImagePickerBottomsheet()
     fragment.show(FragmentManager, String) 
 ```
-3. Allow Camera And Storage Permission To Pick Image And Send Your onRequestPermissionsResult To ImagePickerActivity
+3. Call ImagePickerActivityClass in your onCreate() To Handle Camera, Gallery Click And Permission Result. Pass Context, Activity And Request Permission Result Callback:
+
+```kotlin
+    var imagePicker = ImagePickerActivityClass(context,activity,onResult_Callback)
+```
+
+4. To Enable All Features(crop,rotate,zoomIn,zoomOut) call cropOptions(isAllCropFeaturesRequired: Boolean) And Pass true. By Default It's Set To False And Provides Only Crop Feature.
+
+```kotlin
+    override fun onCreate(savedInstanceState: Bundle?) {
+            ...
+            imagePicker.cropOptions(true)
+        }
+```
+
+5. Allow Camera And Storage Permission To Pick Image And Send Your onRequestPermissionsResult To ImagePickerActivity
 
 ```kotlin
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) 
@@ -71,30 +105,38 @@ You can easily select image from camera and gallery and upload it wherever you w
          imagePicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 ```
-
-4. Call ImagePickerActivityClass To Handle Camera, Gallery Click And Permission Result. Pass Context, Activity And Request Permission Result Callback:
-
-```kotlin
-    var imagePicker = ImagePickerActivityClass(context,activity,onResult_Callback)
-```
-5. To Capture Image From Camera Use takePhotoFromCamera()
+6. To Capture Image From Camera Use takePhotoFromCamera()
 
 ```kotlin
     imagePicker.takePhotoFromCamera()
 ```
-6. To Pick Image From Gallery Use choosePhotoFromGallary()
+7. To Pick Image From Gallery Use choosePhotoFromGallary()
 
 ```kotlin
     imagePicker.choosePhotoFromGallary()
 ```
+8. Send Your onActivityResult to ImagePickerActivity
 
-7. You Will Get Image Result In Uri Format In returnString() And Customize It To Upload 
+```kotlin
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        imagePicker.onActivityResult(requestCode, resultCode, data)
+    }
+```
+9. You Will Get Image Result In Uri Format In returnString() And Customize It To Upload 
 
 ```kotlin
      override fun returnString(item: Uri?) {
             **Here You Will Get Your Image Result In Uri Format**
         }
 ```
+10. You can load image in your imageview using loadImage() func. (If you want to apply circleCrop() then pass isCircle = true, by default it's false)
+
+```kotlin
+     override fun returnString(item: Uri?) {
+             imageViewEditProfile.loadImage(item, isCircle = true) {}
+         }
+```
+
 # To customize bottomsheet:
 * To customize bottomsheet, first override below method in your activity.
 ```kotlin

@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBotto
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         imagePicker = ImagePickerActivityClass(this, this, this)
+        //set to true if you want all features(crop,rotate,zoomIn,zoomOut)
+        //by Default it's value is set to false (only crop feature is enabled)
+        imagePicker.cropOptions(true)
     }
 
     override fun onClick(v: View?) {
@@ -54,7 +57,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBotto
             setButtonColors(galleryButtonColor = ContextCompat.getColor(requireContext(), R.color.white))
 
             //For more customization make a style in your styles xml and pass it to this method. (This will override above method result).
-            setTextAppearance(R.style.fontForNotificationLandingPage)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                setTextAppearance(R.style.fontForNotificationLandingPage)
+            }
 
             //To customize bottomsheet style
             setBottomSheetBackgroundStyle(R.drawable.drawable_bottom_sheet_dialog)

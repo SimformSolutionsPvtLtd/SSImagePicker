@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.yalantis.ucrop.UCrop
+import com.yalantis.ucrop.UCropActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -20,6 +21,7 @@ class ImagePickerActivityClass(private val context: Context, private val activit
 
     private var functionSelection = FunctionProvider.NONE
     private var fileUri: Uri? = null
+    private var isCropAllFeaturesRequired: Boolean? = false
 
     private fun checkForPermission(): Boolean {
         return checkPermissionForUploadImage(context)
@@ -75,9 +77,16 @@ class ImagePickerActivityClass(private val context: Context, private val activit
         }
     }
 
+    fun cropOptions(isAllCropFeaturesRequired: Boolean) {
+        isCropAllFeaturesRequired = isAllCropFeaturesRequired
+    }
+
     /* Applies app colors to Crop activity UI. */
     private fun getUCropOptions(): UCrop.Options {
         return UCrop.Options().apply {
+            if (isCropAllFeaturesRequired != true) {
+                setHideBottomControls(true)
+            }
             setToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimary))
             setStatusBarColor(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
             setToolbarWidgetColor(ContextCompat.getColor(activity, R.color.design_default_color_on_primary))

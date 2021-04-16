@@ -25,7 +25,7 @@ class ImagePickerBottomsheet(@LayoutRes val layoutId: Int = R.layout.bottomsheet
     lateinit var binding: BottomsheetLayoutUploadImageOptionsBinding
 
     override fun getTheme(): Int {
-        return R.style.RoundBottomSheetDialogThemeWhite
+        return R.style.roundBaseBottomSheetDialog
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

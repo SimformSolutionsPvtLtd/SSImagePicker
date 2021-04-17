@@ -6,7 +6,7 @@
 
 Easy to use and configurable library to **Pick an image from the Gallery or Capture image using Camera**.
 
-You can easily select image from camera and gallery and upload it wherever you want. I have created this library to simplify pick or capture image feature.
+You can easily select image from camera and gallery and upload it wherever you want. We have created this library to simplify pick or capture image feature.
 
 # Features :
 

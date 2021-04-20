@@ -6,13 +6,16 @@
 
 Easy to use and configurable library to **Pick an image from the Gallery or Capture image using Camera**.
 
-You can easily select image from camera and gallery and upload it wherever you want. We have created this library to simplify pick or capture image feature.
+* You can easily select image from camera and gallery and upload it wherever you want. We have created this library to simplify pick or capture image feature.
+* Handled permissions for camera and gallery, also supports scoped storage.
+* Returns contentUri of selected image.
+* Easy to use and supports all major devices.
 
 # Features :
 
 * Capture Image Using Camera
 * Pick Image From Gallery
-* Handle Runtime Pemission For Storage And Camera
+* Handle Runtime Permission For Storage And Camera
 * ImagePicker Bottomsheet 
 * Retrieve Image Result In Uri Format
 * Crop Image
@@ -30,11 +33,11 @@ You can easily select image from camera and gallery and upload it wherever you w
 
 | Capture Image Using Camera | Pick Image From Gallery | Customize Bottomsheet |
 |--|--|--|
-| ![](Camera.gif) | ![](Gallery.gif) | ![](cutomize_bottomsheet.gif) |
+| ![](camera.gif) | ![](gallery.gif) | ![](bottomsheetCustomization.gif) |
 
 | Crop Image | Rotate Image | Image Zoom in, Zoom out |
 |--|--|--|
-| ![](crop_image.gif) | ![](Rotate.gif) | ![](Zoom%20in%20Zoom%20Out.gif)
+| ![](crop.gif) | ![](rotate.gif) | ![](zoomInzoomOut.gif)
 
 # How it works:
 

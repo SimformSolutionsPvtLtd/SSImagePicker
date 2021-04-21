@@ -33,11 +33,11 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 | Capture Image Using Camera | Pick Image From Gallery | Customize Bottomsheet |
 |--|--|--|
-| ![](camera.gif) | ![](gallery.gif) | ![](bottomsheetCustomization.gif) |
+| ![](camera_pic.gif) | ![](gallery_pic.gif) | ![](custom_bottomsheet.gif) |
 
 | Crop Image | Rotate Image | Image Zoom in, Zoom out |
 |--|--|--|
-| ![](crop.gif) | ![](rotate.gif) | ![](zoomInzoomOut.gif)
+| ![](crop_pic.gif) | ![](rotate_pic.gif) | ![](zoom_pic.gif)
 
 # How it works:
 
@@ -47,37 +47,37 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 ```groovy
     allprojects {
-    		repositories {
-    			...
-    			maven { url 'https://jitpack.io' }
-    		}
-    	}
+        repositories {
+            ...
+    	    maven { url 'https://jitpack.io' }
+        }
+    }
 ```
 - Add plugin in your app's build.gradle file
 
 ```groovy
-plugins {
-    ...
-    id 'kotlin-kapt'
-} 
+    plugins {
+        ...
+        id 'kotlin-kapt'
+    } 
 ```
 - Add buildFeature in your app's build.gradle file
 
 ```groovy
-android {
-    ...
-    buildFeatures {
-        dataBinding = true
+    android {
+        ...
+        buildFeatures {
+            dataBinding = true
+        }
     }
-}
 ```
 
 - Add the dependency in your app's build.gradle file
 
 ```groovy
     dependencies {
-    	        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.4'
-    	}
+        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.4'
+    }
 ```
 2. Use ImagePicker Bottomsheet To Choose Option For Pick Image From Gallery Or Camera
 
@@ -95,17 +95,16 @@ android {
 
 ```kotlin
     override fun onCreate(savedInstanceState: Bundle?) {
-            ...
-            imagePicker.cropOptions(true)
-        }
+        ...
+        imagePicker.cropOptions(true)
+    }
 ```
 
 5. Allow Camera And Storage Permission To Pick Image And Send Your onRequestPermissionsResult To ImagePickerActivity
 
 ```kotlin
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) 
-    {
-         imagePicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        imagePicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 ```
 6. To Capture Image From Camera Use takePhotoFromCamera()
@@ -128,60 +127,60 @@ android {
 9. You Will Get Image Result In Uri Format In returnString() And Customize It To Upload 
 
 ```kotlin
-     override fun returnString(item: Uri?) {
-            **Here You Will Get Your Image Result In Uri Format**
-        }
+    override fun returnString(item: Uri?) {
+        **Here You Will Get Your Image Result In Uri Format**
+    }
 ```
 10. You can load image in your imageview using loadImage() func. (If you want to apply circleCrop() then pass isCircle = true, by default it's false)
 
 ```kotlin
-     override fun returnString(item: Uri?) {
-             imageViewEditProfile.loadImage(item, isCircle = true) {}
-         }
+    override fun returnString(item: Uri?) {
+        imageViewEditProfile.loadImage(item, isCircle = true) {}
+    }
 ```
 
 # To customize bottomsheet:
 * To customize bottomsheet, first override below method in your activity.
 ```kotlin
-     override fun doCustomisations(fragment: ImagePickerBottomsheet) {
-         //Do customizations here...
-     }
+    override fun doCustomisations(fragment: ImagePickerBottomsheet) {
+        //Do customizations here...
+    }
 ```
 * To customize text of buttons in Bottomsheet.
 ```kotlin
-     fragment.setButtonText("Select Camera","Select Gallery","Remove")
+    fragment.setButtonText("Select Camera","Select Gallery","Remove")
 ```
 * To only change text color of buttons in Bottomsheet.
 ```kotlin
-     fragment.setButtonColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+    fragment.setButtonColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
 ```
 * To customize multiple values of buttons (Text color, size, font family, padding), you need to create a style in your style.xml.
 ```kotlin
-     fragment.setTextAppearance(R.style.fontForNotificationLandingPage)
+    fragment.setTextAppearance(R.style.fontForNotificationLandingPage)
 ```
 In styles.xml (Note: parent must be "Widget.AppCompat.TextView")
 ```xml
-     <style name="fontForNotificationLandingPage" parent="Widget.AppCompat.TextView">
-         <item name="android:fontFamily">@font/poppins_medium</item>
-         <item name="android:textColor">@color/white</item>
-         <item name="android:textSize">@dimen/_18ssp</item>
-     </style>
+    <style name="fontForNotificationLandingPage" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_18ssp</item>
+    </style>
 ```
 Note: if setTextAppearance and setButtonColors both are used than whichever function is last called will override other one.
 * To change bottomsheet's background (shape, color).
 ```kotlin
-     fragment.setBottomSheetBackgroundStyle(R.drawable.drawable_bottom_sheet_dialog)
+    fragment.setBottomSheetBackgroundStyle(R.drawable.drawable_bottom_sheet_dialog)
 ```
 You need to make one drawable file of type shape.
 ```xml
-     <shape xmlns:android="http://schemas.android.com/apk/res/android"
-         android:shape="rectangle">
-         <corners
-             android:topLeftRadius="@dimen/_25sdp"
-             android:topRightRadius="@dimen/_25sdp" />
-         <padding android:top="@dimen/_5sdp" />
-         <solid android:color="@color/colorPrimary" />
-     </shape>
+    <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+        <corners
+            android:topLeftRadius="@dimen/_25sdp"
+            android:topRightRadius="@dimen/_25sdp" />
+        <padding android:top="@dimen/_5sdp" />
+        <solid android:color="@color/colorPrimary" />
+    </shape>
 ```
 # Other Library used:
 * __[UCrop Library](https://github.com/Yalantis/uCrop)__

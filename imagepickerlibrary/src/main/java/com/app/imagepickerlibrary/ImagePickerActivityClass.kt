@@ -9,15 +9,15 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.yalantis.ucrop.UCrop
-import com.yalantis.ucrop.UCropActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-@Suppress("DEPRECATION")
-class ImagePickerActivityClass(private val context: Context, private val activity: Activity, private val callback: OnResult) {
+class ImagePickerActivityClass(private val context: Context, private val activity: Activity, private val callback: OnResult, registry: ActivityResultRegistry) {
 
     private var functionSelection = FunctionProvider.NONE
     private var fileUri: Uri? = null
@@ -30,7 +30,7 @@ class ImagePickerActivityClass(private val context: Context, private val activit
     fun takePhotoFromCamera() {
         functionSelection = FunctionProvider.CAMERA
         if (checkForPermission()) {
-            fileUri = activity.dispatchTakePictureIntent()
+            fileUri = activity.dispatchTakePictureIntent(onGetImageFromCameraActivityResult)
         } else {
             askPermissionForUploadImage(activity)
         }
@@ -40,7 +40,7 @@ class ImagePickerActivityClass(private val context: Context, private val activit
         functionSelection = FunctionProvider.GALLERY
         if (checkForPermission()) {
             val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            activity.startActivityForResult(galleryIntent, REQUEST_GALLERY)
+            onGetImageFromGalleryActivityResult.launch(galleryIntent)
         } else {
             askPermissionForUploadImage(activity)
         }
@@ -96,19 +96,6 @@ class ImagePickerActivityClass(private val context: Context, private val activit
 
     @SuppressLint("MissingSuperCall")
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_CANCELED) {
-            return
-        }
-        if (requestCode == REQUEST_GALLERY) {
-            if (data != null) {
-                startCrop(data.data)
-            }
-        }
-        if (requestCode == REQUEST_TAKE_PHOTO) {
-            if (fileUri != null) {
-                startCrop(fileUri)
-            }
-        }
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             callback.returnString(data?.let { intent -> UCrop.getOutput(intent) })
         }
@@ -116,5 +103,25 @@ class ImagePickerActivityClass(private val context: Context, private val activit
 
     interface OnResult {
         fun returnString(item: Uri?)
+    }
+
+    private val onGetImageFromGalleryActivityResult = registry.register("Gallery", ActivityResultContracts.StartActivityForResult()) { result ->
+        result?.let { activityResult ->
+            if (activityResult.resultCode == RESULT_OK) {
+                activityResult.data?.data?.let { uri ->
+                    startCrop(uri)
+                }
+            }
+        }
+    }
+
+    private val onGetImageFromCameraActivityResult = registry.register("Camera", ActivityResultContracts.StartActivityForResult()) { result ->
+        result?.let { activityResult ->
+            if (activityResult.resultCode == RESULT_OK) {
+                if (fileUri != null) {
+                    startCrop(fileUri)
+                }
+            }
+        }
     }
 }

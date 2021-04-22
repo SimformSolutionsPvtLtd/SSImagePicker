@@ -8,13 +8,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.appcompat.app.AlertDialog
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -37,7 +35,7 @@ fun askPermissionForUploadImage(activity: Activity) {
             PERMISSION_REQUEST_CODE)
 }
 
-fun Activity.dispatchTakePictureIntent(): Uri? {
+fun Activity.dispatchTakePictureIntent(onGetImageFromCameraActivityResult: ActivityResultLauncher<Intent>): Uri? {
     Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
         // Ensure that there's a camera activity to handle the intent
         packageManager?.run {
@@ -51,7 +49,7 @@ fun Activity.dispatchTakePictureIntent(): Uri? {
                         also { photo ->
                             photoURI = FileProvider.getUriForFile(this@dispatchTakePictureIntent, "${BuildConfig.LIBRARY_PACKAGE_NAME}.provider", photo)
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                            onGetImageFromCameraActivityResult.launch(takePictureIntent)
                         }
                         return photoURI
                     }

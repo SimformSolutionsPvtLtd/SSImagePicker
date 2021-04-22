@@ -85,10 +85,10 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
     val fragment = ImagePickerBottomsheet()
     fragment.show(FragmentManager, String) 
 ```
-3. Call ImagePickerActivityClass in your onCreate() To Handle Camera, Gallery Click And Permission Result. Pass Context, Activity And Request Permission Result Callback:
+3. Call ImagePickerActivityClass in your onCreate() To Handle Camera, Gallery Click And Permission Result. Pass Context, Activity , Request Permission Result Callback And activityResultRegistry :
 
 ```kotlin
-    var imagePicker = ImagePickerActivityClass(context,activity,onResult_Callback)
+    var imagePicker = ImagePickerActivityClass(context,activity,onResult_Callback,activityResultRegistry)
 ```
 
 4. To Enable All Features(crop,rotate,zoomIn,zoomOut) call cropOptions(isAllCropFeaturesRequired: Boolean) And Pass true. By Default It's Set To False And Provides Only Crop Feature.
@@ -121,6 +121,7 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 ```kotlin
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)  (required)
         imagePicker.onActivityResult(requestCode, resultCode, data)
     }
 ```

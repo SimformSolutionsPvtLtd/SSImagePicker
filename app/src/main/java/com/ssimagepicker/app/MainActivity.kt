@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBotto
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        imagePicker = ImagePickerActivityClass(this, this, this)
+        imagePicker = ImagePickerActivityClass(this, this, this, activityResultRegistry)
         //set to true if you want all features(crop,rotate,zoomIn,zoomOut)
         //by Default it's value is set to false (only crop feature is enabled)
         imagePicker.cropOptions(true)
@@ -71,8 +71,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBotto
         imagePicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         imagePicker.onActivityResult(requestCode, resultCode, data)
     }
 

@@ -76,7 +76,7 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 ```groovy
     dependencies {
-        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.4'
+        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.5'
     }
 ```
 2. Use ImagePicker Bottomsheet To Choose Option For Pick Image From Gallery Or Camera

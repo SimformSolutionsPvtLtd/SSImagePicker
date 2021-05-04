@@ -76,22 +76,28 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 ```groovy
     dependencies {
-        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.5'
+        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.6'
     }
 ```
-2. Use ImagePicker Bottomsheet To Choose Option For Pick Image From Gallery Or Camera
+2. Implement ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.OnResult interface in your activity or fragment
+
+3. Use ImagePicker Bottomsheet To Choose Option For Pick Image From Gallery Or Camera
 
 ```kotlin
     val fragment = ImagePickerBottomsheet()
     fragment.show(FragmentManager, String) 
 ```
-3. Call ImagePickerActivityClass in your onCreate() To Handle Camera, Gallery Click And Permission Result. Pass Context, Activity , Request Permission Result Callback And activityResultRegistry :
+4. Call ImagePickerActivityClass in your onCreate() To Handle Camera, Gallery Click And Permission Result. Pass Context, Request Permission Result Callback And activityResultRegistry, Activity or Fragment. :
 
 ```kotlin
-    var imagePicker = ImagePickerActivityClass(context,activity,onResult_Callback,activityResultRegistry)
+    //From activity
+    var imagePicker = ImagePickerActivityClass(context,onResult_Callback,activityResultRegistry,activity = this)
+
+    //From fragment
+    var imagePicker = ImagePickerActivityClass(context,onResult_Callback,activityResultRegistry,fragment = this)
 ```
 
-4. To Enable All Features(crop,rotate,zoomIn,zoomOut) call cropOptions(isAllCropFeaturesRequired: Boolean) And Pass true. By Default It's Set To False And Provides Only Crop Feature.
+5. To Enable All Features(crop,rotate,zoomIn,zoomOut) call cropOptions(isAllCropFeaturesRequired: Boolean) And Pass true. By Default It's Set To False And Provides Only Crop Feature.
 
 ```kotlin
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,24 +106,24 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
     }
 ```
 
-5. Allow Camera And Storage Permission To Pick Image And Send Your onRequestPermissionsResult To ImagePickerActivity
+6. Allow Camera And Storage Permission To Pick Image And Send Your onRequestPermissionsResult To ImagePickerActivity
 
 ```kotlin
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        imagePicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults) (required)
     }
 ```
-6. To Capture Image From Camera Use takePhotoFromCamera()
+7. To Capture Image From Camera Use takePhotoFromCamera()
 
 ```kotlin
     imagePicker.takePhotoFromCamera()
 ```
-7. To Pick Image From Gallery Use choosePhotoFromGallary()
+8. To Pick Image From Gallery Use choosePhotoFromGallary()
 
 ```kotlin
     imagePicker.choosePhotoFromGallary()
 ```
-8. Send Your onActivityResult to ImagePickerActivity
+9. Send Your onActivityResult to ImagePickerActivity
 
 ```kotlin
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -125,14 +131,14 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
         imagePicker.onActivityResult(requestCode, resultCode, data)
     }
 ```
-9. You Will Get Image Result In Uri Format In returnString() And Customize It To Upload 
+10. You Will Get Image Result In Uri Format In returnString() And Customize It To Upload
 
 ```kotlin
     override fun returnString(item: Uri?) {
         **Here You Will Get Your Image Result In Uri Format**
     }
 ```
-10. You can load image in your imageview using loadImage() func. (If you want to apply circleCrop() then pass isCircle = true, by default it's false)
+11. You can load image in your imageview using loadImage() func. (If you want to apply circleCrop() then pass isCircle = true, by default it's false)
 
 ```kotlin
     override fun returnString(item: Uri?) {

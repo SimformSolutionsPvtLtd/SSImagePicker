@@ -18,6 +18,7 @@ import com.app.imagepickerlibrary.databinding.BottomsheetLayoutUploadImageOption
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.lang.IllegalStateException
 
 class ImagePickerBottomsheet(@LayoutRes val layoutId: Int = R.layout.bottomsheet_layout_upload_image_options) : BottomSheetDialogFragment(), View.OnClickListener {
 
@@ -58,10 +59,10 @@ class ImagePickerBottomsheet(@LayoutRes val layoutId: Int = R.layout.bottomsheet
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mListener = if (context is ItemClickListener) {
-            context
-        } else {
-            throw RuntimeException("$context")
+        parentFragment?.let { fragment ->
+            mListener = if(fragment is ItemClickListener) fragment else throw IllegalStateException(getString(R.string.error_invalid_context_message))
+        } ?: kotlin.run {
+            mListener = if(context is ItemClickListener) context else throw IllegalStateException(getString(R.string.error_invalid_context_message))
         }
     }
 

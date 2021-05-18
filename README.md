@@ -195,6 +195,16 @@ You need to make one drawable file of type shape.
 ## Find this library useful? :heart:
 Support it by joining __[stargazers](https://github.com/SimformSolutionsPvtLtd/SSImagePicker/stargazers)__ for this repository. :star:
 
+## 🤝 How to Contribute
+
+Whether you're helping us fix bugs, improve the docs, or a feature request, we'd love to have you! :muscle:
+
+Check out our [**Contributing Guide**](https://github.com/SimformSolutionsPvtLtd/SSImagePicker/blob/master/CONTRIBUTING.md) for ideas on contributing.
+
+## Bugs and Feedback
+
+For bugs, feature requests, and discussion please use [GitHub Issues](https://github.com/SimformSolutionsPvtLtd/SSImagePicker/issues).
+
 ## License
 
 ```

@@ -1,8 +1,9 @@
 # 📸SSImagePicker 
 
-[![Android-Studio](https://img.shields.io/badge/Android%20Studio-4.0+-orange.svg?style=flat)](https://developer.android.com/studio/)
+[![Android-Studio](https://img.shields.io/badge/Android%20Studio-4.2.1-orange.svg?style=flat)](https://developer.android.com/studio/)
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
 ![Language](https://img.shields.io/badge/language-Kotlin-orange.svg)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-v1.5.20-blue.svg)](https://kotlinlang.org) 
 
 Easy to use and configurable library to **Pick an image from the Gallery or Capture image using Camera**.
 
@@ -33,11 +34,11 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 | Capture Image Using Camera | Pick Image From Gallery | Customize Bottomsheet |
 |--|--|--|
-| ![](camera_pic.gif) | ![](gallery_pic.gif) | ![](custom_bottomsheet.gif) |
+| ![](gifs/camera_pic.gif) | ![](gifs/gallery_pic.gif) | ![](gifs/custom_bottomsheet.gif) |
 
 | Crop Image | Rotate Image | Image Zoom in, Zoom out |
 |--|--|--|
-| ![](crop_pic.gif) | ![](rotate_pic.gif) | ![](zoom_pic.gif)
+| ![](gifs/crop_pic.gif) | ![](gifs/rotate_pic.gif) | ![](gifs/zoom_pic.gif)
 
 # How it works:
 
@@ -76,7 +77,7 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 ```groovy
     dependencies {
-        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.6'
+        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.7'
     }
 ```
 2. Implement ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.OnResult interface in your activity or fragment

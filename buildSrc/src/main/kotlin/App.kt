@@ -4,7 +4,7 @@ object App {
 
     object Version {
         const val CODE = 1
-        const val NAME = "1.6"
+        const val NAME = "1.7"
     }
 
     object Dimension {

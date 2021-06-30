@@ -1,8 +1,9 @@
 # 📸SSImagePicker 
 
-[![Android-Studio](https://img.shields.io/badge/Android%20Studio-4.0+-orange.svg?style=flat)](https://developer.android.com/studio/)
+[![Android-Studio](https://img.shields.io/badge/Android%20Studio-4.2.1-orange.svg?style=flat)](https://developer.android.com/studio/)
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
 ![Language](https://img.shields.io/badge/language-Kotlin-orange.svg)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-v1.5.20-blue.svg)](https://kotlinlang.org)
 
 Easy to use and configurable library to **Pick an image from the Gallery or Capture image using Camera**.
 

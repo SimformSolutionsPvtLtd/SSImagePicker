@@ -4,7 +4,7 @@
 [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
 ![Language](https://img.shields.io/badge/language-Kotlin-orange.svg)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-v1.5.20-blue.svg)](https://kotlinlang.org)
-[![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23402-orange)](https://androidweekly.net/issues/issue-473)
+[![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23473-orange)](https://androidweekly.net/issues/issue-473)
 [![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-SSImagePicker-green.svg?style=flat )]( https://android-arsenal.com/details/1/8243 )
 
 Easy to use and configurable library to **Pick an image from the Gallery or Capture image using Camera**.

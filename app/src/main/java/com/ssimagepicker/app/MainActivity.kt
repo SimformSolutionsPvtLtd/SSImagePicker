@@ -1,21 +1,16 @@
 package com.ssimagepicker.app
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.app.imagepickerlibrary.ImagePickerActivityClass
-import com.app.imagepickerlibrary.ImagePickerBottomsheet
-import com.app.imagepickerlibrary.bottomSheetActionCamera
-import com.app.imagepickerlibrary.bottomSheetActionFragment
-import com.app.imagepickerlibrary.bottomSheetActionGallary
-import com.app.imagepickerlibrary.loadImage
-import kotlinx.android.synthetic.main.activity_main.imageViewEditProfile
+import com.app.imagepickerlibrary.*
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.OnResult {
+class MainActivity : AppCompatActivity(), View.OnClickListener,
+    ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.OnResult {
 
     private lateinit var imagePicker: ImagePickerActivityClass
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +19,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBotto
         imagePicker = ImagePickerActivityClass(this, this, activityResultRegistry, activity = this)
         //set to true if you want all features(crop,rotate,zoomIn,zoomOut)
         //by Default it's value is set to false (only crop feature is enabled)
-        imagePicker.cropOptions(true)
+        imagePicker.cropOptions(false)
+        //set free crop where you can select image by picking squares.
+        imagePicker.setFreeCrop(true)
     }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -51,10 +49,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBotto
     override fun doCustomisations(fragment: ImagePickerBottomsheet) {
         fragment.apply {
             //Customize button text
-            setButtonText(cameraButtonText = "Select Camera", galleryButtonText = "Select Gallery", cancelButtonText = "Cancel")
+            setButtonText(
+                cameraButtonText = "Select Camera",
+                galleryButtonText = "Select Gallery",
+                cancelButtonText = "Cancel"
+            )
 
             //Customize button text color
-            setButtonColors(galleryButtonColor = ContextCompat.getColor(requireContext(), R.color.white))
+            setButtonColors(
+                galleryButtonColor = ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
 
             //For more customization make a style in your styles xml and pass it to this method. (This will override above method result).
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -66,7 +73,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ImagePickerBotto
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 

@@ -20,7 +20,13 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
+
     </application>
+
+
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />

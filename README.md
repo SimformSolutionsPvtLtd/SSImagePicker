@@ -79,7 +79,7 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 ```groovy
     dependencies {
-        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.7'
+        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.8'
     }
 ```
 2. Implement ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.OnResult interface in your activity or fragment

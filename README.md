@@ -1,3 +1,4 @@
+![](LibraryBanner.png)
 # 📸SSImagePicker 
 
 [![Android-Studio](https://img.shields.io/badge/Android%20Studio-4.2.1-orange.svg?style=flat)](https://developer.android.com/studio/)

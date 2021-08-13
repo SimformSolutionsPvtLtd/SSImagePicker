@@ -47,7 +47,7 @@ fun Activity.dispatchTakePictureIntent(onGetImageFromCameraActivityResult: Activ
                         // Continue only if the File was successfully created
                         var photoURI: Uri? = null
                         also { photo ->
-                            photoURI = FileProvider.getUriForFile(this@dispatchTakePictureIntent, "${BuildConfig.LIBRARY_PACKAGE_NAME}.provider", photo)
+                            photoURI = FileProvider.getUriForFile(this@dispatchTakePictureIntent, "${applicationContext.packageName}.${BuildConfig.LIBRARY_PACKAGE_NAME}.provider", photo)
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                             onGetImageFromCameraActivityResult.launch(takePictureIntent)
                         }

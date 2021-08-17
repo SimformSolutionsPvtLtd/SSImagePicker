@@ -6,4 +6,7 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="color_bg">#D9FEF2</color>
+    <color name="color_button">#B4F0F4</color>
+    <color name="color_cancel_button">#CFECE5</color>
 </resources>

@@ -37,11 +37,11 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 | Capture Image Using Camera | Pick Image From Gallery | Customize Bottomsheet |
 |--|--|--|
-| ![](gifs/camera_pic.gif) | ![](gifs/gallery_pic.gif) | ![](gifs/custom_bottomsheet.gif) |
+| ![](gifs/camera_gif.gif) | ![](gifs/gallery_gif.gif) | ![](gifs/customize_bottomsheet_gif.gif) |
 
 | Crop Image | Rotate Image | Image Zoom in, Zoom out |
 |--|--|--|
-| ![](gifs/crop_pic.gif) | ![](gifs/rotate_pic.gif) | ![](gifs/zoom_pic.gif)
+| ![](gifs/crop_feature_gif.gif) | ![](gifs/rotate.gif) | ![](gifs/zoom_in_zoom_out.gif)
 
 # How it works:
 

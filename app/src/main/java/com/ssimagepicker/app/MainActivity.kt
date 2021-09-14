@@ -55,18 +55,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
                 cancelButtonText = "Cancel"
             )
 
-            //Customize button text color
-            setButtonColors(
-                galleryButtonColor = ContextCompat.getColor(
-                    requireContext(),
-                    R.color.white
-                )
-            )
-
             //For more customization make a style in your styles xml and pass it to this method. (This will override above method result).
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 setTextAppearance(R.style.fontForNotificationLandingPage)
             }
+
+            //Customize button text color
+            setButtonColors(
+                galleryButtonColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary),
+                cameraButtonColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary),
+                cancelButtonColor = ContextCompat.getColor(requireContext(), R.color.color_cancel_text)
+            )
 
             //To customize bottomsheet style
             setBottomSheetBackgroundStyle(R.drawable.drawable_bottom_sheet_dialog)
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun returnString(item: Uri?) {
-        imageViewEditProfile.loadImage(item, isCircle = true) {}
+        imageViewEditProfile.loadImage(item, isRoundedCorners = true) {}
     }
 
 }

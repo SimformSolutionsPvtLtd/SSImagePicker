@@ -23,17 +23,18 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ImagePickerActivityClass(
-    private val context: Context,
-    private val callback: OnResult,
-    private val registry: ActivityResultRegistry,
-    private val activity: Activity? = null,
-    private val fragment: Fragment? = null
+        private val context: Context,
+        private val callback: OnResult,
+        private val registry: ActivityResultRegistry,
+        private val activity: Activity? = null,
+        private val fragment: Fragment? = null
 ) {
 
     private var functionSelection = FunctionProvider.NONE
     private var fileUri: Uri? = null
     private var isCropAllFeaturesRequired: Boolean? = false
     private var isFreeCrop: Boolean? = false
+    private var initialCropWindowPaddingRatio = 0.1f
 
     init {
         if (activity == null && fragment == null) {
@@ -49,7 +50,7 @@ class ImagePickerActivityClass(
         functionSelection = FunctionProvider.CAMERA
         if (checkForPermission()) {
             fileUri = activity?.dispatchTakePictureIntent(onGetImageFromCameraActivityResult)
-                ?: fragment?.activity?.dispatchTakePictureIntent(onGetImageFromCameraActivityResult)
+                    ?: fragment?.activity?.dispatchTakePictureIntent(onGetImageFromCameraActivityResult)
         } else {
             askPermission()
         }
@@ -59,7 +60,7 @@ class ImagePickerActivityClass(
         functionSelection = FunctionProvider.GALLERY
         if (checkForPermission()) {
             val galleryIntent =
-                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             onGetImageFromGalleryActivityResult.launch(galleryIntent)
         } else {
             askPermission()
@@ -68,9 +69,9 @@ class ImagePickerActivityClass(
 
     @SuppressLint("MissingSuperCall")
     fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> {
@@ -88,7 +89,7 @@ class ImagePickerActivityClass(
                     }
                 } else {
                     Toast.makeText(context, "Important Permission Required..", Toast.LENGTH_SHORT)
-                        .show()
+                            .show()
                 }
                 return
             }
@@ -97,28 +98,28 @@ class ImagePickerActivityClass(
 
     private fun startCrop(imageUri: Uri?) {
         val imageFile = activity?.createImageFile(
-            SimpleDateFormat(
-                dateFormatForTakePicture,
-                Locale.getDefault()
-            ).format(Date())
-        )
-            ?: fragment?.activity?.createImageFile(
                 SimpleDateFormat(
-                    dateFormatForTakePicture,
-                    Locale.getDefault()
+                        dateFormatForTakePicture,
+                        Locale.getDefault()
                 ).format(Date())
-            )
+        )
+                ?: fragment?.activity?.createImageFile(
+                        SimpleDateFormat(
+                                dateFormatForTakePicture,
+                                Locale.getDefault()
+                        ).format(Date())
+                )
         imageUri?.let {
             if (activity != null) {
                 if (isFreeCrop != false) {
                     imageCrop(imageUri)
                 } else {
                     UCrop.of(imageUri, Uri.fromFile(imageFile)).withOptions(getUCropOptions())
-                        .start(activity)
+                            .start(activity)
                 }
             } else if (fragment != null) {
                 UCrop.of(imageUri, Uri.fromFile(imageFile)).withOptions(getUCropOptions())
-                    .start(context, fragment)
+                        .start(context, fragment)
             }
         }
     }
@@ -135,6 +136,10 @@ class ImagePickerActivityClass(
         isCropAllFeaturesRequired = freeCrop
     }
 
+    fun setInitialCropWindowPaddingRatio(ratio: Float) {
+        this.initialCropWindowPaddingRatio = ratio
+    }
+
     /* Applies app colors to Crop activity UI. */
     private fun getUCropOptions(): UCrop.Options {
         return UCrop.Options().apply {
@@ -144,10 +149,10 @@ class ImagePickerActivityClass(
             setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
             setStatusBarColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
             setToolbarWidgetColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.design_default_color_on_primary
-                )
+                    ContextCompat.getColor(
+                            context,
+                            R.color.design_default_color_on_primary
+                    )
             )
             setActiveControlsWidgetColor(ContextCompat.getColor(context, R.color.colorAccent))
         }
@@ -165,47 +170,47 @@ class ImagePickerActivityClass(
     }
 
     private val onGetImageFromGalleryActivityResult =
-        registry.register(
-            "Gallery",
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            result?.let { activityResult ->
-                if (activityResult.resultCode == RESULT_OK) {
-                    activityResult.data?.data?.let { uri ->
-                        startCrop(uri)
+            registry.register(
+                    "Gallery",
+                    ActivityResultContracts.StartActivityForResult()
+            ) { result ->
+                result?.let { activityResult ->
+                    if (activityResult.resultCode == RESULT_OK) {
+                        activityResult.data?.data?.let { uri ->
+                            startCrop(uri)
+                        }
                     }
                 }
             }
-        }
 
     private val onGetImageFromCameraActivityResult =
-        registry.register(
-            "Camera",
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            result?.let { activityResult ->
-                if (activityResult.resultCode == RESULT_OK) {
-                    if (fileUri != null) {
-                        startCrop(fileUri)
+            registry.register(
+                    "Camera",
+                    ActivityResultContracts.StartActivityForResult()
+            ) { result ->
+                result?.let { activityResult ->
+                    if (activityResult.resultCode == RESULT_OK) {
+                        if (fileUri != null) {
+                            startCrop(fileUri)
+                        }
                     }
                 }
             }
-        }
 
 
     private fun askPermission() {
         permissionResult.launch(
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA
-            )
+                arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA
+                )
         )
     }
 
     private val permissionResult = registry.register(
-        "permission",
-        ActivityResultContracts.RequestMultiplePermissions()
+            "permission",
+            ActivityResultContracts.RequestMultiplePermissions()
     ) { result ->
         result?.let { mutableMap ->
             if (mutableMap.entries.all { entry -> entry.value == true }) {
@@ -226,8 +231,8 @@ class ImagePickerActivityClass(
 
     fun imageCrop(imageUri: Uri?) {
         val cropImage = registry.register(
-            UUID.randomUUID().toString(),
-            CropImageContract()
+                UUID.randomUUID().toString(),
+                CropImageContract()
         ) { result ->
             if (result.isSuccessful) {
                 // use the returned uri
@@ -239,11 +244,15 @@ class ImagePickerActivityClass(
                 val exception = result.error
             }
         }
+
         cropImage.launch(
-            options(uri = imageUri) {
-                setGuidelines(CropImageView.Guidelines.ON)
-                setOutputCompressFormat(Bitmap.CompressFormat.PNG)
-            }
+                options(uri = imageUri) {
+                    if (initialCropWindowPaddingRatio >= 0 && initialCropWindowPaddingRatio < 0.5) {
+                        setInitialCropWindowPaddingRatio(initialCropWindowPaddingRatio)
+                    }
+                    setGuidelines(CropImageView.Guidelines.ON)
+                    setOutputCompressFormat(Bitmap.CompressFormat.PNG)
+                }
         )
     }
 

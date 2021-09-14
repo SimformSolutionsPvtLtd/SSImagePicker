@@ -10,7 +10,7 @@ import com.app.imagepickerlibrary.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener,
-    ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.OnResult {
+        ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.OnResult {
 
     private lateinit var imagePicker: ImagePickerActivityClass
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
         imagePicker.cropOptions(false)
         //set free crop where you can select image by picking squares.
         imagePicker.setFreeCrop(true)
+
+        //  setInitialCropWindowPaddingRatio Min = 0  max = 0.4
+        imagePicker.setInitialCropWindowPaddingRatio(0f)
     }
 
 
@@ -50,9 +53,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
         fragment.apply {
             //Customize button text
             setButtonText(
-                cameraButtonText = "Select Camera",
-                galleryButtonText = "Select Gallery",
-                cancelButtonText = "Cancel"
+                    cameraButtonText = "Select Camera",
+                    galleryButtonText = "Select Gallery",
+                    cancelButtonText = "Cancel"
             )
 
             //For more customization make a style in your styles xml and pass it to this method. (This will override above method result).
@@ -62,9 +65,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
 
             //Customize button text color
             setButtonColors(
-                galleryButtonColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary),
-                cameraButtonColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary),
-                cancelButtonColor = ContextCompat.getColor(requireContext(), R.color.color_cancel_text)
+                    galleryButtonColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary),
+                    cameraButtonColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary),
+                    cancelButtonColor = ContextCompat.getColor(requireContext(), R.color.color_cancel_text)
             )
 
             //To customize bottomsheet style
@@ -73,9 +76,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }

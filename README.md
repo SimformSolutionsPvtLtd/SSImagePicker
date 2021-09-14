@@ -1,3 +1,4 @@
+![](LibraryBanner.png)
 # 📸SSImagePicker 
 
 [![Android-Studio](https://img.shields.io/badge/Android%20Studio-4.2.1-orange.svg?style=flat)](https://developer.android.com/studio/)
@@ -36,11 +37,11 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 | Capture Image Using Camera | Pick Image From Gallery | Customize Bottomsheet |
 |--|--|--|
-| ![](gifs/camera_pic.gif) | ![](gifs/gallery_pic.gif) | ![](gifs/custom_bottomsheet.gif) |
+| ![](gifs/camera_gif.gif) | ![](gifs/gallery_gif.gif) | ![](gifs/customize_bottomsheet_gif.gif) |
 
 | Crop Image | Rotate Image | Image Zoom in, Zoom out |
 |--|--|--|
-| ![](gifs/crop_pic.gif) | ![](gifs/rotate_pic.gif) | ![](gifs/zoom_pic.gif)
+| ![](gifs/crop_feature_gif.gif) | ![](gifs/rotate.gif) | ![](gifs/zoom_in_zoom_out.gif)
 
 # How it works:
 
@@ -79,7 +80,7 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 
 ```groovy
     dependencies {
-        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.7'
+        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:1.8'
     }
 ```
 2. Implement ImagePickerBottomsheet.ItemClickListener, ImagePickerActivityClass.OnResult interface in your activity or fragment
@@ -211,7 +212,7 @@ For bugs, feature requests, and discussion please use [GitHub Issues](https://gi
 ## License
 
 ```
-Copyright 2020 Simform Solutions
+Copyright 2021 Simform Solutions
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.

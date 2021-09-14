@@ -21,6 +21,12 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+
+
+
 
 // Code for upload Profile Picture
 fun checkPermissionForUploadImage(context: Context): Boolean {
@@ -47,7 +53,7 @@ fun Activity.dispatchTakePictureIntent(onGetImageFromCameraActivityResult: Activ
                         // Continue only if the File was successfully created
                         var photoURI: Uri? = null
                         also { photo ->
-                            photoURI = FileProvider.getUriForFile(this@dispatchTakePictureIntent, "${BuildConfig.LIBRARY_PACKAGE_NAME}.provider", photo)
+                            photoURI = FileProvider.getUriForFile(this@dispatchTakePictureIntent, "${applicationContext.packageName}.${BuildConfig.LIBRARY_PACKAGE_NAME}.provider", photo)
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                             onGetImageFromCameraActivityResult.launch(takePictureIntent)
                         }
@@ -69,7 +75,7 @@ fun Activity.createImageFile(name: String = ""): File {
     return File.createTempFile("JPEG_${name}_", ".jpg", storageDir)
 }
 
-fun AppCompatImageView.loadImage(url: Any?, isCircle: Boolean = false, func: RequestOptions.() -> Unit) {
+fun AppCompatImageView.loadImage(url: Any?, isCircle: Boolean = false, isRoundedCorners: Boolean = false, func: RequestOptions.() -> Unit) {
     url?.let { image ->
         val options = RequestOptions().placeholder(R.mipmap.ic_launcher_round)
                 .error(R.mipmap.ic_launcher_round)
@@ -79,6 +85,8 @@ fun AppCompatImageView.loadImage(url: Any?, isCircle: Boolean = false, func: Req
         val requestBuilder = Glide.with(context).load(image).apply(options)
         if (isCircle) {
             requestBuilder.apply(options.circleCrop())
+        } else if(isRoundedCorners){
+            requestBuilder.apply(options.transforms(CenterCrop(), RoundedCorners(18)))
         }
         requestBuilder.into(this)
     }

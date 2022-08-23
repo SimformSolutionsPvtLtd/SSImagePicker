@@ -1,66 +1,67 @@
 package com.app.imagepickerlibrary
 
-import android.Manifest
 import android.app.Activity
+import android.app.Application
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
+import android.os.Parcelable
 import android.provider.MediaStore
+import android.util.TypedValue
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.AttrRes
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
+import androidx.fragment.app.Fragment
+import com.app.imagepickerlibrary.listener.ImagePickerResultListener
+import com.app.imagepickerlibrary.model.Image
+import com.app.imagepickerlibrary.util.isAtLeast13
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 
 
-
-
-// Code for upload Profile Picture
-fun checkPermissionForUploadImage(context: Context): Boolean {
-    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-}
-
-fun askPermissionForUploadImage(activity: Activity) {
-
-    ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
-            PERMISSION_REQUEST_CODE)
-}
-
-fun Activity.dispatchTakePictureIntent(onGetImageFromCameraActivityResult: ActivityResultLauncher<Intent>): Uri? {
+/**
+ * Checks whether the any camera activity is available or not to handle the intent.
+ * If there is camera activity open the camera
+ */
+internal fun Context.dispatchTakePictureIntent(onGetImageFromCameraActivityResult: ActivityResultLauncher<Intent>): Uri? {
     Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-        // Ensure that there's a camera activity to handle the intent
         packageManager?.run {
             takePictureIntent.resolveActivity(this)?.also {
-                // Create the File where the photo should go
                 try {
-                    val timeStamp: String = SimpleDateFormat(dateFormatForTakePicture, Locale.getDefault()).format(Date())
+                    val timeStamp: String = SimpleDateFormat(
+                        dateFormatForTakePicture,
+                        Locale.getDefault()
+                    ).format(Date())
                     createImageFile(timeStamp).apply {
-                        // Continue only if the File was successfully created
-                        var photoURI: Uri? = null
+                        var photoURI: Uri?
                         also { photo ->
-                            photoURI = FileProvider.getUriForFile(this@dispatchTakePictureIntent, "${applicationContext.packageName}.${BuildConfig.LIBRARY_PACKAGE_NAME}.provider", photo)
+                            photoURI = FileProvider.getUriForFile(
+                                this@dispatchTakePictureIntent,
+                                "${applicationContext.packageName}.${BuildConfig.LIBRARY_PACKAGE_NAME}.provider",
+                                photo
+                            )
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                             onGetImageFromCameraActivityResult.launch(takePictureIntent)
                         }
                         return photoURI
                     }
                 } catch (ex: IOException) {
-                    // Error occurred while creating the File
+                    ex.printStackTrace()
                     return null
                 }
             }
@@ -69,25 +70,199 @@ fun Activity.dispatchTakePictureIntent(onGetImageFromCameraActivityResult: Activ
     return null
 }
 
-fun Activity.createImageFile(name: String = ""): File {
-    // Create an image file name
+/**
+ * Create image file in the picture's directory of external files directory.
+ */
+internal fun Context.createImageFile(name: String = ""): File {
     val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     return File.createTempFile("JPEG_${name}_", ".jpg", storageDir)
 }
 
-fun AppCompatImageView.loadImage(url: Any?, isCircle: Boolean = false, isRoundedCorners: Boolean = false, func: RequestOptions.() -> Unit) {
-    url?.let { image ->
-        val options = RequestOptions().placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .apply(func)
-        val requestBuilder = Glide.with(context).load(image).apply(options)
-        if (isCircle) {
-            requestBuilder.apply(options.circleCrop())
-        } else if(isRoundedCorners){
-            requestBuilder.apply(options.transforms(CenterCrop(), RoundedCorners(18)))
+/**
+ * Extension function to replace fragment in specified container view.
+ */
+internal fun AppCompatActivity.replaceFragment(
+    fragment: Fragment,
+    @IdRes containerViewId: Int = R.id.container_view
+) {
+    supportFragmentManager.beginTransaction().replace(containerViewId, fragment).commit()
+}
+
+/**
+ * Extension function to add fragment in specified container view.
+ */
+internal fun AppCompatActivity.addFragment(
+    fragment: Fragment,
+    @IdRes containerViewId: Int = R.id.container_view
+) {
+    supportFragmentManager.beginTransaction().add(containerViewId, fragment).addToBackStack(null)
+        .commit()
+}
+
+/**
+ * Extension function to get color value from attribute
+ */
+internal fun Context.getColorAttribute(@AttrRes attribute: Int): Int {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(attribute, typedValue, true)
+    return typedValue.data
+}
+
+/**
+ * Extension function to get boolean value from attribute
+ */
+internal fun Context.getBooleanAttribute(@AttrRes attribute: Int): Boolean {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(attribute, typedValue, true)
+    return typedValue.data == 0
+}
+
+/**
+ * Extension function to get string value from attribute
+ */
+internal fun Context.getStringAttribute(@AttrRes attribute: Int): String {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(attribute, typedValue, true)
+    return typedValue.string.toString()
+}
+
+/**
+ * Extension function to register activity result intent
+ */
+internal fun ComponentActivity.registerActivityResult(
+    name: String,
+    errorCallback: (ActivityResult) -> Unit = {},
+    successCallBack: (ActivityResult) -> Unit
+): ActivityResultLauncher<Intent> {
+    return activityResultRegistry.register(name, ActivityResultContracts.StartActivityForResult()) {
+        it?.let { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                successCallBack(activityResult)
+            } else {
+                errorCallback(activityResult)
+            }
         }
-        requestBuilder.into(this)
     }
+}
+
+/**
+ * Extension function to get images from picker
+ */
+internal fun ActivityResult.getImages(isMultiPick: Boolean, callback: ImagePickerResultListener) {
+    if (isMultiPick) {
+        val clipData = data?.clipData
+        if (clipData != null) {
+            val clipItemCount = clipData.itemCount
+            val uriList = mutableListOf<Uri?>()
+            for (i in 0 until clipItemCount) {
+                val uri = clipData.getItemAt(i).uri
+                uriList.add(uri)
+            }
+            callback.onMultiImagePick(uriList.filterNotNull())
+        } else {
+            val uri = data?.data
+            uri?.let { callback.onImagePick(it) }
+        }
+    } else {
+        data?.data?.let { uri -> callback.onImagePick(uri) }
+    }
+}
+
+/**
+ * Extension function to get parcelable from intent according to API level
+ */
+@Suppress("DEPRECATION")
+internal inline fun <reified T : Parcelable> Intent.getModel(): T? {
+    return if (isAtLeast13()) {
+        getParcelableExtra(EXTRA_IMAGE_PICKER_CONFIG, T::class.java)
+    } else {
+        getParcelableExtra(EXTRA_IMAGE_PICKER_CONFIG)
+    }
+}
+
+/**
+ * Extension function to fetch images from media store.
+ * Images are fetched according to passed selection and selection arguments.
+ * The default sort order for fetched images is the date they were added and it is descending.
+ */
+internal suspend fun Context.getImagesList(
+    selection: String? = null,
+    selectionArgs: Array<String>? = null
+): List<Image> {
+    val imageList = mutableListOf<Image>()
+    val collection =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+        } else {
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        }
+    val projection = arrayOf(
+        MediaStore.Images.Media._ID,
+        MediaStore.Images.Media.DISPLAY_NAME,
+        MediaStore.Images.Media.BUCKET_ID,
+        MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
+        MediaStore.Images.Media.SIZE
+    )
+    val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC"
+    val query = contentResolver.query(collection, projection, selection, selectionArgs, sortOrder)
+    return withContext(context = Dispatchers.IO) {
+        query?.use { cursor ->
+            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+            val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+            val bucketIdColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_ID)
+            val bucketNameColumn =
+                cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+            val sizeColumn =
+                cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(idColumn)
+                val name = cursor.getString(nameColumn)
+                val bucketId = cursor.getLong(bucketIdColumn)
+                val bucketName = cursor.getString(bucketNameColumn)
+                val size = cursor.getLong(sizeColumn)
+                val contentUri: Uri =
+                    ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                imageList += Image(id, contentUri, name, bucketId, bucketName, size)
+            }
+        }
+        imageList
+    }
+}
+
+/**
+ * Extension function to convert Megabyte to Byte
+ */
+internal fun Int.toByteSize(): Long {
+    return (this * 1e+6).toLong()
+}
+
+/**
+ * Extension function to show toast from the fragment
+ */
+internal fun Fragment.toast(string: String) {
+    Toast.makeText(requireContext(), string, Toast.LENGTH_LONG).show()
+}
+
+/**
+ * Extension function to get uri from file path
+ */
+internal fun Context.getFileUri(filePath: String): Uri? {
+    return FileProvider.getUriForFile(
+        this,
+        "${applicationContext.packageName}.${BuildConfig.LIBRARY_PACKAGE_NAME}.provider",
+        File(filePath)
+    )
+}
+
+/**
+ * Gets the real path from the URI.
+ */
+internal fun Context.getRealPathFromURI(contentURI: Uri): String? {
+    val cursor: Cursor? = contentResolver.query(contentURI, null, null, null, null)
+    val path = cursor?.use {
+        it.moveToFirst()
+        val index: Int = it.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+        it.getString(index)
+    }
+    return path
 }

@@ -6,5 +6,9 @@
     <string name="str_gallery">"Gallery"</string>
     <string name="str_cancel">Cancel</string>
     <string name="error_exception_message">Pass activity or fragment.</string>
-    <string name="error_invalid_context_message">Invalid context</string>
+    <string name="error_invalid_context_listener">Pass context which implements ImagePickerClickListener</string>
+    <string name="error_no_data_found">No data found</string>
+    <string name="str_done">Done</string>
+    <string name="str_picker_limit">Maximum selection reached</string>
+    <string name="str_selected_image_toolbar">%s (%d/%d)</string>
 </resources>

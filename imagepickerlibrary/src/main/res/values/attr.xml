@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SSImagePickerTheme">
+        <!--PICKER ACTIVITY ATTRIBUTES-->
+        <!--Status bar color of image picker activity -->
+        <attr name="ssStatusBarColor" format="color" />
+        <!--Whether status bar should be in light or dark mode-->
+        <attr name="ssStatusBarLightMode" format="boolean" />
+        <!--Toolbar background color of image picker activity -->
+        <attr name="ssToolbarBackground" format="reference|color" />
+        <!--Toolbar back icon of image picker activity -->
+        <attr name="ssToolbarBackIcon" format="reference" />
+        <!--Toolbar title text appearance -->
+        <attr name="ssToolbarTextAppearance" format="reference" />
+        <!--Toolbar camera icon -->
+        <attr name="ssToolbarCameraIcon" format="reference" />
+        <!--Toolbar done icon -->
+        <attr name="ssToolbarDoneIcon" format="reference" />
+        <!--Toolbar done text -->
+        <attr name="ssToolbarDoneText" format="string" />
+        <!--Toolbar done text appearance -->
+        <attr name="ssToolbarDoneTextAppearance" format="reference" />
+        <!--Picker screen background. -->
+        <attr name="ssPickerBackground" format="reference|color" />
+        <!--Progress indicator style for the loading bar which is displayed until images are loaded -->
+        <attr name="ssProgressIndicatorStyle" format="reference" />
+        <!--Folder name text view style. This will show on folders -->
+        <attr name="ssFolderTextViewStyle" format="reference" />
+        <!--If no data is available, then this text will be shown to user -->
+        <attr name="ssNoDataText" format="string" />
+        <!--The text view style for the no data text. -->
+        <attr name="ssNoDataTextViewStyle" format="reference" />
+        <!--The text which will be displayed to user as toast message when the user tries to select more images then the specified pick limit-->
+        <attr name="ssImagePickerLimitText" format="string" />
+        <!--Grid count in picker screen. It will be same for both folder and the image-->
+        <attr name="ssPickerGridCount" format="integer" />
+        <!--The image drawable to indicate the image is selected. the icon is displayed over the selected image.-->
+        <attr name="ssImageSelectIcon" format="reference" />
+        <!--The icon which is used to open image in dialog mode to see in full view mode-->
+        <attr name="ssImageZoomIcon" format="reference" />
+        <!--UCrop activity toolbar background color -->
+        <attr name="ssUCropToolbarColor" format="color" />
+        <!--UCrop activity status bar background color -->
+        <attr name="ssUCropStatusBarColor" format="color" />
+        <!--UCrop activity toolbar widget color -->
+        <attr name="ssUCropToolbarWidgetColor" format="color" />
+        <!--UCrop activity active control widget color -->
+        <attr name="ssUCropActiveControlWidgetColor" format="color" />
+        <!--PICKER OPTION BOTTOM SHEET ATTRIBUTES-->
+        <!-- Picker option bottom sheet camera text -->
+        <attr name="ssSheetCameraText" format="string" />
+        <!-- Picker option bottom sheet gallery text -->
+        <attr name="ssSheetGalleryText" format="string" />
+        <!-- Picker option bottom sheet cancel text -->
+        <attr name="ssSheetCancelText" format="string" />
+        <!-- Picker option bottom sheet camera button background -->
+        <attr name="ssSheetCameraButtonBackground" format="reference|color" />
+        <!-- Picker option bottom sheet gallery button background -->
+        <attr name="ssSheetGalleryButtonBackground" format="reference|color" />
+        <!-- Picker option bottom sheet cancel button background -->
+        <attr name="ssSheetCancelButtonBackground" format="reference|color" />
+        <!-- Picker option bottom sheet camera text view style -->
+        <attr name="ssSheetCameraViewStyle" format="reference" />
+        <!-- Picker option bottom sheet gallery text view background -->
+        <attr name="ssSheetGalleryViewStyle" format="reference" />
+        <!-- Picker option bottom sheet cancel text view background -->
+        <attr name="ssSheetCancelViewStyle" format="reference" />
+        <!-- Picker option bottom sheet background -->
+        <attr name="ssSheetBackground" format="reference|color" />
+    </declare-styleable>
+</resources>

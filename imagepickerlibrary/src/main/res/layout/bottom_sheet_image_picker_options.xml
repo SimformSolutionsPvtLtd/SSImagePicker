@@ -13,18 +13,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/ssSheetBackground"
         android:paddingBottom="@dimen/_4sdp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewChooseCamera"
-            style="@style/TextViewImageOption"
+            style="?attr/ssSheetCameraViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/drawable_button"
+            android:background="?attr/ssSheetCameraButtonBackground"
             android:includeFontPadding="false"
             android:onClick="@{clickHandler::onClick}"
-            android:text="@string/str_camera"
+            android:padding="@dimen/_14sdp"
+            android:text="?attr/ssSheetCameraText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,14 +41,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewChooseGallery"
-            style="@style/TextViewImageOption"
+            style="?attr/ssSheetGalleryViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/drawable_button"
+            android:background="?attr/ssSheetGalleryButtonBackground"
             android:includeFontPadding="false"
             android:onClick="@{clickHandler::onClick}"
-            android:text="@string/str_gallery"
+            android:padding="@dimen/_14sdp"
+            android:text="?attr/ssSheetGalleryText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewChooseCamera" />
@@ -61,17 +64,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewChooseCancel"
-            style="@style/TextViewImageOption"
+            style="?attr/ssSheetCancelViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/drawable_button"
-            android:backgroundTint="@color/color_cancel_button"
+            android:background="?attr/ssSheetCancelButtonBackground"
             android:includeFontPadding="false"
             android:onClick="@{clickHandler::onClick}"
-            android:padding="@dimen/_12sdp"
-            android:text="@string/str_cancel"
-            android:textSize="@dimen/_12ssp"
+            android:padding="@dimen/_14sdp"
+            android:text="?attr/ssSheetCancelText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

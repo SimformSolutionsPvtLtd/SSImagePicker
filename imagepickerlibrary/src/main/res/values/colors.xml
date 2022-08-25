@@ -5,6 +5,7 @@
     <color name="colorAccent">#46a0c6</color>
 
     <color name="black">#FF000000</color>
+    <color name="black_40">#66000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_bg">#D9FEF2</color>
     <color name="color_button">#B4F0F4</color>

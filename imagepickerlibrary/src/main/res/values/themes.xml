@@ -1,33 +1,106 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Theme.SSImagePicker" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="SSImagePicker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <!--For Image picker activity-->
+        <item name="ssStatusBarColor">@color/colorPrimary</item>
+        <item name="ssStatusBarLightMode">true</item>
+        <item name="ssToolbarBackground">@color/colorPrimary</item>
+        <item name="ssToolbarBackIcon">@drawable/ic_ss_arrow_back</item>
+        <item name="ssToolbarTextAppearance">@style/SSToolbarTitleTextAppearance</item>
+        <item name="ssToolbarCameraIcon">@drawable/ic_ss_camera</item>
+        <item name="ssToolbarDoneIcon">@drawable/ic_ss_done</item>
+        <item name="ssToolbarDoneText">@string/str_done</item>
+        <item name="ssToolbarDoneTextAppearance">@style/SSToolbarDoneTextAppearance</item>
+        <item name="ssPickerBackground">@color/white</item>
+        <item name="ssProgressIndicatorStyle">@style/SSProgressIndicatorStyle</item>
+        <item name="ssFolderTextViewStyle">@style/SSFolderTextStyle</item>
+        <item name="ssNoDataText">@string/error_no_data_found</item>
+        <item name="ssNoDataTextViewStyle">@style/SSNoDataTextStyle</item>
+        <item name="ssImagePickerLimitText">@string/str_picker_limit</item>
+        <item name="ssPickerGridCount">2</item>
+        <item name="ssImageSelectIcon">@drawable/ic_ss_check_circle</item>
+        <item name="ssImageZoomIcon">@drawable/ic_ss_zoom_eye</item>
+        <item name="ssUCropToolbarColor">?attr/ssToolbarBackground</item>
+        <item name="ssUCropStatusBarColor">?attr/ssStatusBarColor</item>
+        <item name="ssUCropToolbarWidgetColor">@color/white</item>
+        <item name="ssUCropActiveControlWidgetColor">@color/colorPrimary</item>
     </style>
 
-    <style name="TextViewImageOption">
+    <style name="SSToolbarTitleTextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_15ssp</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SSToolbarDoneTextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+    </style>
+
+    <style name="SSFolderTextStyle">
+        <item name="android:background">@drawable/bg_ss_drawable_shadow</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:paddingStart">@dimen/_4sdp</item>
+        <item name="android:paddingEnd">@dimen/_4sdp</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+    </style>
+
+    <style name="SSNoDataTextStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:paddingStart">@dimen/_4sdp</item>
+        <item name="android:paddingEnd">@dimen/_4sdp</item>
+        <item name="android:layout_marginStart">@dimen/_16sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_16sdp</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+    </style>
+
+    <style name="SSProgressIndicatorStyle">
+        <item name="indicatorColor">?attr/ssToolbarBackground</item>
+    </style>
+
+    <style name="SSImagePickerBaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="bottomSheetStyle">@style/SSRoundBottomSheet</item>
+        <!--For Picker Bottom Sheet-->
+        <item name="ssSheetCameraText">@string/str_camera</item>
+        <item name="ssSheetGalleryText">@string/str_gallery</item>
+        <item name="ssSheetCancelText">@string/str_cancel</item>
+        <item name="ssSheetCameraButtonBackground">@drawable/bg_ss_picker_option_button</item>
+        <item name="ssSheetGalleryButtonBackground">@drawable/bg_ss_picker_option_button</item>
+        <item name="ssSheetCancelButtonBackground">@drawable/bg_ss_picker_option_button_cancel
+        </item>
+        <item name="ssSheetCameraViewStyle">@style/SSBottomSheetTextViewStyle</item>
+        <item name="ssSheetGalleryViewStyle">@style/SSBottomSheetTextViewStyle</item>
+        <item name="ssSheetCancelViewStyle">@style/SSBottomSheetTextViewStyle</item>
+        <item name="ssSheetBackground">@drawable/bg_ss_picker_option</item>
+    </style>
+
+    <style name="SSRoundBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/drawable_bottom_sheet_dialog</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="SSBottomSheetTextViewStyle">
         <item name="android:textColor">@color/design_default_color_on_secondary</item>
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">@dimen/_14sdp</item>
     </style>
-
-    <style name="roundBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/drawable_bottom_sheet_dialog</item>
-        <item name="android:windowIsFloating">false</item>
-    </style>
-
-    <style name="roundBaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="bottomSheetStyle">@style/roundBottomSheet</item>
-    </style>
-
 </resources>

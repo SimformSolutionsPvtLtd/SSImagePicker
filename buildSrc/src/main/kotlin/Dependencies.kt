@@ -12,6 +12,8 @@ object Dependencies {
     const val LIFECYCLE_LIVEDATA = "androidx.lifecycle:lifecycle-livedata:${Versions.LIFECYCLE}"
     const val LIFECYCLE_LIVEDATA_KTX =
         "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE}"
+    const val RECYCLER_VIEW =
+        "androidx.recyclerview:recyclerview:${Versions.RECYCLER_VIEW}"
     const val ARCH_CORE_TESTING = "androidx.arch.core:core-testing:${Versions.ARCH_CORE_TESTING}"
     const val TEST_RUNNER = "androidx.test:runner:${Versions.TEST_RUNNER}"
     const val TEST_RULES = "androidx.test:rules:${Versions.TEST_RULES}"

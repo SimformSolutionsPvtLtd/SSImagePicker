@@ -1,5 +1,6 @@
 package com.app.imagepickerlibrary.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -8,10 +9,12 @@ import android.graphics.Matrix
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
+import android.os.ext.SdkExtensions.getExtensionVersion
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.exifinterface.media.ExifInterface
 import com.app.imagepickerlibrary.createImageFile
 import com.app.imagepickerlibrary.getRealPathFromURI
+import com.app.imagepickerlibrary.isNullOrEmptyOrBlank
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
@@ -26,13 +29,32 @@ internal fun isAtLeast13(): Boolean {
 }
 
 /**
+ * Utility function to check if system picker is available or not on Android 11+.
+ * The function is provided by google to check whether the photo picker is available or not
+ * [More Details](https://developer.android.com/training/data-storage/shared/photopicker#check-availability)
+ *
+ * Using SuppressLint to remove warning about the getExtensionVersion method.
+ */
+@SuppressLint("NewApi")
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.R)
+internal fun isPhotoPickerAvailable(): Boolean {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        true
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        getExtensionVersion(Build.VERSION_CODES.R) >= 2
+    } else {
+        false
+    }
+}
+
+/**
  * Utility function to compress the image.
  * The function returns the file path of the compressed image.
  */
 @Suppress("DEPRECATION")
 internal fun compress(context: Context, uri: Uri, name: String, compressQuality: Int): String? {
     val filePath = context.getRealPathFromURI(uri)
-    if (filePath.isNullOrEmpty() || filePath.isBlank()) {
+    if (filePath.isNullOrEmptyOrBlank()) {
         return null
     }
     var scaledBitmap: Bitmap? = null

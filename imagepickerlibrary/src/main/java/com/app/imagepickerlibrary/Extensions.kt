@@ -1,13 +1,13 @@
 package com.app.imagepickerlibrary
 
 import android.app.Activity
-import android.app.Application
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
 import android.provider.MediaStore
@@ -32,6 +32,8 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
 
 /**
@@ -127,6 +129,15 @@ internal fun Context.getStringAttribute(@AttrRes attribute: Int): String {
 }
 
 /**
+ * Extension function to get integer value from attribute
+ */
+internal fun Context.getIntAttribute(@AttrRes attribute: Int): Int {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(attribute, typedValue, true)
+    return typedValue.data
+}
+
+/**
  * Extension function to register activity result intent
  */
 internal fun ComponentActivity.registerActivityResult(
@@ -172,11 +183,23 @@ internal fun ActivityResult.getImages(isMultiPick: Boolean, callback: ImagePicke
  * Extension function to get parcelable from intent according to API level
  */
 @Suppress("DEPRECATION")
-internal inline fun <reified T : Parcelable> Intent.getModel(): T? {
+internal inline fun <reified T : Parcelable> Intent.getModel(name: String = EXTRA_IMAGE_PICKER_CONFIG): T? {
     return if (isAtLeast13()) {
-        getParcelableExtra(EXTRA_IMAGE_PICKER_CONFIG, T::class.java)
+        getParcelableExtra(name, T::class.java)
     } else {
-        getParcelableExtra(EXTRA_IMAGE_PICKER_CONFIG)
+        getParcelableExtra(name)
+    }
+}
+
+/**
+ * Extension function to get parcelable from bundle according to API level
+ */
+@Suppress("DEPRECATION")
+internal inline fun <reified T : Parcelable> Bundle.getModel(name: String = EXTRA_IMAGE_PICKER_CONFIG): T? {
+    return if (isAtLeast13()) {
+        getParcelable(name, T::class.java)
+    } else {
+        getParcelable(name)
     }
 }
 
@@ -222,7 +245,12 @@ internal suspend fun Context.getImagesList(
                 val size = cursor.getLong(sizeColumn)
                 val contentUri: Uri =
                     ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-                imageList += Image(id, contentUri, name, bucketId, bucketName, size)
+                val folderName = if (bucketName.isNullOrEmptyOrBlank()) {
+                    getFolderName(contentUri)
+                } else {
+                    bucketName
+                }
+                imageList += Image(id, contentUri, name, bucketId, folderName, size)
             }
         }
         imageList
@@ -232,8 +260,14 @@ internal suspend fun Context.getImagesList(
 /**
  * Extension function to convert Megabyte to Byte
  */
-internal fun Int.toByteSize(): Long {
-    return (this * 1e+6).toLong()
+internal fun Float.toByteSize(): Long {
+    return try {
+        val twoDecimalFloatingPoint = "%.2f".format(this).toFloat()
+        (twoDecimalFloatingPoint * MB_TO_BYTE_MULTIPLIER).toLong()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        (this.toInt() * MB_TO_BYTE_MULTIPLIER).toLong()
+    }
 }
 
 /**
@@ -255,6 +289,22 @@ internal fun Context.getFileUri(filePath: String): Uri? {
 }
 
 /**
+ * Gets the folder name from the uri.
+ * Folder name is fetched by the file path.
+ */
+internal fun Context.getFolderName(contentURI: Uri): String {
+    val path = getRealPathFromURI(contentURI)
+    if (path.isNullOrEmptyOrBlank()) {
+        return ""
+    }
+    val name = File(path).parentFile?.name
+    if (!name.isNullOrEmptyOrBlank()) {
+        return name
+    }
+    return ""
+}
+
+/**
  * Gets the real path from the URI.
  */
 internal fun Context.getRealPathFromURI(contentURI: Uri): String? {
@@ -265,4 +315,15 @@ internal fun Context.getRealPathFromURI(contentURI: Uri): String? {
         it.getString(index)
     }
     return path
+}
+
+/**
+ * Internal function to check if string is null or empty or blank
+ */
+@OptIn(ExperimentalContracts::class)
+internal fun String?.isNullOrEmptyOrBlank(): Boolean {
+    contract {
+        returns(false) implies (this@isNullOrEmptyOrBlank != null)
+    }
+    return this.isNullOrEmpty() || this.isNullOrBlank()
 }

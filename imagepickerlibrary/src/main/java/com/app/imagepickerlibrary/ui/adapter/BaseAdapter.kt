@@ -32,9 +32,14 @@ internal abstract class BaseAdapter<T>(protected val listener: ItemClickListener
 
     override fun getItemCount() = itemList.size
 
-    fun addItemList(list: List<T>) {
+    /**
+     * Clearing previous image list item and adding all the new items
+     * Using notifyDataSetChanged to manage both addition and removal of image items from list
+     */
+    fun setItemList(list: List<T>) {
+        itemList.clear()
         itemList.addAll(list)
-        notifyItemRangeInserted(itemList.size - list.size, list.size)
+        notifyDataSetChanged()
     }
 
     internal open inner class BaseVH(val binding: ViewDataBinding) :

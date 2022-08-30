@@ -8,6 +8,7 @@ import com.app.imagepickerlibrary.R
 import com.app.imagepickerlibrary.databinding.FragmentFolderBinding
 import com.app.imagepickerlibrary.model.Folder
 import com.app.imagepickerlibrary.model.Image
+import com.app.imagepickerlibrary.model.Result
 import com.app.imagepickerlibrary.ui.adapter.FolderAdapter
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,7 @@ internal class FolderFragment : BaseFragment<FragmentFolderBinding, Folder>() {
     override fun getLayoutResId(): Int = R.layout.fragment_folder
 
     override fun onViewCreated() {
+        setRecyclerView(binding.rvFolder)
         binding.rvFolder.adapter = folderAdapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
@@ -39,10 +41,13 @@ internal class FolderFragment : BaseFragment<FragmentFolderBinding, Folder>() {
     }
 
     private fun updateFolderList(folderList: List<Folder>) {
+        if (viewModel.resultFlow.value is Result.Loading) {
+            return
+        }
         val isFolderListEmpty = folderList.isEmpty()
         binding.rvFolder.isVisible = !isFolderListEmpty
         binding.textNoData.isVisible = isFolderListEmpty
-        folderAdapter.addItemList(folderList)
+        folderAdapter.setItemList(folderList)
     }
 
     override fun handleSuccess(images: List<Image>) {
@@ -60,5 +65,9 @@ internal class FolderFragment : BaseFragment<FragmentFolderBinding, Folder>() {
 
     override fun handleItemClick(item: Folder, position: Int, viewId: Int) {
         viewModel.openFolder(item)
+    }
+
+    override fun onConfigurationChange() {
+        setRecyclerView(binding.rvFolder)
     }
 }

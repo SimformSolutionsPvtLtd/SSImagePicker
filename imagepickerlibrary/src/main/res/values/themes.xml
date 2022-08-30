@@ -23,6 +23,7 @@
         <item name="ssNoDataTextViewStyle">@style/SSNoDataTextStyle</item>
         <item name="ssImagePickerLimitText">@string/str_picker_limit</item>
         <item name="ssPickerGridCount">2</item>
+        <item name="ssPickerGridCountLandscape">4</item>
         <item name="ssImageSelectIcon">@drawable/ic_ss_check_circle</item>
         <item name="ssImageZoomIcon">@drawable/ic_ss_zoom_eye</item>
         <item name="ssUCropToolbarColor">?attr/ssToolbarBackground</item>

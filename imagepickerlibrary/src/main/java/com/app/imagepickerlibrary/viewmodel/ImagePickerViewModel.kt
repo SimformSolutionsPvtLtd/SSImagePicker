@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.imagepickerlibrary.getFileUri
 import com.app.imagepickerlibrary.getImagesList
+import com.app.imagepickerlibrary.isNullOrEmptyOrBlank
 import com.app.imagepickerlibrary.model.Folder
 import com.app.imagepickerlibrary.model.Image
 import com.app.imagepickerlibrary.model.PickerConfig
@@ -29,10 +30,10 @@ internal class ImagePickerViewModel(application: Application) : AndroidViewModel
     val resultFlow = _resultFlow.asStateFlow()
     private val _selectedFolder = MutableSharedFlow<Folder>()
     val selectedFolder = _selectedFolder.asSharedFlow()
-    private val _folderFlow = MutableStateFlow<List<Folder>>(listOf())
-    val folderFlow = _folderFlow.asStateFlow()
-    private val _imageFlow = MutableStateFlow<List<Image>>(listOf())
-    val imageFlow = _imageFlow.asStateFlow()
+    private val _folderFlow = MutableSharedFlow<List<Folder>>()
+    val folderFlow = _folderFlow.asSharedFlow()
+    private val _imageFlow = MutableSharedFlow<List<Image>>(replay = 1)
+    val imageFlow = _imageFlow.asSharedFlow()
     private val _completeSelection = MutableSharedFlow<Boolean>()
     val completeSelection = _completeSelection.asSharedFlow()
     private val _selectedImages = mutableListOf<Image>()
@@ -49,6 +50,8 @@ internal class ImagePickerViewModel(application: Application) : AndroidViewModel
         _resultFlow.update { Result.Loading }
         viewModelScope.launch {
             val imageList = fetchImageList()
+            _selectedImages.clear()
+            _updateImageCount.emit(true)
             _resultFlow.update { Result.Success(imageList) }
         }
     }
@@ -70,17 +73,17 @@ internal class ImagePickerViewModel(application: Application) : AndroidViewModel
                     Folder(it.key, image.bucketName, image.uri, it.value)
                 }
                 .sortedBy { it.bucketName }
-            _folderFlow.update { folders }
+            _folderFlow.emit(folders)
         }
     }
 
     fun getImagesFromFolder(bucketId: Long?, images: List<Image>) {
         if (bucketId == null) {
-            _imageFlow.update { images }
+            _imageFlow.tryEmit(images)
         } else {
             viewModelScope.launch(Dispatchers.IO) {
                 val filteredImages = images.filter { it.bucketId == bucketId }
-                _imageFlow.update { filteredImages }
+                _imageFlow.tryEmit(filteredImages)
             }
         }
     }
@@ -130,7 +133,7 @@ internal class ImagePickerViewModel(application: Application) : AndroidViewModel
             _disableInteraction.emit(true)
             list.forEach { image ->
                 val compressImagePath = compress(context, image.uri, image.name, compressQuality)
-                if (compressImagePath.isNullOrEmpty() || compressImagePath.isBlank()) {
+                if (compressImagePath.isNullOrEmptyOrBlank()) {
                     compressedImageList.add(image.copy())
                 } else {
                     val fileUri = context.getFileUri(compressImagePath)

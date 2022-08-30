@@ -4,4 +4,24 @@
     <string name="str_camera">"Camera"</string>
     <string name="str_gallery">"Gallery"</string>
     <string name="str_cancel">Cancel</string>
+    <string name="allow_multi_selection">Allow multi selection</string>
+    <string name="show_count_in_toolbar">Show count in toolbar</string>
+    <string name="picker_type">Picker type</string>
+    <string name="show_folder">Show folder</string>
+    <string name="camera_icon_in_gallery">Camera icon in gallery</string>
+    <string name="pick_count">Max pick count</string>
+    <string name="max_size_mb">Max size (MB)</string>
+    <string name="done_icon">Done icon</string>
+    <string name="enable_crop">Enable crop</string>
+    <string name="system_picker">System picker (Android 11+)</string>
+    <string name="compress_image">Compress image</string>
+    <string name="extension">Extension</string>
+    <string name="all">All</string>
+    <string name="png">PNG</string>
+    <string name="jpeg">JPEG</string>
+    <string name="webp">WEBP</string>
+    <string name="open_picker_sheet">Open picker choose sheet</string>
+    <string name="open_image_picker">Open image picker</string>
+    <string name="error_count_value">Enter valid max count value. It should be greater than 0.</string>
+    <string name="error_size_value">Enter valid max size value. It should be greater than 0.</string>
 </resources>

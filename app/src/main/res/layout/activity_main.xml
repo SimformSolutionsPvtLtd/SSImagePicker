@@ -1,43 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_bg"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewEditProfile"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:layout_marginBottom="@dimen/_50sdp"
-        android:background="@drawable/ic_image_background"
-        android:onClick="onClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <ProgressBar
-        android:id="@+id/loading_progress"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewEditProfile"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewEditProfile"
-        app:layout_constraintStart_toStartOf="@+id/imageViewEditProfile"
-        app:layout_constraintTop_toTopOf="@+id/imageViewEditProfile" />
+        <variable
+            name="clickHandler"
+            type="android.view.View.OnClickListener" />
+    </data>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/edit_logo"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:onClick="onClick"
-        android:src="@drawable/ic_upload_image"
-        app:layout_constraintEnd_toEndOf="@id/imageViewEditProfile"
-        app:layout_constraintStart_toStartOf="@+id/imageViewEditProfile"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewEditProfile" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context=".MainActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/_12sdp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/picker_type_text"
+                style="@style/TitleStyle"
+                android:text="@string/picker_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/picker_type_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:checkedButton="@id/gallery_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/picker_type_text"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/gallery_button"
+                    style="@style/ButtonStyle"
+                    android:text="@string/str_gallery" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/camera_button"
+                    style="@style/ButtonStyle"
+                    android:text="@string/str_camera" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/multi_selection_switch"
+                style="@style/SwitchStyle"
+                android:text="@string/allow_multi_selection"
+                app:layout_constraintEnd_toStartOf="@id/divider_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/picker_type_group" />
+
+            <View
+                android:id="@+id/divider_1"
+                style="@style/DividerStyle"
+                app:layout_constraintBottom_toBottomOf="@id/multi_selection_switch"
+                app:layout_constraintEnd_toStartOf="@id/count_toolbar_switch"
+                app:layout_constraintStart_toEndOf="@id/multi_selection_switch"
+                app:layout_constraintTop_toTopOf="@id/multi_selection_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/count_toolbar_switch"
+                style="@style/SwitchStyle"
+                android:checked="true"
+                android:text="@string/show_count_in_toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider_1"
+                app:layout_constraintTop_toBottomOf="@id/picker_type_group" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/folder_switch"
+                style="@style/SwitchStyle"
+                android:checked="true"
+                android:text="@string/show_folder"
+                app:layout_constraintEnd_toStartOf="@id/divider_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/multi_selection_switch" />
+
+            <View
+                android:id="@+id/divider_2"
+                style="@style/DividerStyle"
+                app:layout_constraintBottom_toBottomOf="@id/folder_switch"
+                app:layout_constraintEnd_toStartOf="@id/camera_in_gallery"
+                app:layout_constraintStart_toEndOf="@id/folder_switch"
+                app:layout_constraintTop_toTopOf="@id/folder_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/camera_in_gallery"
+                style="@style/SwitchStyle"
+                android:checked="true"
+                android:text="@string/camera_icon_in_gallery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider_2"
+                app:layout_constraintTop_toBottomOf="@id/multi_selection_switch" />
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/done_switch"
+                style="@style/SwitchStyle"
+                android:checked="true"
+                android:text="@string/done_icon"
+                app:layout_constraintEnd_toStartOf="@id/divider_3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/folder_switch" />
+
+            <View
+                android:id="@+id/divider_3"
+                style="@style/DividerStyle"
+                app:layout_constraintBottom_toBottomOf="@id/done_switch"
+                app:layout_constraintEnd_toStartOf="@id/open_crop_switch"
+                app:layout_constraintStart_toEndOf="@id/done_switch"
+                app:layout_constraintTop_toTopOf="@id/done_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/open_crop_switch"
+                style="@style/SwitchStyle"
+                android:text="@string/enable_crop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider_3"
+                app:layout_constraintTop_toBottomOf="@id/folder_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/system_picker_switch"
+                style="@style/SwitchStyle"
+                android:text="@string/system_picker"
+                app:layout_constraintEnd_toStartOf="@id/divider_4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/done_switch" />
+
+            <View
+                android:id="@+id/divider_4"
+                style="@style/DividerStyle"
+                app:layout_constraintBottom_toBottomOf="@id/system_picker_switch"
+                app:layout_constraintEnd_toStartOf="@id/compress_image_switch"
+                app:layout_constraintStart_toEndOf="@id/system_picker_switch"
+                app:layout_constraintTop_toTopOf="@id/system_picker_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/compress_image_switch"
+                style="@style/SwitchStyle"
+                android:text="@string/compress_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider_4"
+                app:layout_constraintTop_toBottomOf="@id/done_switch" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/pick_count_text"
+                style="@style/TitleStyle"
+                android:text="@string/pick_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/system_picker_switch" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/pick_count_slider"
+                android:layout_width="0dp"
+                android:value="5"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pick_count_text" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pick_size_til"
+                style="@style/TextInputLayoutStyle"
+                android:hint="@string/max_size_mb"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pick_count_slider">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pick_size_tie"
+                    style="@style/EditTextStyle"
+                    android:imeOptions="actionDone"
+                    android:text="2.5" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/extension_type_text"
+                style="@style/TitleStyle"
+                android:text="@string/extension"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pick_size_til" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/extension_type_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:checkedButton="@id/all_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/extension_type_text"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/all_button"
+                    style="@style/ButtonStyle"
+                    android:text="@string/all" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/png_button"
+                    style="@style/ButtonStyle"
+                    android:text="@string/png" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/jpeg_button"
+                    style="@style/ButtonStyle"
+                    android:text="@string/jpeg" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/webp_button"
+                    style="@style/ButtonStyle"
+                    android:text="@string/webp" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/open_sheet_button"
+                style="@style/ButtonStyle"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:onClick="@{clickHandler::onClick}"
+                android:text="@string/open_picker_sheet"
+                app:layout_constraintEnd_toStartOf="@id/open_picker_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/extension_type_group" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/open_picker_button"
+                style="@style/ButtonStyle"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:onClick="@{clickHandler::onClick}"
+                android:text="@string/open_image_picker"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/open_sheet_button"
+                app:layout_constraintTop_toBottomOf="@id/extension_type_group" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/image_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_24sdp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/open_picker_button"
+                tools:itemCount="5"
+                tools:listitem="@layout/list_item_image_data" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

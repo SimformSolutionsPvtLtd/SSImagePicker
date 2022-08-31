@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import coil.load
 import com.app.imagepickerlibrary.R
 import com.app.imagepickerlibrary.databinding.DialogFragmentFullScreenImageBinding
+import com.app.imagepickerlibrary.getModel
 import com.app.imagepickerlibrary.model.Image
 
 /**
@@ -48,7 +49,7 @@ internal class FullScreenImageDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val image: Image? = arguments?.getParcelable(IMAGE)
+        val image: Image? = arguments?.getModel(IMAGE)
         if (image == null) {
             dismiss()
         }

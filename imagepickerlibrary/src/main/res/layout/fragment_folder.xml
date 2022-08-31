@@ -18,7 +18,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:spanCount="?attr/ssPickerGridCount"
             tools:listitem="@layout/list_item_folder" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator

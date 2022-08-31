@@ -3,6 +3,7 @@ package com.app.imagepickerlibrary.model
 import android.net.Uri
 import android.os.Parcelable
 import android.provider.MediaStore
+import com.app.imagepickerlibrary.MAX_PICK_LIMIT
 import com.app.imagepickerlibrary.toByteSize
 import kotlinx.parcelize.Parcelize
 import java.util.Locale
@@ -17,8 +18,8 @@ internal data class PickerConfig(
     var showCountInToolBar: Boolean = true,
     var showFolders: Boolean = true,
     var allowMultipleSelection: Boolean = false,
-    var maxPickCount: Int = Int.MAX_VALUE,
-    var maxPickSizeMB: Int = Int.MAX_VALUE,
+    var maxPickCount: Int = MAX_PICK_LIMIT,
+    var maxPickSizeMB: Float = Float.MAX_VALUE,
     var pickExtension: PickExtension = PickExtension.ALL,
     var showCameraIconInGallery: Boolean = true,
     var isDoneIcon: Boolean = true,
@@ -40,7 +41,7 @@ internal data class PickerConfig(
     fun generateSelectionArguments(): Pair<String, Array<String>> {
         val selection: StringBuilder = StringBuilder()
         val selectionArgs = mutableListOf<String>()
-        if (maxPickSizeMB != Int.MAX_VALUE) {
+        if (maxPickSizeMB != Float.MAX_VALUE) {
             selection.append("${MediaStore.Images.Media.SIZE} <= ?")
             selectionArgs.add(maxPickSizeMB.toByteSize().toString())
         }

@@ -5,7 +5,6 @@ import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -156,7 +155,7 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateSelectCount() {
-        if (pickerConfig.showCountInToolBar && pickerConfig.allowMultipleSelection && pickerConfig.maxPickCount != Int.MAX_VALUE) {
+        if (pickerConfig.showCountInToolBar && pickerConfig.allowMultipleSelection) {
             binding.toolbar.textTitle.text =
                 getString(
                     R.string.str_selected_image_toolbar,

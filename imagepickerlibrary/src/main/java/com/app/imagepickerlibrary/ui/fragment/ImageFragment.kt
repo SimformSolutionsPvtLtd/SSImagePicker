@@ -10,6 +10,7 @@ import com.app.imagepickerlibrary.databinding.FragmentImageBinding
 import com.app.imagepickerlibrary.getStringAttribute
 import com.app.imagepickerlibrary.model.Image
 import com.app.imagepickerlibrary.model.PickerConfig
+import com.app.imagepickerlibrary.model.Result
 import com.app.imagepickerlibrary.toast
 import com.app.imagepickerlibrary.ui.adapter.ImageAdapter
 import com.app.imagepickerlibrary.ui.dialog.FullScreenImageDialogFragment
@@ -41,6 +42,7 @@ internal class ImageFragment : BaseFragment<FragmentImageBinding, Image>() {
 
     override fun onViewCreated() {
         bucketId = arguments?.getLong(BUCKET_ID)
+        setRecyclerView(binding.rvImage)
         binding.rvImage.apply {
             adapter = imageAdapter
             setHasFixedSize(true)
@@ -63,10 +65,13 @@ internal class ImageFragment : BaseFragment<FragmentImageBinding, Image>() {
     }
 
     private fun updateImageList(imageList: List<Image>) {
+        if (viewModel.resultFlow.value is Result.Loading) {
+            return
+        }
         val isImageListEmpty = imageList.isEmpty()
         binding.rvImage.isVisible = !isImageListEmpty
         binding.textNoData.isVisible = isImageListEmpty
-        imageAdapter.addItemList(imageList)
+        imageAdapter.setItemList(imageList)
     }
 
     override fun handleSuccess(images: List<Image>) {
@@ -121,5 +126,9 @@ internal class ImageFragment : BaseFragment<FragmentImageBinding, Image>() {
     private fun showZoomImage(item: Image) {
         val imageDialogFragment = FullScreenImageDialogFragment.newInstance(item)
         imageDialogFragment.show(childFragmentManager, FullScreenImageDialogFragment.FRAGMENT_TAG)
+    }
+
+    override fun onConfigurationChange() {
+        setRecyclerView(binding.rvImage)
     }
 }

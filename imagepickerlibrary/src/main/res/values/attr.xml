@@ -32,8 +32,10 @@
         <attr name="ssNoDataTextViewStyle" format="reference" />
         <!--The text which will be displayed to user as toast message when the user tries to select more images then the specified pick limit-->
         <attr name="ssImagePickerLimitText" format="string" />
-        <!--Grid count in picker screen. It will be same for both folder and the image-->
+        <!--Grid count in picker screen for portrait mode. It will be same for both folder and the image-->
         <attr name="ssPickerGridCount" format="integer" />
+        <!--Grid count in picker screen for landscape mode. It will be same for both folder and the image-->
+        <attr name="ssPickerGridCountLandscape" format="integer" />
         <!--The image drawable to indicate the image is selected. the icon is displayed over the selected image.-->
         <attr name="ssImageSelectIcon" format="reference" />
         <!--The icon which is used to open image in dialog mode to see in full view mode-->

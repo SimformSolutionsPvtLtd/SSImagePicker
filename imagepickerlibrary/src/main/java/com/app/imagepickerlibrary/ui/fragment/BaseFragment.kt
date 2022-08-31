@@ -1,5 +1,6 @@
 package com.app.imagepickerlibrary.ui.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.app.imagepickerlibrary.R
+import com.app.imagepickerlibrary.getIntAttribute
 import com.app.imagepickerlibrary.listener.ItemClickListener
 import com.app.imagepickerlibrary.model.Image
 import com.app.imagepickerlibrary.model.Result
@@ -99,6 +104,27 @@ internal abstract class BaseFragment<Binding : ViewDataBinding, T> : Fragment(),
         }
         handleItemClick(item, position, viewId)
     }
+
+    /**
+     * Setting recycler view for both folder and image fragments.
+     * The span count is based on screen orientation so that the picker screen look better.
+     */
+    protected fun setRecyclerView(recyclerView: RecyclerView) {
+        val spanCount =
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                requireContext().getIntAttribute(R.attr.ssPickerGridCount)
+            } else {
+                requireContext().getIntAttribute(R.attr.ssPickerGridCountLandscape)
+            }
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        onConfigurationChange()
+    }
+
+    abstract fun onConfigurationChange()
 
     abstract fun handleItemClick(item: T, position: Int, viewId: Int)
 }

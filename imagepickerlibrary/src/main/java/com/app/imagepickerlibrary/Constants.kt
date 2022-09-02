@@ -1,11 +1,6 @@
 package com.app.imagepickerlibrary
 
-const val bottomSheetActionFragment = "BottomSheetFragment"
-var dateFormatForTakePicture = "yyyyMMdd_HHmmss"
-var bottomSheetActionCamera = "Camera"
-var bottomSheetActionGallary = "Gallery"
-var bottomSheetActionCancel = "Cancel"
-var imageFilePath = ""
-const val PERMISSION_REQUEST_CODE = 1
-const val REQUEST_GALLERY = 2
-const val REQUEST_TAKE_PHOTO = 3
+internal const val dateFormatForTakePicture = "yyyyMMdd_HHmmss"
+internal const val EXTRA_IMAGE_PICKER_CONFIG = "extra-picker-config"
+internal const val MB_TO_BYTE_MULTIPLIER = 1e+6
+internal const val MAX_PICK_LIMIT = 15

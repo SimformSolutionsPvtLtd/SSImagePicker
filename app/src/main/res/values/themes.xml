@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.SSImagePicker" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="SSImagePickerApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -10,28 +10,88 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="TextViewImageOption">
-        <item name="android:textColor">@color/design_default_color_on_secondary</item>
-        <item name="android:textSize">@dimen/_14ssp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:padding">@dimen/_14sdp</item>
+    <style name="CustomSSImagePicker" parent="SSImagePicker">
+        <item name="ssToolbarBackIcon">@drawable/ic_arrow_back_ios</item>
+        <item name="ssToolbarDoneTextAppearance">@style/CustomDoneTextAppearance</item>
+        <item name="ssPickerGridCountLandscape">3</item>
+        <item name="ssImageSelectIcon">@drawable/ic_baseline_check_circle</item>
     </style>
 
-    <style name="RoundBottomSheetDialogThemeWhite" parent="RoundBaseBottomSheetDialogWhite" />
-
-    <style name="RoundBaseBottomSheetDialogWhite" parent="@style/Theme.Design.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="bottomSheetStyle">@style/RoundBottomSheetWhite</item>
+    <style name="CustomDoneTextAppearance" parent="SSToolbarDoneTextAppearance">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/_13ssp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
 
-    <style name="RoundBottomSheetWhite" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/drawable_bottom_sheet_dialog</item>
+    <style name="CustomPickerBottomSheet" parent="SSImagePickerBaseBottomSheetDialog">
+        <item name="ssSheetCameraViewStyle">@style/PickerBottomSheetText</item>
+        <item name="ssSheetGalleryViewStyle">@style/PickerBottomSheetText</item>
+        <item name="ssSheetCancelViewStyle">@style/PickerBottomSheetText</item>
     </style>
 
-    <style name="fontForNotificationLandingPage" parent="Widget.AppCompat.TextView">
+    <style name="PickerBottomSheetText" parent="SSBottomSheetTextViewStyle">
         <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textColor">@color/color_text</item>
         <item name="android:textSize">@dimen/_15ssp</item>
+    </style>
+
+    <style name="SwitchStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/_8sdp</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Button</item>
+        <item name="android:textColor">@color/color_text</item>
+        <item name="switchPadding">@dimen/_5sdp</item>
+    </style>
+
+    <style name="DividerStyle">
+        <item name="android:layout_width">@dimen/_1sdp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginStart">@dimen/_4sdp</item>
+        <item name="android:layout_marginTop">@dimen/_8sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_4sdp</item>
+        <item name="android:layout_marginBottom">@dimen/_8sdp</item>
+        <item name="android:background">@color/color_text</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/color_text</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/_8sdp</item>
+        <item name="hintTextColor">@color/color_text</item>
+    </style>
+
+    <style name="RadioButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Button</item>
+        <item name="android:textColor">@color/color_text</item>
+    </style>
+
+    <style name="TitleStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/_10sdp</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Button</item>
+        <item name="android:textColor">@color/color_text</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
 </resources>

@@ -1,19 +1,16 @@
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     kotlin(Plugins.Kotlin.ANDROID)
-    kotlin(Plugins.Kotlin.ANDROID_EXTENSIONS)
     kotlin(Plugins.Kotlin.KAPT)
-    id(Plugins.KOTLIN_ANDROID)
 }
 
 android {
-    compileSdkVersion(Versions.COMPILE_SDK)
-    buildToolsVersion(Versions.BUILD_TOOLS)
+    compileSdk = Versions.COMPILE_SDK
 
     defaultConfig {
         applicationId = App.ID
-        minSdkVersion(Versions.MIN_SDK)
-        targetSdkVersion(Versions.TARGET_SDK)
+        minSdk = Versions.MIN_SDK
+        targetSdk = Versions.TARGET_SDK
         versionCode = App.Version.CODE
         versionName = App.Version.NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -45,42 +42,17 @@ android {
         }
     }
 
-    flavorDimensions(App.Dimension.DEFAULT)
-
-    productFlavors {
-        create(App.Flavor.DEV) {
-            applicationId = App.ID
-        }
-
-        create(App.Flavor.QA) {
-
-        }
-
-        create(App.Flavor.PRODUCTION) {
-
-        }
-    }
-
-    variantFilter {
-        val name = this.flavors[0].name
-
-        @SuppressWarnings("ComplexCondition")
-        if ((this.buildType.name == App.BuildType.RELEASE && name.contains(App.Flavor.DEV)) || (this.buildType.name == App.BuildType.DEBUG && name.contains(App.Flavor.QA))) {
-            ignore = true
-        }
-    }
-
     buildFeatures {
         dataBinding = true
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 }
 
@@ -99,6 +71,7 @@ dependencies {
     // Jetpack
     implementation(Dependencies.ACTIVITY_KTX)
     implementation(Dependencies.FRAGMENT_KTX)
+    implementation(Dependencies.RECYCLER_VIEW)
 
     // LiveData
     implementation(Dependencies.LIFECYCLE_LIVEDATA)

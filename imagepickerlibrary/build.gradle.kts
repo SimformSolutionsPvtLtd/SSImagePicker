@@ -6,6 +6,20 @@ plugins {
     id("maven-publish")
 }
 
+afterEvaluate {
+    publishing {
+        publications {
+            register<MavenPublication>("release") {
+                groupId = "com.github.SimformSolutionsPvtLtd"
+                artifactId = "SSImagePicker"
+                version = "2.0"
+
+                from(components["release"])
+            }
+        }
+    }
+}
+
 android {
     compileSdk = 33
 
@@ -37,20 +51,6 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-
-    afterEvaluate {
-        publishing {
-            publications {
-                register<MavenPublication>("release") {
-                    groupId = "com.github.SimformSolutionsPvtLtd"
-                    artifactId = "SSImagePicker"
-                    version = "2.0"
-
-                    from(components["release"])
-                }
-            }
-        }
     }
 }
 

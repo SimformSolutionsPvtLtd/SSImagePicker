@@ -94,7 +94,7 @@
     </style>
 
     <style name="SSRoundBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/drawable_bottom_sheet_dialog</item>
+        <item name="android:background">?attr/ssSheetBackground</item>
         <item name="android:windowIsFloating">false</item>
     </style>
 

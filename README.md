@@ -1,13 +1,13 @@
-![](LibraryBanner.png)
+![](library_banner.png)
 # 📸 SSImagePicker
 
-[![Android-Studio](https://img.shields.io/badge/Android%20Studio-Chipmunk-orange.svg?style=flat)](https://developer.android.com/studio/)
+[![](https://jitpack.io/v/SimformSolutionsPvtLtd/SSImagePicker.svg)](https://jitpack.io/#SimformSolutionsPvtLtd/SSImagePicker)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-v1.7.0-blue.svg)](https://kotlinlang.org)
 [![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23473-orange)](https://androidweekly.net/issues/issue-473)
 [![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-SSImagePicker-green.svg?style=flat )]( https://android-arsenal.com/details/1/8243 )
 
-Easy to use and configurable library to **Pick an image from the Gallery or Capture image using Camera**.
+Easy to use and configurable library to **Pick multiple images from the Gallery or Capture an image using Camera with maximum size, extension, crop, rotate, zoom and compress features**.
 
 * You can easily select image from camera and gallery and upload it wherever you want. We have created this library to simplify pick or capture image feature.
 * Handled permissions for camera and gallery, also supports scoped storage.
@@ -15,7 +15,7 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
 * Easy to use and supports all major devices.
 * Support for new [Photo Picker](https://developer.android.com/training/data-storage/shared/photopicker) for Android 11+.
 
-# Features :
+# :zap: Features :
 
 * Capture Image Using Camera
 * Pick Image From Gallery
@@ -72,13 +72,23 @@ Easy to use and configurable library to **Pick an image from the Gallery or Capt
         }
     ```
 
+* Enable data binding feature in your app's build.gradle file [(More Details)](https://developer.android.com/topic/libraries/data-binding/start#build_environment).
+    ```groovy
+        android {
+            ...
+            buildFeatures {
+                dataBinding true
+            }
+        }
+    ```
+
 * Add the dependency in your app's build.gradle file
 
-```groovy
-    dependencies {
-        implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:2.0'
-    }
-```
+    ```groovy
+        dependencies {
+            implementation 'com.github.SimformSolutionsPvtLtd:SSImagePicker:2.0'
+        }
+    ```
 2. Add ImagePickerActivity into your AndroidManifest.xml. **`SSImagePicker`** is default theme for image picker activity. If you want to set custom theme check out [customization guide](docs/picker_ui_customization.md). Make sure to add the **`android:configChanges`** to handle the rotation.
 ```xml
 <activity
@@ -191,14 +201,25 @@ For bugs, feature requests, and discussion please use [GitHub Issues](https://gi
 ## License
 
 ```
-Copyright 2022 Simform Solutions
+MIT License
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and limitations under the License.
+Copyright (c) 2022 Simform Solutions
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```

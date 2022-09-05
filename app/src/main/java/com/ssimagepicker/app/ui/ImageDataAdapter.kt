@@ -1,11 +1,13 @@
-package com.ssimagepicker.app
+package com.ssimagepicker.app.ui
 
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.ssimagepicker.app.R
 import com.ssimagepicker.app.databinding.ListItemImageDataBinding
+import com.ssimagepicker.app.loadImage
 
 /**
  * ImageDataAdapter class to display list of picked images from the picker.

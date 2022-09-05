@@ -1,26 +1,27 @@
-package com.ssimagepicker.app
+package com.ssimagepicker.app.ui
 
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.app.imagepickerlibrary.ImagePicker
 import com.app.imagepickerlibrary.ImagePicker.Companion.registerImagePicker
 import com.app.imagepickerlibrary.listener.ImagePickerResultListener
 import com.app.imagepickerlibrary.model.ImageProvider
-import com.app.imagepickerlibrary.model.PickExtension
 import com.app.imagepickerlibrary.model.PickerType
 import com.app.imagepickerlibrary.ui.bottomsheet.SSPickerOptionsBottomSheet
+import com.ssimagepicker.app.PickerOptions
+import com.ssimagepicker.app.R
 import com.ssimagepicker.app.databinding.ActivityMainBinding
+import com.ssimagepicker.app.isAtLeast11
 
 /**
  * MainActivity which displays all the functionality of the ImagePicker library. All the attributes are modified with the ui.
  */
 class MainActivity : AppCompatActivity(), View.OnClickListener,
     SSPickerOptionsBottomSheet.ImagePickerClickListener,
-    ImagePickerResultListener {
+    ImagePickerResultListener, PickerOptionsBottomSheet.PickerOptionsListener {
 
     companion object {
         private const val IMAGE_LIST = "IMAGE_LIST"
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     private val imagePicker: ImagePicker = registerImagePicker(this@MainActivity)
     private val imageList = mutableListOf<Uri>()
     private val imageDataAdapter = ImageDataAdapter(imageList)
+    private var pickerOptions = PickerOptions.default()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +42,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun setUI(savedInstanceState: Bundle?) {
         binding.imageRecyclerView.adapter = imageDataAdapter
-        binding.pickCountSlider.valueFrom = 1f
-        binding.pickCountSlider.valueTo = 15f
-        binding.pickCountSlider.stepSize = 1f
         if (savedInstanceState != null && savedInstanceState.containsKey(IMAGE_LIST)) {
             val uriList: List<Uri> =
                 savedInstanceState.getParcelableArrayList(IMAGE_LIST) ?: listOf()
@@ -52,14 +51,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onClick(v: View) {
         when (v.id) {
+            R.id.options_button -> {
+                openPickerOptions()
+            }
             R.id.open_picker_button -> {
-                val pickerType =
-                    if (binding.pickerTypeGroup.checkedButtonId == R.id.gallery_button) {
-                        PickerType.GALLERY
-                    } else {
-                        PickerType.CAMERA
-                    }
-                checkForImagePicker(pickerType)
+                openImagePicker()
             }
             R.id.open_sheet_button -> {
                 val fragment =
@@ -75,10 +71,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     override fun onImageProvider(provider: ImageProvider) {
         when (provider) {
             ImageProvider.GALLERY -> {
-                checkForImagePicker(PickerType.GALLERY)
+                pickerOptions = pickerOptions.copy(pickerType = PickerType.GALLERY)
+                openImagePicker()
             }
             ImageProvider.CAMERA -> {
-                checkForImagePicker(PickerType.CAMERA)
+                pickerOptions = pickerOptions.copy(pickerType = PickerType.CAMERA)
+                openImagePicker()
             }
             ImageProvider.NONE -> {
                 //User has pressed cancel show anything or just leave it blank.
@@ -86,54 +84,44 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private fun checkForImagePicker(pickerType: PickerType) {
-        if (isDataValid()) {
-            openImagePicker(pickerType)
-        }
+    /**
+     * Opens the options for picker. The picker option is bottom sheet with many input parameters.
+     */
+    private fun openPickerOptions() {
+        val fragment = PickerOptionsBottomSheet.newInstance(pickerOptions)
+        fragment.setClickListener(this)
+        fragment.show(supportFragmentManager, PickerOptionsBottomSheet.BOTTOM_SHEET_TAG)
     }
 
     /**
-     * Check whether the max pick count and max size is valid or not.
-     * If all data is valid it will return true.
+     * Once the picker options are selected in bottom sheet
+     * we will receive the latest picker options in this method
      */
-    private fun isDataValid(): Boolean {
-        val sizeValue = binding.pickSizeTie.text.toString().toFloatOrNull()
-        if (sizeValue == null || sizeValue <= 0) {
-            Toast.makeText(this, R.string.error_size_value, Toast.LENGTH_LONG).show()
-            return false
-        }
-        return true
+    override fun onPickerOptions(pickerOptions: PickerOptions) {
+        this.pickerOptions = pickerOptions
+        openImagePicker()
     }
 
     /**
      * Open the image picker according to picker type and the ui options.
      * The new system picker is only available for Android 13+.
      */
-    private fun openImagePicker(pickerType: PickerType) {
-        val countValue = binding.pickCountSlider.value.toInt()
-        val sizeValue = binding.pickSizeTie.text.toString().toFloat()
-        val pickExtension = when (binding.extensionTypeGroup.checkedButtonId) {
-            R.id.all_button -> PickExtension.ALL
-            R.id.png_button -> PickExtension.PNG
-            R.id.jpeg_button -> PickExtension.JPEG
-            R.id.webp_button -> PickExtension.WEBP
-            else -> PickExtension.ALL
-        }
+    private fun openImagePicker() {
         imagePicker
             .title("My Picker")
-            .multipleSelection(binding.multiSelectionSwitch.isChecked, countValue)
-            .showCountInToolBar(binding.countToolbarSwitch.isChecked)
-            .showFolder(binding.folderSwitch.isChecked)
-            .cameraIcon(binding.cameraInGallery.isChecked)
-            .doneIcon(binding.doneSwitch.isChecked)
-            .allowCropping(binding.openCropSwitch.isChecked)
-            .compressImage(binding.compressImageSwitch.isChecked)
-            .maxImageSize(sizeValue)
-            .extension(pickExtension)
+            .multipleSelection(pickerOptions.allowMultipleSelection, pickerOptions.maxPickCount)
+            .showCountInToolBar(pickerOptions.showCountInToolBar)
+            .showFolder(pickerOptions.showFolders)
+            .cameraIcon(pickerOptions.showCameraIconInGallery)
+            .doneIcon(pickerOptions.isDoneIcon)
+            .allowCropping(pickerOptions.openCropOptions)
+            .compressImage(pickerOptions.compressImage)
+            .maxImageSize(pickerOptions.maxPickSizeMB)
+            .extension(pickerOptions.pickExtension)
         if (isAtLeast11()) {
-            imagePicker.systemPicker(binding.systemPickerSwitch.isChecked)
+            imagePicker.systemPicker(pickerOptions.openSystemPicker)
         }
-        imagePicker.open(pickerType)
+        imagePicker.open(pickerOptions.pickerType)
     }
 
     /**

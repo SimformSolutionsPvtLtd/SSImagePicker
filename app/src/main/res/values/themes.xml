@@ -38,10 +38,11 @@
     <style name="SwitchStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/_8sdp</item>
+        <item name="android:layout_marginTop">@dimen/_4sdp</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Button</item>
         <item name="android:textColor">@color/color_text</item>
-        <item name="switchPadding">@dimen/_5sdp</item>
+        <item name="thumbTint">@drawable/selector_switch_thumb</item>
+        <item name="trackTint">@drawable/selector_switch_track</item>
     </style>
 
     <style name="DividerStyle">
@@ -88,10 +89,24 @@
         <item name="android:textSize">@dimen/_14ssp</item>
     </style>
 
-    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="ButtonSelectorStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
+        <item name="strokeColor">@color/button_stroke_color</item>
+        <item name="android:textColor">@drawable/selector_button_text_color</item>
+        <item name="backgroundTint">@drawable/selector_button_bg</item>
+    </style>
+
+    <style name="PickerOptionsBottomSheetDialog" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="bottomSheetStyle">@style/RoundCornerBottomSheet</item>
+    </style>
+
+    <style name="RoundCornerBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/drawable_bottom_sheet_dialog</item>
     </style>
 
 </resources>

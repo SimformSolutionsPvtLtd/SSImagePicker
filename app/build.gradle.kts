@@ -2,6 +2,7 @@ plugins {
     id(Plugins.ANDROID_APPLICATION)
     kotlin(Plugins.Kotlin.ANDROID)
     kotlin(Plugins.Kotlin.KAPT)
+    id(Plugins.Kotlin.PARCELIZE)
 }
 
 android {

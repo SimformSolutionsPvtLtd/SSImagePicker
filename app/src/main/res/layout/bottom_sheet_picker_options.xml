@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="clickHandler"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context=".ui.MainActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/_12sdp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/title"
+                style="@style/TitleStyle"
+                android:gravity="center"
+                android:text="@string/picker_options"
+                android:textSize="@dimen/_17ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/done_text"
+                style="@style/TitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:onClick="@{clickHandler::onClick}"
+                android:text="@string/done"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintBottom_toBottomOf="@id/title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/picker_type_text"
+                style="@style/TitleStyle"
+                android:text="@string/picker_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/picker_type_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:checkedButton="@id/gallery_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/picker_type_text"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/gallery_button"
+                    style="@style/ButtonSelectorStyle"
+                    android:text="@string/str_gallery" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/camera_button"
+                    style="@style/ButtonSelectorStyle"
+                    android:text="@string/str_camera" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/multi_selection_switch"
+                style="@style/SwitchStyle"
+                android:text="@string/allow_multi_selection"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/picker_type_group" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/count_toolbar_switch"
+                style="@style/SwitchStyle"
+                android:checked="true"
+                android:text="@string/show_count_in_toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/multi_selection_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/folder_switch"
+                style="@style/SwitchStyle"
+                android:checked="true"
+                android:text="@string/show_folder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/count_toolbar_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/camera_in_gallery"
+                style="@style/SwitchStyle"
+                android:checked="true"
+                android:text="@string/camera_icon_in_gallery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/folder_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/done_switch"
+                style="@style/SwitchStyle"
+                android:checked="true"
+                android:text="@string/done_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/camera_in_gallery" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/open_crop_switch"
+                style="@style/SwitchStyle"
+                android:text="@string/enable_crop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/done_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/system_picker_switch"
+                style="@style/SwitchStyle"
+                android:text="@string/system_picker"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/open_crop_switch" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/compress_image_switch"
+                style="@style/SwitchStyle"
+                android:text="@string/compress_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/system_picker_switch" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/pick_count_text"
+                style="@style/TitleStyle"
+                android:text="@string/pick_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/compress_image_switch" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/pick_count_slider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:value="5"
+                android:valueFrom="1"
+                android:valueTo="15"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pick_count_text"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pick_size_til"
+                style="@style/TextInputLayoutStyle"
+                android:hint="@string/max_size_mb"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pick_count_slider">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pick_size_tie"
+                    style="@style/EditTextStyle"
+                    android:imeOptions="actionDone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/extension_type_text"
+                style="@style/TitleStyle"
+                android:text="@string/extension"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pick_size_til" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/extension_type_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
+                app:checkedButton="@id/all_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/extension_type_text"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/all_button"
+                    style="@style/ButtonSelectorStyle"
+                    android:text="@string/all" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/png_button"
+                    style="@style/ButtonSelectorStyle"
+                    android:text="@string/png" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/jpeg_button"
+                    style="@style/ButtonSelectorStyle"
+                    android:text="@string/jpeg" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/webp_button"
+                    style="@style/ButtonSelectorStyle"
+                    android:text="@string/webp" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -2,4 +2,5 @@
 <resources>
     <color name="color_text">#FFFFFF</color>
     <color name="color_bottom_sheet_bg">#222222</color>
+    <color name="button_stroke_color">@color/black</color>
 </resources>

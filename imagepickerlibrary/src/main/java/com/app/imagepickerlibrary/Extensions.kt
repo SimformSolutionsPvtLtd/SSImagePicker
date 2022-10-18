@@ -24,6 +24,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.app.imagepickerlibrary.listener.ImagePickerResultListener
 import com.app.imagepickerlibrary.model.Image
+import com.app.imagepickerlibrary.model.PickerConfig
 import com.app.imagepickerlibrary.util.isAtLeast13
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -159,7 +160,9 @@ internal fun ComponentActivity.registerActivityResult(
 /**
  * Extension function to get images from picker
  */
-internal fun ActivityResult.getImages(isMultiPick: Boolean, callback: ImagePickerResultListener) {
+internal fun ActivityResult.getImages(pickerConfig: PickerConfig, callback: ImagePickerResultListener) {
+    val isMultiPick = pickerConfig.allowMultipleSelection
+    val pickerType = pickerConfig.pickerType
     if (isMultiPick) {
         val clipData = data?.clipData
         if (clipData != null) {
@@ -169,13 +172,13 @@ internal fun ActivityResult.getImages(isMultiPick: Boolean, callback: ImagePicke
                 val uri = clipData.getItemAt(i).uri
                 uriList.add(uri)
             }
-            callback.onMultiImagePick(uriList.filterNotNull())
+            callback.onMultiImagePick(uriList.filterNotNull(), pickerType)
         } else {
             val uri = data?.data
-            uri?.let { callback.onImagePick(it) }
+            uri?.let { callback.onImagePick(it, pickerType) }
         }
     } else {
-        data?.data?.let { uri -> callback.onImagePick(uri) }
+        data?.data?.let { uri -> callback.onImagePick(uri, pickerType) }
     }
 }
 

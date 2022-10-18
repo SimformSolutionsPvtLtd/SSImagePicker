@@ -21,8 +21,7 @@ class ImagePicker private constructor(
     private val activity: ComponentActivity
 ) {
     private val picker = activity.registerActivityResult("image-picker") {
-        val isMultipleSelection = pickerConfigManager.getPickerConfig().allowMultipleSelection
-        it.getImages(isMultipleSelection, callback)
+        it.getImages(pickerConfigManager.getPickerConfig(), callback)
     }
     private val pickerConfigManager = PickerConfigManager(activity)
 

@@ -27,4 +27,6 @@
     <string name="customize_picker_options">Customize Picker Options</string>
     <string name="picker_options">Picker Options</string>
     <string name="done">Done</string>
+    <string name="activity_demo">Activity Demo</string>
+    <string name="fragment_demo">Fragment Demo</string>
 </resources>

@@ -2,9 +2,11 @@ package com.ssimagepicker.app.ui
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.app.imagepickerlibrary.ImagePicker
 import com.app.imagepickerlibrary.ImagePicker.Companion.registerImagePicker
 import com.app.imagepickerlibrary.listener.ImagePickerResultListener
@@ -13,32 +15,36 @@ import com.app.imagepickerlibrary.model.PickerType
 import com.app.imagepickerlibrary.ui.bottomsheet.SSPickerOptionsBottomSheet
 import com.ssimagepicker.app.PickerOptions
 import com.ssimagepicker.app.R
-import com.ssimagepicker.app.databinding.ActivityMainBinding
+import com.ssimagepicker.app.databinding.FragmentDemoBinding
 import com.ssimagepicker.app.isAtLeast11
 
-/**
- * MainActivity which displays all the functionality of the ImagePicker library. All the attributes are modified with the ui.
- */
-class MainActivity : AppCompatActivity(), View.OnClickListener,
+class DemoFragment : Fragment(), View.OnClickListener,
     SSPickerOptionsBottomSheet.ImagePickerClickListener,
     ImagePickerResultListener, PickerOptionsBottomSheet.PickerOptionsListener {
+
+    private lateinit var binding: FragmentDemoBinding
 
     companion object {
         private const val IMAGE_LIST = "IMAGE_LIST"
     }
 
-    private lateinit var binding: ActivityMainBinding
     private val imagePicker: ImagePicker by lazy {
-        registerImagePicker(this@MainActivity)
+        registerImagePicker(this)
     }
     private val imageList = mutableListOf<Uri>()
     private val imageDataAdapter = ImageDataAdapter(imageList)
     private var pickerOptions = PickerOptions.default()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        title = getString(R.string.activity_demo)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_demo, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.clickHandler = this
         setUI(savedInstanceState)
     }
@@ -63,7 +69,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
             R.id.open_sheet_button -> {
                 val fragment =
                     SSPickerOptionsBottomSheet.newInstance(R.style.CustomPickerBottomSheet)
-                fragment.show(supportFragmentManager, SSPickerOptionsBottomSheet.BOTTOM_SHEET_TAG)
+                fragment.show(childFragmentManager, SSPickerOptionsBottomSheet.BOTTOM_SHEET_TAG)
             }
         }
     }
@@ -93,7 +99,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     private fun openPickerOptions() {
         val fragment = PickerOptionsBottomSheet.newInstance(pickerOptions)
         fragment.setClickListener(this)
-        fragment.show(supportFragmentManager, PickerOptionsBottomSheet.BOTTOM_SHEET_TAG)
+        fragment.show(childFragmentManager, PickerOptionsBottomSheet.BOTTOM_SHEET_TAG)
     }
 
     /**

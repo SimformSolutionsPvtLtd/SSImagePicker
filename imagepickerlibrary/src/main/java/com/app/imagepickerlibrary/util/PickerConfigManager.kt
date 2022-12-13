@@ -19,14 +19,18 @@ internal class PickerConfigManager(registryOwner: SavedStateRegistryOwner) :
     private var pickerConfig = PickerConfig.defaultPicker()
 
     init {
+        val registry = registryOwner.savedStateRegistry
         registryOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_CREATE) {
-                val registry = registryOwner.savedStateRegistry
-                registry.registerSavedStateProvider(PICKER_CONFIG_MANAGER, this)
+                if (registry.getSavedStateProvider(PICKER_CONFIG_MANAGER) == null) {
+                    registry.registerSavedStateProvider(PICKER_CONFIG_MANAGER, this)
+                }
                 val previousState = registry.consumeRestoredStateForKey(PICKER_CONFIG_MANAGER)
                 if (previousState != null && previousState.containsKey(EXTRA_IMAGE_PICKER_CONFIG)) {
                     pickerConfig = previousState.getModel() ?: PickerConfig.defaultPicker()
                 }
+            } else if (event == Lifecycle.Event.ON_DESTROY) {
+                registry.unregisterSavedStateProvider(PICKER_CONFIG_MANAGER)
             }
         })
     }

@@ -21,6 +21,8 @@ import androidx.annotation.AttrRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.database.getLongOrNull
+import androidx.core.database.getStringOrNull
 import androidx.fragment.app.Fragment
 import com.app.imagepickerlibrary.listener.ImagePickerResultListener
 import com.app.imagepickerlibrary.model.Image
@@ -30,8 +32,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
@@ -239,10 +240,10 @@ internal suspend fun Context.getImagesList(
                 cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idColumn)
-                val name = cursor.getString(nameColumn)
-                val bucketId = cursor.getLong(bucketIdColumn)
-                val bucketName = cursor.getString(bucketNameColumn)
-                val size = cursor.getLong(sizeColumn)
+                val name = cursor.getStringOrNull(nameColumn)
+                val bucketId = cursor.getLongOrNull(bucketIdColumn)
+                val bucketName = cursor.getStringOrNull(bucketNameColumn)
+                val size = cursor.getLongOrNull(sizeColumn) ?: 0
                 val contentUri: Uri =
                     ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
                 val folderName = if (bucketName.isNullOrEmptyOrBlank()) {
@@ -250,7 +251,14 @@ internal suspend fun Context.getImagesList(
                 } else {
                     bucketName
                 }
-                imageList += Image(id, contentUri, name, bucketId, folderName, size)
+                val fileName = if (name.isNullOrEmptyOrBlank()) {
+                    getFileName(contentUri)
+                } else {
+                    name
+                }
+                if (bucketId != null) {
+                    imageList += Image(id, contentUri, fileName, bucketId, folderName, size)
+                }
             }
         }
         imageList
@@ -305,6 +313,22 @@ internal fun Context.getFolderName(contentURI: Uri): String {
 }
 
 /**
+ * Gets the file name from the uri.
+ * File name is fetched by the file path.
+ */
+internal fun Context.getFileName(contentURI: Uri): String {
+    val path = getRealPathFromURI(contentURI)
+    if (path.isNullOrEmptyOrBlank()) {
+        return ""
+    }
+    val name = File(path).name
+    if (!name.isNullOrEmptyOrBlank()) {
+        return name
+    }
+    return ""
+}
+
+/**
  * Gets the real path from the URI.
  */
 internal fun Context.getRealPathFromURI(contentURI: Uri): String? {
@@ -325,5 +349,5 @@ internal fun String?.isNullOrEmptyOrBlank(): Boolean {
     contract {
         returns(false) implies (this@isNullOrEmptyOrBlank != null)
     }
-    return this.isNullOrEmpty() || this.isNullOrBlank()
+    return this.isNullOrEmpty() || this.isBlank()
 }

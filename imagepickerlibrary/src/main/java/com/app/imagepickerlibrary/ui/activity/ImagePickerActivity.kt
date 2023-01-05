@@ -169,12 +169,7 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showCamera() {
-        if (checkForPermission(Manifest.permission.CAMERA)) {
-            fileUri = dispatchTakePictureIntent(onGetImageFromCameraActivityResult)
-        } else {
-            openCameraAfterPermission = true
-            askPermission(Manifest.permission.CAMERA)
-        }
+        fileUri = dispatchTakePictureIntent(onGetImageFromCameraActivityResult)
     }
 
     /**

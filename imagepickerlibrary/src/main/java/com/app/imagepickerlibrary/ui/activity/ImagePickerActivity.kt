@@ -331,4 +331,10 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
         setResult(RESULT_OK, intent)
         finish()
     }
+
+    override fun onDestroy() {
+        onCropImageActivityResult.unregister()
+        onGetImageFromCameraActivityResult.unregister()
+        super.onDestroy()
+    }
 }

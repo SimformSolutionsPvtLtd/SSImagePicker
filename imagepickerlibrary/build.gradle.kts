@@ -12,7 +12,7 @@ afterEvaluate {
             register<MavenPublication>("release") {
                 groupId = "com.github.SimformSolutionsPvtLtd"
                 artifactId = "SSImagePicker"
-                version = "2.0"
+                version = "2.1"
 
                 from(components["release"])
             }

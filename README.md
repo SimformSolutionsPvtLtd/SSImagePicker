@@ -116,10 +116,12 @@ Easy to use and configurable library to **Pick multiple images from the Gallery 
     }
 ```
 
-4. Open Image Picker from activity or fragment via registering the image picker. It will give object of **`ImagePicker`** class. Always call the **`registerImagePicker`** before on create inside your fragment or activity.
+4. Open Image Picker from activity or fragment via registering the image picker. It will give object of **`ImagePicker`** class.
 
 ```kotlin
-    private val imagePicker: ImagePicker = registerImagePicker(callback = this)
+    private val imagePicker: ImagePicker by lazy {
+        registerImagePicker(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

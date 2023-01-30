@@ -116,10 +116,12 @@ Easy to use and configurable library to **Pick multiple images from the Gallery 
     }
 ```
 
-4. Open Image Picker from activity or fragment via registering the image picker. It will give object of **`ImagePicker`** class. Always call the **`registerImagePicker`** before on create inside your fragment or activity.
+4. Open Image Picker from activity or fragment via registering the image picker. It will give object of **`ImagePicker`** class.
 
 ```kotlin
-    private val imagePicker: ImagePicker = registerImagePicker(callback = this)
+    private val imagePicker: ImagePicker by lazy {
+        registerImagePicker(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -174,6 +176,13 @@ Easy to use and configurable library to **Pick multiple images from the Gallery 
 - Customize picker config for different available options - [:books: Picker Config Guide](docs/picker_config.md)
 - Customize UI of picker screen with different style attributes - [:books: Picker Screen UI Guide](docs/picker_ui_customization.md)
 - Customize UI of picker options bottom sheet with different style attributes - [:books: Picker Options Bottom Sheet Guide](docs/options_bottom_sheet_customization.md)
+
+# :pencil: Permissions
+
+**SSImagePicker** Uses following permissions to display images. For system [Photo Picker](https://developer.android.com/training/data-storage/shared/photopicker) on Android 11+ no permission is required.
+
+* API **21(Android 5)** to API **32(Android 12L)**: `android.permission.READ_EXTERNAL_STORAGE`
+* API **33(Android 13)** onwards: `android.permission.READ_MEDIA_IMAGES`
 
 # :rocket: Migration
 

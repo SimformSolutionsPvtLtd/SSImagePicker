@@ -169,12 +169,7 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showCamera() {
-        if (checkForPermission(Manifest.permission.CAMERA)) {
-            fileUri = dispatchTakePictureIntent(onGetImageFromCameraActivityResult)
-        } else {
-            openCameraAfterPermission = true
-            askPermission(Manifest.permission.CAMERA)
-        }
+        fileUri = dispatchTakePictureIntent(onGetImageFromCameraActivityResult)
     }
 
     /**
@@ -330,5 +325,11 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
     private fun sendResult(intent: Intent) {
         setResult(RESULT_OK, intent)
         finish()
+    }
+
+    override fun onDestroy() {
+        onCropImageActivityResult.unregister()
+        onGetImageFromCameraActivityResult.unregister()
+        super.onDestroy()
     }
 }

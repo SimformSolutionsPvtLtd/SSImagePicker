@@ -21,17 +21,18 @@ afterEvaluate {
 }
 
 android {
-    compileSdk = 33
-
+    compileSdk = 34
+    namespace = "com.app.imagepickerlibrary"
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -55,17 +56,16 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("com.intuit.sdp:sdp-android:1.0.6")
-    implementation("com.intuit.ssp:ssp-android:1.0.6")
-    implementation("androidx.fragment:fragment-ktx:1.5.1")
-    implementation("com.github.yalantis:ucrop:2.2.8")
-    implementation("io.coil-kt:coil:2.1.0")
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.sdp.android)
+    implementation(libs.ssp.android)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.ucrop)
+    implementation(libs.coil)
+    implementation(libs.androidx.recyclerview)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

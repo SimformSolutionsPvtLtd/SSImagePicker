@@ -1,22 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-        gradlePluginPortal()
-    }
-    dependencies {
-        classpath(ClassPaths.ANDROID_GRADLE)
-        classpath(ClassPaths.KOTLIN_GRADLE)
-        classpath(ClassPaths.BINTRAY)
-    }
-}
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.android.libray) apply false
+    alias(libs.plugins.hilt.android) apply false
+    alias(libs.plugins.com.google.gms.google.services) apply false
 
-allprojects {
-    repositories {
-        mavenCentral()
-        google()
-        jitPack()
-        gradlePluginPortal()
-    }
 }

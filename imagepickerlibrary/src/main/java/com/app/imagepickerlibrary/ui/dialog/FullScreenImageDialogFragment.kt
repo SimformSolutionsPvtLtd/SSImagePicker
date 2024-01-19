@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import coil.load
-import com.app.imagepickerlibrary.R
 import com.app.imagepickerlibrary.databinding.DialogFragmentFullScreenImageBinding
 import com.app.imagepickerlibrary.getModel
 import com.app.imagepickerlibrary.model.Image
+import com.intuit.sdp.R as SdpR
 
 /**
  * FullScreenImageDialogFragment to display image full screen with transparent background.
@@ -32,7 +32,7 @@ internal class FullScreenImageDialogFragment : DialogFragment() {
         super.onStart()
         dialog?.let {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
-            val height = resources.getDimensionPixelSize(R.dimen._350sdp)
+            val height = resources.getDimensionPixelSize(SdpR.dimen._350sdp)
             it.window?.setLayout(width, height)
             it.window?.setBackgroundDrawableResource(android.R.color.transparent)
         }

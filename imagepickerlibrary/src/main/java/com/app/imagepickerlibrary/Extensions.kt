@@ -56,7 +56,7 @@ internal fun Context.dispatchTakePictureIntent(onGetImageFromCameraActivityResul
                         also { photo ->
                             photoURI = FileProvider.getUriForFile(
                                 this@dispatchTakePictureIntent,
-                                "${BuildConfig.LIBRARY_PACKAGE_NAME}.provider",
+                                "${applicationContext.packageName}.${BuildConfig.LIBRARY_PACKAGE_NAME}.provider",
                                 photo
                             )
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)

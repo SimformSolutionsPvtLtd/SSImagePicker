@@ -10,7 +10,7 @@
     <application>
         <provider
             android:name=".ImagePickerFileProvider"
-            android:authorities="${applicationId}.com.app.imagepickerlibrary.provider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

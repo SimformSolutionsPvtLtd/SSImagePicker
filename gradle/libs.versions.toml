@@ -1,9 +1,4 @@
 [versions]
-compile-sdk = "34"
-min-sdk = "21"
-target-sdk = "34"
-code = "1"
-name = "1.8"
 activity-ktx = "1.8.2"
 androidx-junit = "1.1.5"
 androidx-test-ext-junit = "1.1.5"

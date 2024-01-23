@@ -62,30 +62,29 @@ using Camera with maximum size, extension, crop, rotate, zoom and compress featu
         allprojects {
             repositories {
                 ...
-    	         maven { url = "https://jitpack.io" }
+    	        maven { url ="https://jitpack.io" }
             }
         }
    ```
-    - For latest Android Studio, in **settings.gradle** file
-      inside **`dependencyResolutionManagement`** block
+    - For latest Android Studio, in **settings.gradle** file inside *
+      *`dependencyResolutionManagement`** block
 
    ```kotlin
         dependencyResolutionManagement {
             repositories {
                 ...
-                 maven { url = "https://jitpack.io" }
+                maven { url = "https://jitpack.io" }
             }
         }
     ```
 
 * Enable data binding feature in your app's build.gradle
-  file [(More Details)](https://developer.android.com/topic/libraries/data-binding/start#build_environment)
-  .
+  file [(More Details)](https://developer.android.com/topic/libraries/data-binding/start#build_environment).
     ```kotlin
         android {
             ...
             buildFeatures {
-                dataBinding=true
+                dataBinding = true
             }
         }
     ```
@@ -100,8 +99,8 @@ using Camera with maximum size, extension, crop, rotate, zoom and compress featu
 
 2. Add ImagePickerActivity into your AndroidManifest.xml. **`SSImagePicker`** is default theme for
    image picker activity. If you want to set custom theme check
-   out [customization guide](docs/picker_ui_customization.md). Make sure to add
-   the **`android:configChanges`** to handle the rotation.
+   out [customization guide](docs/picker_ui_customization.md). Make sure to add the *
+   *`android:configChanges`** to handle the rotation.
 
 ```xml
 
@@ -109,9 +108,9 @@ using Camera with maximum size, extension, crop, rotate, zoom and compress featu
     android:configChanges="orientation|screenSize" android:theme="@style/SSImagePicker" />
 ```
 
-3. If you want to use Picker options bottom sheet then
-   implement **`SSPickerOptionsBottomSheet.ImagePickerClickListener`** in your fragment or
-   activity. **`onImageProvider`** method will give the selected provider type.
+3. If you want to use Picker options bottom sheet then implement *
+   *`SSPickerOptionsBottomSheet.ImagePickerClickListener`** in your fragment or activity. *
+   *`onImageProvider`** method will give the selected provider type.
 
 ```kotlin
     val pickerOptionBottomSheet = SSPickerOptionsBottomSheet.newInstance()
@@ -193,12 +192,12 @@ imagePicker.open(PickerType.GALLERY)
 
 # :art: Customization
 
-- Customize picker config for different available options
-    - [:books: Picker Config Guide](docs/picker_config.md)
-- Customize UI of picker screen with different style attributes
-    - [:books: Picker Screen UI Guide](docs/picker_ui_customization.md)
-- Customize UI of picker options bottom sheet with different style attributes
-    - [:books: Picker Options Bottom Sheet Guide](docs/options_bottom_sheet_customization.md)
+- Customize picker config for different available
+  options - [:books: Picker Config Guide](docs/picker_config.md)
+- Customize UI of picker screen with different style
+  attributes - [:books: Picker Screen UI Guide](docs/picker_ui_customization.md)
+- Customize UI of picker options bottom sheet with different style
+  attributes - [:books: Picker Options Bottom Sheet Guide](docs/options_bottom_sheet_customization.md)
 
 # :pencil: Permissions
 
@@ -219,18 +218,18 @@ Android 11+ no permission is required.
 
 ## Find this library useful? :heart:
 
-Support it by
-joining __[stargazers](https://github.com/SimformSolutionsPvtLtd/SSImagePicker/stargazers)__ for
-this repository. :star:
+Support it by joining _
+_[stargazers](https://github.com/SimformSolutionsPvtLtd/SSImagePicker/stargazers)__ for this
+repository. :star:
 
 ## 🤝 How to Contribute
 
 Whether you're helping us fix bugs, improve the docs, or a feature request, we'd love to have you! :
 muscle:
 
-Check out our [**Contributing
-Guide**](https://github.com/SimformSolutionsPvtLtd/SSImagePicker/blob/master/CONTRIBUTING.md) for
-ideas on contributing.
+Check out our [**Contributing Guide
+**](https://github.com/SimformSolutionsPvtLtd/SSImagePicker/blob/master/CONTRIBUTING.md) for ideas
+on contributing.
 
 ## Bugs and Feedback
 

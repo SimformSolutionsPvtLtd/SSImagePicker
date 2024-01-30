@@ -24,8 +24,8 @@ android {
     compileSdk = 34
     namespace = "com.app.imagepickerlibrary"
     defaultConfig {
-        minSdk = 21
-        targetSdk = 34
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }

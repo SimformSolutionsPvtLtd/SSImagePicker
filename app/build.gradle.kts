@@ -6,14 +6,14 @@ plugins {
 }
 
 android {
-    compileSdk = Versions.COMPILE_SDK
+    compileSdk = libs.versions.compile.sdk.get().toInt()
     namespace = App.ID
     defaultConfig {
         applicationId = App.ID
-        minSdk = Versions.MIN_SDK
-        targetSdk = Versions.TARGET_SDK
-        versionCode = App.Version.CODE
-        versionName = App.Version.NAME
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
+        versionCode = libs.versions.version.code.get().toInt()
+        versionName = libs.versions.version.name.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = App.MULTI_DEX
         javaCompileOptions {
@@ -27,8 +27,7 @@ android {
         getByName(App.BuildType.RELEASE) {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             manifestPlaceholders["enableCrashReporting"] = true
         }
@@ -36,8 +35,7 @@ android {
         getByName(App.BuildType.DEBUG) {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             manifestPlaceholders["enableCrashReporting"] = false
         }

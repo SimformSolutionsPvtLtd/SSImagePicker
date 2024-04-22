@@ -67,7 +67,7 @@ class ImagePicker private constructor(
     fun multipleSelection(enable: Boolean, maxCount: Int): ImagePicker {
         val pickerConfig = pickerConfigManager.getPickerConfig()
         if (enable) {
-            require(maxCount in 1..MAX_PICK_LIMIT) { "The maximum allowed image count should be in range of 1..$MAX_PICK_LIMIT. The end limit is inclusive." }
+            require(maxCount > 1) { "The maximum allowed image count should be more than 1." }
             pickerConfig.maxPickCount = maxCount
         }
         pickerConfig.allowMultipleSelection = enable

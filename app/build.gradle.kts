@@ -6,14 +6,14 @@ plugins {
 }
 
 android {
-    compileSdk = Versions.COMPILE_SDK
-
+    compileSdk = libs.versions.compile.sdk.get().toInt()
+    namespace = App.ID
     defaultConfig {
         applicationId = App.ID
-        minSdk = Versions.MIN_SDK
-        targetSdk = Versions.TARGET_SDK
-        versionCode = App.Version.CODE
-        versionName = App.Version.NAME
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
+        versionCode = libs.versions.version.code.get().toInt()
+        versionName = libs.versions.version.name.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = App.MULTI_DEX
         javaCompileOptions {
@@ -27,8 +27,7 @@ android {
         getByName(App.BuildType.RELEASE) {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             manifestPlaceholders["enableCrashReporting"] = true
         }
@@ -36,8 +35,7 @@ android {
         getByName(App.BuildType.DEBUG) {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             manifestPlaceholders["enableCrashReporting"] = false
         }
@@ -62,44 +60,44 @@ dependencies {
     implementation(defaultFileTree())
 
     // Core
-    implementation(Dependencies.CORE_KTX)
+    implementation(libs.androidx.core.ktx)
 
     // UI
-    implementation(Dependencies.APPCOMPAT)
-    implementation(Dependencies.CONSTRAINT_LAYOUT)
-    implementation(Dependencies.MATERIAL)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.material)
 
     // Jetpack
-    implementation(Dependencies.ACTIVITY_KTX)
-    implementation(Dependencies.FRAGMENT_KTX)
-    implementation(Dependencies.RECYCLER_VIEW)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.recyclerview)
 
     // LiveData
-    implementation(Dependencies.LIFECYCLE_LIVEDATA)
-    implementation(Dependencies.LIFECYCLE_LIVEDATA_KTX)
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.lifecycle.livedata.ktx)
 
     // Material
-    implementation(Dependencies.MATERIAL)
+    implementation(libs.material)
 
     // INTUIT DIMEN SSP and SDP
-    implementation(Dependencies.INTUIT_SDP)
-    implementation(Dependencies.INTUIT_SSP)
+    implementation(libs.sdp.android)
+    implementation(libs.ssp.android)
 
     // Unit testing
-    testImplementation(Dependencies.JUNIT)
-    testImplementation(Dependencies.JUNIT_EXT)
-    testImplementation(Dependencies.ARCH_CORE_TESTING)
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.androidx.junit)
 
     // UI testing
-    androidTestImplementation(Dependencies.TEST_RUNNER)
-    androidTestImplementation(Dependencies.JUNIT_EXT)
-    androidTestImplementation(Dependencies.TEST_RULES)
-    androidTestImplementation(Dependencies.ESPRESSO_CORE)
-    androidTestImplementation(Dependencies.ESPRESSO_CONTRIB)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.junit.v111)
+    androidTestImplementation(libs.rules)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.contrib)
 
     // Glide
-    implementation(Dependencies.GLIDE)
-    kapt(Dependencies.GLIDE_COMPILER)
+    implementation(libs.glide)
+    kapt(libs.compiler)
 
     implementation(project(":imagepickerlibrary"))
 }

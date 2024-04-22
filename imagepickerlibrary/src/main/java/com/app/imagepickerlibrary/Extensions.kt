@@ -32,7 +32,8 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
@@ -291,7 +292,7 @@ internal fun Fragment.toast(string: String) {
 internal fun Context.getFileUri(filePath: String): Uri? {
     return FileProvider.getUriForFile(
         this,
-        "${applicationContext.packageName}.${BuildConfig.LIBRARY_PACKAGE_NAME}.provider",
+        "${applicationContext.packageName}.provider",
         File(filePath)
     )
 }

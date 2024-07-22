@@ -4,7 +4,7 @@
 
 [![](https://jitpack.io/v/SimformSolutionsPvtLtd/SSImagePicker.svg)](https://jitpack.io/#SimformSolutionsPvtLtd/SSImagePicker)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-v1.7.0-blue.svg)](https://kotlinlang.org)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-v1.9.23-blue.svg)](https://kotlinlang.org)
 [![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23473-orange)](https://androidweekly.net/issues/issue-473)
 [![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-SSImagePicker-green.svg?style=flat )]( https://android-arsenal.com/details/1/8243 )
 
@@ -94,7 +94,7 @@ using Camera with maximum size, extension, crop, rotate, zoom and compress featu
 
     ```kotlin
         dependencies {
-            implementation("com.github.SimformSolutionsPvtLtd:SSImagePicker:2.2")
+            implementation("com.github.SimformSolutionsPvtLtd:SSImagePicker:2.3")
         }
     ```
 

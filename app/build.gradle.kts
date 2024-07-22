@@ -46,12 +46,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 
@@ -65,7 +65,6 @@ dependencies {
     // UI
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.material)
 
     // Jetpack
     implementation(libs.androidx.activity.ktx)
@@ -90,7 +89,7 @@ dependencies {
 
     // UI testing
     androidTestImplementation(libs.androidx.runner)
-    androidTestImplementation(libs.androidx.junit.v111)
+    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.rules)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.espresso.contrib)

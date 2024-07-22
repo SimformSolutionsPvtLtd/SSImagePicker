@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 /**
  * SSPickerOptionsBottomSheet to display picker option related to Image Picker.
  * It displays a bottom sheet with options Gallery, Camera and Cancel.
- * The bottomsheet can be modified via SSImagePickerBaseBottomSheetDialog theme
+ * The bottom sheet can be modified via SSImagePickerBaseBottomSheetDialog theme
  */
 class SSPickerOptionsBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     companion object {
@@ -28,10 +28,6 @@ class SSPickerOptionsBottomSheet : BottomSheetDialogFragment(), View.OnClickList
             return SSPickerOptionsBottomSheet().apply {
                 arguments = bundleOf(THEME_ID to themeId)
             }
-        }
-
-        fun newInstance(): SSPickerOptionsBottomSheet {
-            return SSPickerOptionsBottomSheet()
         }
     }
 

@@ -7,7 +7,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color_bottom_sheet_bg">#FFFFFF</color>
     <color name="color_text">#194F54</color>
-    <color name="color_cancel_text">#6F7B7A</color>
     <color name="gray">#808080</color>
     <color name="button_stroke_color">@color/colorPrimary</color>
 </resources>

@@ -53,7 +53,7 @@ class ImagePicker private constructor(
 
     /**
      * Whether to allow multiple selection or not
-     * If only multiple selection is enabled and no value is passed for maxcount then the default pick size will be value of MAX_PICK_LIMIT = (15)
+     * If only multiple selection is enabled and no value is passed for max count then the default pick size will be value of MAX_PICK_LIMIT = (15)
      */
     fun multipleSelection(enable: Boolean): ImagePicker {
         multipleSelection(enable, MAX_PICK_LIMIT)

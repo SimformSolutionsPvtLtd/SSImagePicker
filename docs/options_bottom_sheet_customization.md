@@ -38,15 +38,15 @@
 
 ## Picker Option Bottom Sheet UI Attributes Table
 
-| UI attribute | Format | Default value/style | Description |
-|---|---|---|---|
-| **ssSheetCameraText** | string | `"Camera"` | Text for the camera button. |
-| **ssSheetGalleryText** | string | `"Gallery"` | Text for the gallery button. |
-| **ssSheetCancelText** | string | `"Cancel"` | Text for the cancel button. |
-| **ssSheetCameraButtonBackground** | reference/color | @drawable/bg_ss_picker_option_button | Background for the camera button. |
-| **ssSheetGalleryButtonBackground** | reference/color | @drawable/bg_ss_picker_option_button | Background for the gallery button. |
-| **ssSheetCancelButtonBackground** | reference/color | @drawable/bg_ss_picker_option_button_cancel | Background for the cancel button. |
-| **ssSheetCameraViewStyle** | reference | SSBottomSheetTextViewStyle | Text view style for the camera button. |
-| **ssSheetGalleryViewStyle** | reference | SSBottomSheetTextViewStyle | Text view style for the gallery button. |
-| **ssSheetCancelViewStyle** | reference | SSBottomSheetTextViewStyle | Text view style for the cancel button. |
-| **ssSheetBackground** | reference/color | @drawable/bg_ss_picker_option | Background for entire bottom sheet. |
+| UI attribute                       | Format          | Default value/style                         | Description                             |
+|------------------------------------|-----------------|---------------------------------------------|-----------------------------------------|
+| **ssSheetCameraText**              | string          | `"Camera"`                                  | Text for the camera button.             |
+| **ssSheetGalleryText**             | string          | `"Gallery"`                                 | Text for the gallery button.            |
+| **ssSheetCancelText**              | string          | `"Cancel"`                                  | Text for the cancel button.             |
+| **ssSheetCameraButtonBackground**  | reference/color | @drawable/bg_ss_picker_option_button        | Background for the camera button.       |
+| **ssSheetGalleryButtonBackground** | reference/color | @drawable/bg_ss_picker_option_button        | Background for the gallery button.      |
+| **ssSheetCancelButtonBackground**  | reference/color | @drawable/bg_ss_picker_option_button_cancel | Background for the cancel button.       |
+| **ssSheetCameraViewStyle**         | reference       | SSBottomSheetTextViewStyle                  | Text view style for the camera button.  |
+| **ssSheetGalleryViewStyle**        | reference       | SSBottomSheetTextViewStyle                  | Text view style for the gallery button. |
+| **ssSheetCancelViewStyle**         | reference       | SSBottomSheetTextViewStyle                  | Text view style for the cancel button.  |
+| **ssSheetBackground**              | reference/color | @drawable/bg_ss_picker_option               | Background for entire bottom sheet.     |

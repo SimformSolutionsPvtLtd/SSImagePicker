@@ -22,7 +22,6 @@
     <string name="webp">WEBP</string>
     <string name="open_picker_sheet">Choose Picker Type</string>
     <string name="open_image_picker">Open image picker</string>
-    <string name="error_count_value">Enter valid max count value. It should be greater than 0.</string>
     <string name="error_size_value">Enter valid max size value. It should be greater than 0.</string>
     <string name="customize_picker_options">Customize Picker Options</string>
     <string name="picker_options">Picker Options</string>

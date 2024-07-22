@@ -84,7 +84,7 @@ enum class PickExtension {
 
 /**
  * ImageProvider constants to determine user has selected which picker option from the bottom sheet.
- * This class is only related to bottomsheet which displays the picker options.
+ * This class is only related to bottom sheet which displays the picker options.
  */
 enum class ImageProvider {
     GALLERY,
@@ -125,5 +125,5 @@ internal data class Folder(
 internal sealed class Result<out R> {
     data class Success<out T>(val data: T) : Result<T>()
     data class Error(val exception: Exception) : Result<Nothing>()
-    object Loading : Result<Nothing>()
+    data object Loading : Result<Nothing>()
 }

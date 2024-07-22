@@ -7,9 +7,4 @@ object App {
         const val DEBUG = "debug"
     }
 
-    object Flavor {
-        const val DEV = "dev"
-        const val QA = "qa"
-        const val PRODUCTION = "production"
-    }
 }

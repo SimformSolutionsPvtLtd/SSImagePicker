@@ -18,7 +18,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/open_picker_button"
-            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_56sdp"
             style="@style/ButtonSelectorStyle"
             android:onClick="@{clickHandler::onClick}"
             android:text="@string/open_image_picker"

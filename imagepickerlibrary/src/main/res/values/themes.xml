@@ -104,4 +104,8 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">@dimen/_14sdp</item>
     </style>
+
+    <style name="CustomUCrop" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
 </resources>

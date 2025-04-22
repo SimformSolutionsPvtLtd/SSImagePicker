@@ -185,7 +185,8 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
         } else {
             Manifest.permission.READ_EXTERNAL_STORAGE
         }
-        if (checkForPermission(permission)) {
+        if (checkForPermission(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
+            || checkForPermission(permission)) {
             replaceFragment(getInitialFragment())
             viewModel.fetchImagesFromMediaStore()
         } else {
@@ -234,7 +235,8 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
             ActivityResultContracts.RequestMultiplePermissions()
         ) { result ->
             result?.let { mutableMap ->
-                if (mutableMap.entries.all { entry -> entry.value }) {
+                if (mutableMap.entries.all { entry -> entry.value }
+                    || checkForPermission(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)) {
                     pickImage()
                 }
             }

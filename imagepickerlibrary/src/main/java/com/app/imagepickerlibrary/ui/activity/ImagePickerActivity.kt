@@ -251,7 +251,7 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     private fun checkForCropping(imageUri: Uri) {
-        if (pickerConfig.openCropOptions || pickerConfig.compressImage) {
+        if (pickerConfig.openCropOptions || pickerConfig.compressImage || pickerConfig.aspectRatio != null) {
             val date =
                 SimpleDateFormat(dateFormatForTakePicture, Locale.getDefault()).format(Date())
             val imageFile = createImageFile(date)
@@ -267,6 +267,11 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
      * Cropping option for the crop screen. Changing colors and setting ui controls.
      */
     private fun getUCropOptions(): UCrop.Options {
+        pickerConfig.aspectRatio?.let { aspectRatio ->
+            return UCrop.Options().apply {
+                withAspectRatio(aspectRatio.x, aspectRatio.y)
+            }
+        }
         return UCrop.Options().apply {
             setFreeStyleCropEnabled(pickerConfig.openCropOptions)
             setHideBottomControls(!pickerConfig.openCropOptions)

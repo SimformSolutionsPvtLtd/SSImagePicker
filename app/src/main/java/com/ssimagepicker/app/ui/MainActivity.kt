@@ -121,6 +121,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
             .compressImage(pickerOptions.compressImage)
             .maxImageSize(pickerOptions.maxPickSizeMB)
             .extension(pickerOptions.pickExtension)
+            .aspectRatio(pickerOptions.aspectRatio)
         if (isAtLeast11()) {
             imagePicker.systemPicker(pickerOptions.openSystemPicker)
         }

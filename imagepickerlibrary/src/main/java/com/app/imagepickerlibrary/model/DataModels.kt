@@ -26,7 +26,8 @@ internal data class PickerConfig(
     var openCropOptions: Boolean = false,
     var openSystemPicker: Boolean = false,
     var compressImage: Boolean = false,
-    var compressQuality: Int = 75
+    var compressQuality: Int = 75,
+    var aspectRatio: AspectRatio? = null
 ) : Parcelable {
 
     companion object {
@@ -127,3 +128,6 @@ internal sealed class Result<out R> {
     data class Error(val exception: Exception) : Result<Nothing>()
     data object Loading : Result<Nothing>()
 }
+
+@Parcelize
+data class AspectRatio(val x: Float, val y : Float): Parcelable

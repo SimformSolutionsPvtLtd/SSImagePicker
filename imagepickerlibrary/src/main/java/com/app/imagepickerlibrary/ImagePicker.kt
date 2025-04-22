@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.app.imagepickerlibrary.listener.ImagePickerResultListener
+import com.app.imagepickerlibrary.model.AspectRatio
 import com.app.imagepickerlibrary.model.PickExtension
 import com.app.imagepickerlibrary.model.PickerType
 import com.app.imagepickerlibrary.ui.activity.ImagePickerActivity
@@ -122,6 +123,16 @@ class ImagePicker private constructor(
     fun doneIcon(enable: Boolean): ImagePicker {
         pickerConfigManager.getPickerConfig().isDoneIcon = enable
         return this
+    }
+
+    /**
+     * Pass the AspectRatio and user will have to select the image in specified aspect Ratio
+     * Note:If you use the `aspectRatio`, the `openCropOption` will be ignored.
+     * By default, `aspectRatio` is set to `null`. If you want to allow users to choose
+     * crop options manually via `openCropOption`, ensure that `aspectRatio` remains `null`.
+     */
+    fun aspectRatio(aspectRatio: AspectRatio?) {
+        pickerConfigManager.getPickerConfig().aspectRatio = aspectRatio
     }
 
     /**

@@ -13,21 +13,31 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/_12sdp"
         tools:context=".ui.MainActivity">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/open_picker_button"
-            android:layout_marginTop="@dimen/_6sdp"
-            style="@style/ButtonSelectorStyle"
-            android:onClick="@{clickHandler::onClick}"
-            android:text="@string/open_image_picker"
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_app"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_picker_button"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            style="@style/ButtonSelectorStyle"
+            android:onClick="@{clickHandler::onClick}"
+            android:text="@string/open_image_picker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/open_sheet_button"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             style="@style/ButtonSelectorStyle"
             android:onClick="@{clickHandler::onClick}"
             android:text="@string/open_picker_sheet"
@@ -37,6 +47,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/options_button"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             style="@style/ButtonSelectorStyle"
             android:onClick="@{clickHandler::onClick}"
             android:text="@string/customize_picker_options"
@@ -49,6 +61,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:clipToPadding="false"
             android:orientation="vertical"
             android:paddingBottom="@dimen/_8sdp"

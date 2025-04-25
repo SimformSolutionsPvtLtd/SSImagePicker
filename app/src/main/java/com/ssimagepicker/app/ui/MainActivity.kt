@@ -14,6 +14,7 @@ import com.app.imagepickerlibrary.ui.bottomsheet.SSPickerOptionsBottomSheet
 import com.ssimagepicker.app.PickerOptions
 import com.ssimagepicker.app.R
 import com.ssimagepicker.app.databinding.ActivityMainBinding
+import com.ssimagepicker.app.enableEdgeToEdge
 import com.ssimagepicker.app.isAtLeast11
 
 /**
@@ -40,7 +41,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         title = getString(R.string.activity_demo)
         binding.clickHandler = this
+        setUpToolbar()
         setUI(savedInstanceState)
+        enableEdgeToEdge(binding.toolbar.root)
     }
 
     private fun setUI(savedInstanceState: Bundle?) {
@@ -153,5 +156,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putParcelableArrayList(IMAGE_LIST, ArrayList(imageList))
         super.onSaveInstanceState(outState)
+    }
+
+    private fun setUpToolbar() {
+        binding.toolbar.apply {
+            title = this@MainActivity.title.toString()
+            clickListener = View.OnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
     }
 }

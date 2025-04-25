@@ -1,7 +1,7 @@
 [versions]
-compile-sdk = "34"
+compile-sdk = "35"
 min-sdk = "21"
-target-sdk = "34"
+target-sdk = "35"
 version-code = "1"
 version-name = "1.8"
 

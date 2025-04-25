@@ -6,12 +6,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -74,6 +77,7 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
         openCameraAfterPermission = pickerConfig.pickerType == PickerType.CAMERA
         pickImage()
         addObserver()
+        enableEdgeToEdge(binding.toolbar.root)
     }
 
     private fun setUI() {
@@ -338,5 +342,22 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
         onCropImageActivityResult.unregister()
         onGetImageFromCameraActivityResult.unregister()
         super.onDestroy()
+    }
+
+    //If you are using custom theming and need to change the status bar color,
+    // it may not work unless you specify a particular view object, like a toolbar.
+    private fun enableEdgeToEdge(view: View?) {
+        view?.let {
+            ViewCompat.setOnApplyWindowInsetsListener(it) { view, windowInsets ->
+                val systemBarInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.setPadding(
+                    systemBarInsets.left,
+                    systemBarInsets.top,
+                    systemBarInsets.right,
+                    0
+                )
+                windowInsets
+            }
+        }
     }
 }

@@ -14,6 +14,7 @@ import com.app.imagepickerlibrary.model.PickExtension
 import com.app.imagepickerlibrary.model.PickerType
 import com.app.imagepickerlibrary.ui.activity.ImagePickerActivity
 import com.app.imagepickerlibrary.util.PickerConfigManager
+import com.app.imagepickerlibrary.util.isAtLeast13
 import com.app.imagepickerlibrary.util.isPhotoPickerAvailable
 import java.lang.Integer.min
 
@@ -179,14 +180,24 @@ class ImagePicker private constructor(
 
     /**
      * Opens either system picker or the ImagePickerActivity activity depending on the configuration.
-     * If the system picker is selected for android 11+ and the picker type is camera then the ImagePickerActivity is opened in camera mode.
-     * The system picker is only available in android 11+ with some that meets some criteria set by system.
+     * If the picker type is camera, then the ImagePickerActivity is opened in camera mode.
+     * The system picker is only available on android 11+ with some criteria set by the system.
      * [More Details](https://developer.android.com/training/data-storage/shared/photopicker)
+     * 
+     * On Android 13+, the system picker is ALWAYS used for gallery mode to avoid permission requirements, 
+     * regardless of the systemPicker setting.
+     * 
+     * On Android 11-12, the system picker is only used if explicitly enabled with systemPicker(true).
      */
     fun open(pickerType: PickerType) {
         val pickerConfig = pickerConfigManager.getPickerConfig()
         pickerConfig.pickerType = pickerType
-        if (pickerType == PickerType.GALLERY && pickerConfig.openSystemPicker && isPhotoPickerAvailable()) {
+        
+        // For Android 13+, always use system picker for gallery unless explicitly disabled
+        // This avoids permission requirements for media access
+        val useSystemPicker = (pickerType == PickerType.GALLERY) && ((pickerConfig.openSystemPicker)
+                || isAtLeast13()) && isPhotoPickerAvailable()
+        if (useSystemPicker) {
             openSystemPhotoPicker(picker)
         } else {
             openImagePicker(activity, picker)

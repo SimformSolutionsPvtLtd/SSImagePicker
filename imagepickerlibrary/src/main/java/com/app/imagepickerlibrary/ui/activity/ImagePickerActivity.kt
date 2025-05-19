@@ -173,25 +173,20 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     /**
-     * Apps targeting for Android 13 or higher requires to declare READ_MEDIA_* to request the media that other apps have created.
-     * The READ_EXTERNAL_STORAGE will not work on Android 13 and higher to access the media created by other apps.
-     * If the user previously granted app the READ_EXTERNAL_STORAGE permission, the system automatically grants the granular media permission.
-     * [More Details](https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions)
-     * So for Android 13+ we are asking for permission READ_MEDIA_IMAGES and below that READ_EXTERNAL_STORAGE to get the images from device.
+     * For Android 13+ (API level 33), the Photo Picker API is now the preferred method to access media files.
+     * For Android 12L and below, we need READ_EXTERNAL_STORAGE permission.
+     * This approach avoids the need for READ_MEDIA permissions on Android 13+.
      */
     private fun showGallery() {
-        val permission = if (isAtLeast13()) {
-            Manifest.permission.READ_MEDIA_IMAGES
-        } else {
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        }
-        if (checkForPermission(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
-            || checkForPermission(permission)) {
+        // For Android 13+, we don't need permissions with Photo Picker API
+        // For below Android 13, we need READ_EXTERNAL_STORAGE permission
+        if (checkForPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             replaceFragment(getInitialFragment())
             viewModel.fetchImagesFromMediaStore()
         } else {
+            // Always request permission for pre-Android 13 devices
             openCameraAfterPermission = false
-            askPermission(permission)
+            askPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }
 
@@ -235,8 +230,7 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
             ActivityResultContracts.RequestMultiplePermissions()
         ) { result ->
             result?.let { mutableMap ->
-                if (mutableMap.entries.all { entry -> entry.value }
-                    || checkForPermission(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)) {
+                if (mutableMap.entries.all { entry -> entry.value }) {
                     pickImage()
                 }
             }

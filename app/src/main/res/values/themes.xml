@@ -15,12 +15,18 @@
         <item name="ssToolbarDoneTextAppearance">@style/CustomDoneTextAppearance</item>
         <item name="ssPickerGridCountLandscape">3</item>
         <item name="ssImageSelectIcon">@drawable/ic_baseline_check_circle</item>
+        <item name="ssPickerBackground">@color/picker_background</item>
+        <item name="ssNoDataTextViewStyle">@style/CustomNoDataTextStyle</item>
     </style>
 
     <style name="CustomDoneTextAppearance" parent="SSToolbarDoneTextAppearance">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/_13ssp</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="CustomNoDataTextStyle" parent="SSNoDataTextStyle">
+        <item name="android:textColor">@color/no_content_text_color</item>
     </style>
 
     <style name="CustomPickerBottomSheet" parent="SSImagePickerBaseBottomSheetDialog">

@@ -4,7 +4,7 @@
 
 [![](https://jitpack.io/v/SimformSolutionsPvtLtd/SSImagePicker.svg)](https://jitpack.io/#SimformSolutionsPvtLtd/SSImagePicker)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-v1.9.23-blue.svg)](https://kotlinlang.org)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-v2.0.21-blue.svg)](https://kotlinlang.org)
 [![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23473-orange)](https://androidweekly.net/issues/issue-473)
 [![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-SSImagePicker-green.svg?style=flat )]( https://android-arsenal.com/details/1/8243 )
 
@@ -19,6 +19,7 @@ using Camera with maximum size, extension, crop, rotate, zoom and compress featu
 * Support for
   new [Photo Picker](https://developer.android.com/training/data-storage/shared/photopicker) for
   Android 11+.
+* Dark theme support.
 
 # :zap: Features :
 
@@ -36,6 +37,7 @@ using Camera with maximum size, extension, crop, rotate, zoom and compress featu
 * Compress image
 * Customize entire Image Picker screen UI with your own options and style
 * New Photo picker for the Android 11+.
+* Edge-to-Edge Support ([Refer Here](https://developer.android.com/develop/ui/views/layout/edge-to-edge))
 
 # 🎬Preview
 
@@ -94,7 +96,7 @@ using Camera with maximum size, extension, crop, rotate, zoom and compress featu
 
     ```kotlin
         dependencies {
-            implementation("com.github.SimformSolutionsPvtLtd:SSImagePicker:2.3")
+            implementation("com.github.SimformSolutionsPvtLtd:SSImagePicker:2.4")
         }
     ```
 
@@ -163,6 +165,7 @@ imagePicker.open(PickerType.GALLERY)
     .compressImage(false)
     .maxImageSize(2)
     .extension(PickExtension.JPEG)
+    .aspectRatio(AspectRatio(16, 8))
 imagePicker.open(PickerType.GALLERY)
 ```
 
@@ -202,12 +205,13 @@ imagePicker.open(PickerType.GALLERY)
 
 # :pencil: Permissions
 
-**SSImagePicker** Uses following permissions to display images. For
-system [Photo Picker](https://developer.android.com/training/data-storage/shared/photopicker) on
-Android 11+ no permission is required.
+**SSImagePicker** handles permissions automatically and follows modern Android best practices:
 
-* API **21(Android 5)** to API **32(Android 12L)**: `android.permission.READ_EXTERNAL_STORAGE`
-* API **33(Android 13)** onwards: `android.permission.READ_MEDIA_IMAGES`
+* **API 21(Android 5) to API 29(Android 10)**: Requires `android.permission.READ_EXTERNAL_STORAGE` to access gallery images
+* **API 30(Android 11) to API 32(Android 12L)**: You can choose between two options:
+  - **Traditional Gallery Picker**: Requires `android.permission.READ_EXTERNAL_STORAGE` 
+  - **System Photo Picker**: Available and **requires no permissions** (recommended for better user experience)
+* **API 33(Android 13) and above**: Uses the system [Photo Picker](https://developer.android.com/training/data-storage/shared/photopicker) API which **requires no permissions**
 
 # :rocket: Migration
 

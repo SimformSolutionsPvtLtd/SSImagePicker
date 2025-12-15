@@ -1,6 +1,7 @@
 package com.ssimagepicker.app
 
 import android.os.Parcelable
+import com.app.imagepickerlibrary.model.AspectRatio
 import com.app.imagepickerlibrary.model.PickExtension
 import com.app.imagepickerlibrary.model.PickerType
 import kotlinx.parcelize.Parcelize
@@ -22,7 +23,8 @@ data class PickerOptions(
     val openCropOptions: Boolean,
     val openSystemPicker: Boolean,
     val compressImage: Boolean,
-    val freeSizeCrop: Boolean
+    val freeSizeCrop: Boolean,
+    var aspectRatio: AspectRatio?
 ) : Parcelable {
     companion object {
         fun default(): PickerOptions {
@@ -39,7 +41,8 @@ data class PickerOptions(
                 openCropOptions = false,
                 openSystemPicker = false,
                 compressImage = false,
-                freeSizeCrop = false
+                freeSizeCrop = false,
+                aspectRatio = null
             )
         }
     }

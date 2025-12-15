@@ -9,4 +9,6 @@
     <color name="color_text">#194F54</color>
     <color name="gray">#808080</color>
     <color name="button_stroke_color">@color/colorPrimary</color>
+    <color name="no_content_text_color">@color/black</color>
+    <color name="picker_background">@color/white</color>
 </resources>

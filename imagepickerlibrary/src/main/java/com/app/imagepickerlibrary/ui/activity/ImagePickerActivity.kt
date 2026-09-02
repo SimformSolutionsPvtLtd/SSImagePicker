@@ -289,7 +289,7 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
             setFreeStyleCropEnabled(pickerConfig.freeStyleCrop)
             setHideBottomControls(true)
             setToolbarColor(getColorAttribute(R.attr.ssUCropToolbarColor))
-            setStatusBarColor(getColorAttribute(R.attr.ssUCropStatusBarColor))
+            setStatusBarLight(false)
             setToolbarWidgetColor(getColorAttribute(R.attr.ssUCropToolbarWidgetColor))
             setActiveControlsWidgetColor(getColorAttribute(R.attr.ssUCropActiveControlWidgetColor))
             if (pickerConfig.freeStyleCrop.not()) {

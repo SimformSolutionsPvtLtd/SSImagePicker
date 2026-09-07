@@ -25,7 +25,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/activity_button"
             style="@style/ButtonSelectorStyle"
-            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_96sdp"
             android:onClick="@{clickHandler::onClick}"
             android:text="@string/activity_demo"
             android:layout_marginStart="@dimen/_12sdp"

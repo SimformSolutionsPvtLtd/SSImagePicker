@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
                 openPickerOptions()
             }
             R.id.open_picker_button -> {
+                pickerOptions = pickerOptions.copy(compressImage = true)
                 openImagePicker()
             }
             R.id.open_sheet_button -> {
@@ -120,8 +121,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
             .showFolder(pickerOptions.showFolders)
             .cameraIcon(pickerOptions.showCameraIconInGallery)
             .doneIcon(pickerOptions.isDoneIcon)
-            .allowCropping(pickerOptions.openCropOptions)
-            .compressImage(pickerOptions.compressImage)
+            .compressImage(true)
+            .allowCropping(false)
             .maxImageSize(pickerOptions.maxPickSizeMB)
             .extension(pickerOptions.pickExtension)
             .aspectRatio(pickerOptions.aspectRatio)

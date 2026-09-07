@@ -7,11 +7,11 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Matrix
 import android.graphics.Paint
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.ext.SdkExtensions.getExtensionVersion
 import androidx.annotation.ChecksSdkIntAtLeast
-import androidx.exifinterface.media.ExifInterface
 import com.app.imagepickerlibrary.createImageFile
 import com.app.imagepickerlibrary.getRealPathFromURI
 import com.app.imagepickerlibrary.isNullOrEmptyOrBlank
@@ -26,6 +26,11 @@ import kotlin.math.roundToInt
 @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.TIRAMISU)
 internal fun isAtLeast13(): Boolean {
     return Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+}
+
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+internal fun isAtLeast14(): Boolean {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 }
 
 /**

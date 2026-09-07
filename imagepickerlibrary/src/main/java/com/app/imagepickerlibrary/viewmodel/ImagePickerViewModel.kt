@@ -1,6 +1,7 @@
 package com.app.imagepickerlibrary.viewmodel
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.imagepickerlibrary.getFileUri
@@ -11,6 +12,7 @@ import com.app.imagepickerlibrary.model.Image
 import com.app.imagepickerlibrary.model.PickerConfig
 import com.app.imagepickerlibrary.model.Result
 import com.app.imagepickerlibrary.util.compress
+import com.app.imagepickerlibrary.util.isAtLeast14
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,10 +59,15 @@ internal class ImagePickerViewModel(application: Application) : AndroidViewModel
     }
 
     private suspend fun fetchImageList(): List<Image> {
-        val config = pickerConfig.value
-        val (selection, selectionArgs) = config.generateSelectionArguments()
         val context = (getApplication() as Application).applicationContext
-        return context.getImagesList(selection, selectionArgs)
+        if (isAtLeast14()) {
+            return context.getImagesList(null, null)
+        } else {
+            val config = pickerConfig.value
+            val (selection, selectionArgs) = config.generateSelectionArguments()
+            return context.getImagesList(selection, selectionArgs)
+        }
+
     }
 
     fun getFoldersFromImages(images: List<Image>) {

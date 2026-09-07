@@ -3,16 +3,15 @@ package com.app.imagepickerlibrary.ui.activity
 import android.Manifest
 import android.content.ClipData
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -32,15 +31,17 @@ import com.app.imagepickerlibrary.dispatchTakePictureIntent
 import com.app.imagepickerlibrary.getBooleanAttribute
 import com.app.imagepickerlibrary.getColorAttribute
 import com.app.imagepickerlibrary.getModel
+import com.app.imagepickerlibrary.isCameraPermissionRequired
+import com.app.imagepickerlibrary.isPermissionGranted
 import com.app.imagepickerlibrary.model.Folder
 import com.app.imagepickerlibrary.model.Image
 import com.app.imagepickerlibrary.model.PickerConfig
 import com.app.imagepickerlibrary.model.PickerType
 import com.app.imagepickerlibrary.registerActivityResult
 import com.app.imagepickerlibrary.replaceFragment
+import com.app.imagepickerlibrary.toast
 import com.app.imagepickerlibrary.ui.fragment.FolderFragment
 import com.app.imagepickerlibrary.ui.fragment.ImageFragment
-import com.app.imagepickerlibrary.util.isAtLeast13
 import com.app.imagepickerlibrary.viewmodel.ImagePickerViewModel
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.launch
@@ -172,8 +173,31 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    /**
+     * The library itself does not declare the camera permission, but if the host app declares it
+     * in its manifest the system requires it to be granted before the capture intent can be
+     * started. Otherwise starting the intent throws a SecurityException.
+     */
     private fun showCamera() {
+        if (isCameraPermissionRequired()) {
+            openCameraAfterPermission = true
+            askPermission(Manifest.permission.CAMERA)
+            return
+        }
         fileUri = dispatchTakePictureIntent(onGetImageFromCameraActivityResult)
+    }
+
+    /**
+     * Without the camera permission the picker can not open the camera.
+     * If the picker was opened only for the camera there is nothing left to show, so the result is
+     * sent back as empty. Otherwise the gallery remains visible.
+     */
+    private fun onCameraPermissionDenied() {
+        openCameraAfterPermission = false
+        toast(getString(R.string.error_camera_permission_denied))
+        if (pickerConfig.pickerType == PickerType.CAMERA) {
+            createSingleSelectionResult(null)
+        }
     }
 
     /**
@@ -184,7 +208,7 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
     private fun showGallery() {
         // For Android 13+, we don't need permissions with Photo Picker API
         // For below Android 13, we need READ_EXTERNAL_STORAGE permission
-        if (checkForPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        if (isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             replaceFragment(getInitialFragment())
             viewModel.fetchImagesFromMediaStore()
         } else {
@@ -202,11 +226,16 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun checkForPermission(permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(
-            this,
-            permission
-        ) == PackageManager.PERMISSION_GRANTED
+    val pickMedia = registerForActivityResult(PickVisualMedia()) { uri ->
+        // Callback is invoked after the user selects a media item or closes the
+        // photo picker.
+        if (uri != null) {
+            checkForCropping(uri)
+            viewModel.fetchImagesFromMediaStore()
+            Log.d("PhotoPicker", "Selected URI: $uri")
+        } else {
+            Log.d("PhotoPicker", "No media selected")
+        }
     }
 
     private fun askPermission(vararg permission: String) {
@@ -236,6 +265,8 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
             result?.let { mutableMap ->
                 if (mutableMap.entries.all { entry -> entry.value }) {
                     pickImage()
+                } else if (mutableMap.containsKey(Manifest.permission.CAMERA)) {
+                    onCameraPermissionDenied()
                 }
             }
         }
@@ -274,11 +305,15 @@ class ImagePickerActivity : AppCompatActivity(), View.OnClickListener {
         }
         return UCrop.Options().apply {
             setFreeStyleCropEnabled(pickerConfig.openCropOptions)
-            setHideBottomControls(!pickerConfig.openCropOptions)
+            setFreeStyleCropEnabled(pickerConfig.freeStyleCrop)
+            setHideBottomControls(true)
             setToolbarColor(getColorAttribute(R.attr.ssUCropToolbarColor))
-            setStatusBarColor(getColorAttribute(R.attr.ssUCropStatusBarColor))
+            setStatusBarLight(false)
             setToolbarWidgetColor(getColorAttribute(R.attr.ssUCropToolbarWidgetColor))
             setActiveControlsWidgetColor(getColorAttribute(R.attr.ssUCropActiveControlWidgetColor))
+            if (pickerConfig.freeStyleCrop.not()) {
+                withAspectRatio(1f, 1f)
+            }
             if (pickerConfig.compressImage) {
                 setCompressionQuality(pickerConfig.compressQuality)
             }

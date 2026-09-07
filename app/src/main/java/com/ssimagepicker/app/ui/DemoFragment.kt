@@ -118,8 +118,7 @@ class DemoFragment : Fragment(), View.OnClickListener,
     private fun openImagePicker() {
         imagePicker
             .title("My Picker")
-            .multipleSelection(pickerOptions.allowMultipleSelection, pickerOptions.maxPickCount)
-            .showCountInToolBar(pickerOptions.showCountInToolBar)
+             .showCountInToolBar(pickerOptions.showCountInToolBar)
             .showFolder(pickerOptions.showFolders)
             .cameraIcon(pickerOptions.showCameraIconInGallery)
             .doneIcon(pickerOptions.isDoneIcon)

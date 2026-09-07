@@ -23,6 +23,7 @@ data class PickerOptions(
     val openCropOptions: Boolean,
     val openSystemPicker: Boolean,
     val compressImage: Boolean,
+    val freeSizeCrop: Boolean,
     var aspectRatio: AspectRatio?
 ) : Parcelable {
     companion object {
@@ -40,6 +41,7 @@ data class PickerOptions(
                 openCropOptions = false,
                 openSystemPicker = false,
                 compressImage = false,
+                freeSizeCrop = false,
                 aspectRatio = null
             )
         }

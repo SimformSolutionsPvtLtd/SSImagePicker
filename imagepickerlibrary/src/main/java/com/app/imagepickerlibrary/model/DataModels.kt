@@ -27,6 +27,7 @@ internal data class PickerConfig(
     var openSystemPicker: Boolean = false,
     var compressImage: Boolean = false,
     var compressQuality: Int = 75,
+    var freeStyleCrop: Boolean = false,
     var aspectRatio: AspectRatio? = null
 ) : Parcelable {
 

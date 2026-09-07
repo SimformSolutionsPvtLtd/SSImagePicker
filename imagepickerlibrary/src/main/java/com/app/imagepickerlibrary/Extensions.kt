@@ -1,9 +1,12 @@
 package com.app.imagepickerlibrary
 
+import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -20,6 +23,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.AttrRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
@@ -43,6 +47,9 @@ import kotlin.contracts.contract
  * If there is camera activity open the camera
  */
 internal fun Context.dispatchTakePictureIntent(onGetImageFromCameraActivityResult: ActivityResultLauncher<Intent>): Uri? {
+    if (isCameraPermissionRequired()) {
+        return null
+    }
     Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
         packageManager?.run {
             takePictureIntent.resolveActivity(this)?.also {
@@ -67,6 +74,14 @@ internal fun Context.dispatchTakePictureIntent(onGetImageFromCameraActivityResul
                 } catch (ex: IOException) {
                     ex.printStackTrace()
                     return null
+                } catch (ex: ActivityNotFoundException) {
+                    ex.printStackTrace()
+                    return null
+                } catch (ex: SecurityException) {
+                    // The host app declares the camera permission but it is not granted,
+                    // the camera app rejects the capture intent in that case.
+                    ex.printStackTrace()
+                    return null
                 }
             }
         }
@@ -80,6 +95,43 @@ internal fun Context.dispatchTakePictureIntent(onGetImageFromCameraActivityResul
 internal fun Context.createImageFile(name: String = ""): File {
     val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     return File.createTempFile("JPEG_${name}_", ".jpg", storageDir)
+}
+
+/**
+ * Checks whether the camera permission is declared in the merged manifest of the host app.
+ * The library does not declare the permission itself, but if the host app declares it then the
+ * system requires it to be granted before the capture intent can be started.
+ */
+internal fun Context.isCameraPermissionDeclared(): Boolean {
+    return try {
+        val packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
+        packageInfo.requestedPermissions?.contains(Manifest.permission.CAMERA) == true
+    } catch (ex: PackageManager.NameNotFoundException) {
+        ex.printStackTrace()
+        false
+    }
+}
+
+/**
+ * Returns true when the camera permission has to be requested before opening the camera,
+ * i.e. the host app declares it in the manifest and the user has not granted it yet.
+ */
+internal fun Context.isCameraPermissionRequired(): Boolean {
+    return isCameraPermissionDeclared() && !isPermissionGranted(Manifest.permission.CAMERA)
+}
+
+/**
+ * Extension function to check whether the given runtime permission is granted or not.
+ */
+internal fun Context.isPermissionGranted(permission: String): Boolean {
+    return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+}
+
+/**
+ * Extension function to show toast from the context
+ */
+internal fun Context.toast(string: String) {
+    Toast.makeText(this, string, Toast.LENGTH_LONG).show()
 }
 
 /**
@@ -265,6 +317,10 @@ internal suspend fun Context.getImagesList(
         imageList
     }
 }
+
+
+
+
 
 /**
  * Extension function to convert Megabyte to Byte

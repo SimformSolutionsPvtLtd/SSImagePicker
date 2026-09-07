@@ -146,6 +146,15 @@ class ImagePicker private constructor(
     }
 
     /**
+     * Whether to free size crop option or not.
+     * The cropping option are only available if the single selection is set or the picture is picked via camera.
+     */
+    fun allowFreeSizeCropping(enable: Boolean): ImagePicker {
+        pickerConfigManager.getPickerConfig().freeStyleCrop = enable
+        return this
+    }
+
+    /**
      * Whether to open new photo picker for android 11+ or not.
      * If the system picker is set to open the all other options except multi selection, max count and pick extension are ignored.
      * The max count for picking image depends on the OS, you can get the maximum images count via MediaStore.getPickImagesMaxLimit().
